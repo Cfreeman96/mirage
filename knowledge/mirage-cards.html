@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mirage — Ableton Cards</title>
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#f6f5f2; --card:#ffffff; --ink:#1c1b1a; --muted:#6b6864; --line:#e7e4df;
+    --accent:#d1471f; --accent-soft:#fbe9e2;
+    --radius:16px; --shadow:0 1px 3px rgba(0,0,0,.06),0 6px 20px rgba(0,0,0,.05);
+    --c-found:#3b5b80;  --c-found-bg:#e6edf6;
+    --c-prin:#7a5b12;   --c-prin-bg:#f6efdd;
+    --c-dyn:#b23a2e;    --c-dyn-bg:#fbe6e2;
+    --c-eq:#1f6f5c;     --c-eq-bg:#e3f1ec;
+    --c-dist:#9d4a12;   --c-dist-bg:#f7e8dc;
+    --c-time:#4b4699;   --c-time-bg:#e9e7f6;
+    --c-mod:#a53670;    --c-mod-bg:#f7e4ef;
+    --c-inst:#5a5148;   --c-inst-bg:#efe9e2;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg); color:var(--ink);
+    font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding:16px; max-width:640px; margin:0 auto; -webkit-font-smoothing:antialiased;}
+  header{margin:4px 2px 12px}
+  .kicker{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:700}
+  h1{font-size:21px; margin:2px 0 4px; letter-spacing:-.01em}
+  .sub{font-size:13px; color:var(--muted)}
+  .filters{display:flex; gap:7px; flex-wrap:wrap; margin:12px 2px 4px}
+  .chip{font-size:12.5px; font-weight:600; padding:6px 11px; border-radius:999px; border:1px solid var(--line);
+    background:var(--card); color:var(--muted); cursor:pointer; -webkit-tap-highlight-color:transparent}
+  .chip.active{background:var(--ink); color:#fff; border-color:var(--ink)}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:18px 17px; margin:14px 0;}
+  .badges{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; align-items:center}
+  .badge{font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:999px; letter-spacing:.02em}
+  .badge.dev{background:#f0efec; color:var(--muted)}
+  .prompt{font-size:17px; font-weight:600; line-height:1.45; margin:2px 0 4px}
+  .think{font-size:12.5px; color:var(--muted); margin-top:8px; font-style:italic}
+  .reveal-wrap{margin-top:14px}
+  button{font:inherit; font-weight:700; font-size:15px; cursor:pointer; border-radius:13px;
+    padding:14px 12px; border:1px solid var(--line); background:var(--card); color:var(--ink);
+    box-shadow:var(--shadow); -webkit-tap-highlight-color:transparent; transition:transform .05s ease; width:100%;}
+  button:active{transform:translateY(1px)}
+  button.primary{background:var(--accent); color:#fff; border-color:var(--accent)}
+  .answer{display:none; margin-top:6px; animation:fade .25s ease}
+  .answer.show{display:block}
+  @keyframes fade{from{opacity:0; transform:translateY(4px)}to{opacity:1; transform:none}}
+  .sec{margin:15px 0 0}
+  .sec-h{font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:700; margin-bottom:5px}
+  .sec p{margin:0}
+  .idea{font-size:15px}
+  .you{border-left:3px solid var(--accent); background:#fff8f5; padding:9px 12px; border-radius:0 10px 10px 0; font-size:14.5px}
+  .try{border-left:3px solid var(--c-eq); background:var(--c-eq-bg); padding:9px 12px; border-radius:0 10px 10px 0; font-size:14.5px}
+  .jargon{border-left:3px solid var(--c-found); background:var(--c-found-bg); padding:6px 12px 8px; border-radius:0 10px 10px 0}
+  .jargon p{margin:8px 0; font-size:14px; line-height:1.5}
+  .jargon b{color:var(--c-found)}
+  .links{display:flex; gap:14px; flex-wrap:wrap; margin-top:15px; padding-top:12px; border-top:1px solid var(--line)}
+  .links a{font-size:13px; color:var(--accent); text-decoration:none; font-weight:600}
+  .links a:hover{text-decoration:underline}
+  .bar{position:sticky; bottom:0; display:flex; gap:10px; padding:12px 0 6px;
+    background:linear-gradient(180deg,rgba(246,245,242,0),var(--bg) 34%)}
+  .mini{text-align:center; font-size:12px; color:var(--muted); margin-top:6px}
+  .ai-btn{margin-top:13px; font-size:13px; font-weight:600; color:var(--c-found); background:none; border:none; box-shadow:none; padding:0; text-align:left; width:auto; cursor:pointer}
+  .ai-btn:hover{text-decoration:underline}
+  .ai{display:none; margin-top:10px; border-left:3px solid var(--c-found); background:#eef2f9; padding:10px 12px; border-radius:0 10px 10px 0; font-size:14.5px}
+  .ai.show{display:block}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">Mirage · Ableton Cards</div>
+  <h1>Answer it in your head. Then reveal.</h1>
+  <div class="sub">43 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
+</header>
+
+<div class="filters" id="filters"></div>
+<div id="stage"></div>
+<div class="bar"><button id="next" class="primary">Next card →</button></div>
+<div class="mini" id="counter"></div>
+
+<script>
+const CATS = {
+  found:{label:"Foundations", v:"--c-found", bg:"--c-found-bg"},
+  prin: {label:"Principle",   v:"--c-prin",  bg:"--c-prin-bg"},
+  dyn:  {label:"Dynamics",    v:"--c-dyn",   bg:"--c-dyn-bg"},
+  eq:   {label:"EQ & Filter", v:"--c-eq",    bg:"--c-eq-bg"},
+  dist: {label:"Distortion",  v:"--c-dist",  bg:"--c-dist-bg"},
+  time: {label:"Time-based",  v:"--c-time",  bg:"--c-time-bg"},
+  mod:  {label:"Modulation",  v:"--c-mod",   bg:"--c-mod-bg"},
+  inst: {label:"Instruments", v:"--c-inst",  bg:"--c-inst-bg"}
+};
+const M = "https://www.ableton.com/en/manual/live-audio-effect-reference/";
+const MI = "https://www.ableton.com/en/manual/live-instrument-reference/";
+
+const CARDS = [
+  // ===== FOUNDATIONS =====
+  { cat:"found", dev:"Device categories",
+    prompt:"A part of your track sounds wrong — muddy, flat, jumpy, too dry. How do you decide <i>which type of device</i> to even reach for?",
+    answer:"Ask which of five properties is off: <b>loudness</b> (→ Dynamics), <b>tone/balance</b> (→ EQ &amp; Filter), <b>harmonic richness / dirt</b> (→ Distortion), <b>space / echo</b> (→ Time-based), or <b>motion</b> (→ Modulation). Each device category shapes exactly one of those. 'Muddy' is usually a tone problem (EQ); 'jumpy in volume' is dynamics; 'thin/lifeless' may want harmonics (saturation); 'too dry and upfront' wants space (reverb).",
+    you:"This is the map your whole knowledge base is organized by. Naming the problem first stops you from randomly stacking plugins.",
+    tryThis:"Next time you grab a device, say out loud which of the five you're fixing. Can't name it? You probably don't need the device yet.",
+    jargon:[["Dynamics","how loud things are, moment to moment."],["Harmonics","extra related frequencies distortion adds to enrich a sound."],["Tone / EQ","the balance of frequencies — bright vs dark, thin vs full."]],
+    links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  // ===== PRINCIPLES =====
+  { cat:"prin", dev:"Dry / Wet",
+    prompt:"What does the <b>Dry/Wet</b> knob actually control — and where should it sit at 100%?",
+    answer:"It's the balance of untouched (<b>dry</b>) vs processed (<b>wet</b>) signal. 0% = effect bypassed, 100% = only the processed sound. On a normal insert you blend to taste; on a <b>return track</b> set it to <b>100%</b>, because the dry already exists on the source track — you're only sending the wet there.",
+    you:"You set Dry/Wet all over — Delay 17%, Echo 30%, Phaser 70%. Each is a taste balance on an insert.",
+    tryThis:"On the synth pluck's Delay, sweep Dry/Wet 0→100% and find where the repeats start crowding the dry note. That sweet spot is usually 15–30%.",
+    jargon:[["Dry","the original, untouched signal."],["Wet","the processed signal coming out of the effect."],["Return track","a shared 'effects-only' channel you send several tracks to — like a room full of people sharing one echo chamber down the hall."]],
+    links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Threshold",
+    prompt:"Compressors, gates and limiters all have a <b>Threshold</b>. What does it set?",
+    answer:"<b>Threshold</b> is the level line where a processor starts acting. On a compressor, signal <i>above</i> the threshold gets turned down; on a gate, signal <i>below</i> it gets shut out. Lower the threshold and more of the signal is affected; raise it and only the loudest peaks get touched. It's the 'when do you kick in?' control, paired with Ratio (how hard).",
+    you:"Every compressor Guido has you set — on the drums, bass and master — starts with where you place the threshold.",
+    tryThis:"On the drum-bus compressor, slowly lower the threshold and watch the gain-reduction meter start moving on the loudest hits first.",
+    jargon:[["Threshold","the level line where the effect switches on."],["Gain reduction","how many dB the compressor is turning the signal down right now — shown on its meter."]],
+    links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Ratio",
+    prompt:"On a compressor, what does the <b>Ratio</b> control decide?",
+    answer:"<b>Ratio</b> sets how hard the compressor turns down whatever crosses the threshold. At <b>2:1</b>, a signal 4 dB over the threshold comes out only 2 dB over — gentle. At <b>10:1</b> it's firm; at <b>∞:1</b> it's limiting (a brick wall). Low ratios = subtle leveling; high ratios = obvious squashing or peak-catching.",
+    you:"Low ratios glue your drum group gently; the very high / infinite ratio is what your master Limiter uses to catch peaks.",
+    tryThis:"On one drum, set ratio 2:1 vs 8:1 at the same threshold and hear 'controlled' become 'squashed.'",
+    jargon:[["Ratio (e.g. 4:1)","how much the signal is reduced above the threshold — 4 dB in becomes 1 dB out."],["Limiting","compression at an extreme ratio, acting as a hard ceiling."]],
+    links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Attack & Release",
+    prompt:"On a compressor, what's the difference between <b>Attack</b> and <b>Release</b> — and which setting <i>preserves punch</i>?",
+    answer:"<b>Attack</b> = how fast it clamps once the signal crosses the threshold. <b>Release</b> = how fast it lets go afterward. A <b>slower attack</b> lets the initial transient (the snap/click) through <i>before</i> compressing the body — that's what <b>preserves punch</b>. A fast attack catches and tames the transient. Release timed to the tempo feels musical; too fast pumps, too slow stays dull.",
+    you:"When Guido has you compress the drums, this is the lever that decides whether the kick keeps its 'snap' or gets squashed.",
+    tryThis:"On a kick: slow-ish attack (~10–15 ms) so the click survives, then shorten release until the tail tightens without pumping.",
+    jargon:[["Attack","how fast the compressor clamps after the signal crosses the threshold."],["Release","how fast it lets go afterward."],["Transient","the initial spike of a sound; a slow attack lets it through to keep punch."]],
+    links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Knee",
+    prompt:"Two compressors, same settings, but one feels gentle and one grabs hard. Often it's the <b>Knee</b>. What is it?",
+    answer:"The <b>Knee</b> is how abruptly compression engages around the threshold. A <b>soft knee</b> eases in gradually starting just below the threshold — smooth, transparent. A <b>hard knee</b> slams in the instant the signal crosses — aggressive and obvious. Live's <b>Compressor</b> lets you dial the knee; the <b>Glue Compressor</b> doesn't — its knee just gets sharper as you raise the ratio.",
+    you:"It's why your Glue on the drum group feels smooth at low ratios and grabbier as you push it.",
+    tryThis:"On the Compressor, A/B a soft vs hard knee on a vocal at the same threshold/ratio — hear 'gentle' vs 'clamped.'",
+    jargon:[["Soft knee","compression that fades in gradually around the threshold — transparent."],["Hard knee","compression that snaps on the instant the threshold is crossed — aggressive."]],
+    links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Makeup gain",
+    prompt:"You compress a sound and it gets quieter, so you can't tell if it's better or just softer. What fixes that — and why does it matter?",
+    answer:"<b>Makeup gain</b> adds level back after compression to match the original loudness. It matters because our ears think 'louder = better,' so you can't fairly judge a compressor unless the in/out volumes match. With makeup set right, you compare the <i>effect</i>, not the <i>loudness</i>. Live's Compressor and Glue both have it (often an <b>Auto</b> option).",
+    you:"Whenever you bypass a compressor to A/B it, makeup is what keeps that comparison honest.",
+    tryThis:"Compress a bass hard, then raise makeup until bypassed and active sound equally loud. Now the difference you hear is the compression itself.",
+    jargon:[["Makeup gain","volume added back after compressing, to level-match."],["A/B","flipping an effect on and off to compare — only fair at matched loudness."]],
+    links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Sidechain",
+    prompt:"Producers talk about 'the pump' in house music. What is <b>sidechaining</b>, and how does it create that?",
+    answer:"Normally a compressor reacts to its own signal. With a <b>sidechain</b>, you make it react to a <i>different</i> signal instead. The classic move: put a compressor on the bass but set its <b>trigger</b> to the kick. Now every kick hit tells the bass to duck for a moment, then recover — so the two stop clashing and you get that rhythmic <b>pumping</b> that breathes with the beat. There's usually a headphones/'listen' button to hear exactly what's triggering it.",
+    you:"Guido had you remove a muted sidechain-trigger track and build a smoother version on the bass with <b>Shaper + 2 Utilities</b> — same ducking idea, no clicks.",
+    tryThis:"On the bass Compressor: unfold it, enable <b>Sidechain</b>, pick the kick as input, fast attack, release ~1/16. Tap the headphones icon to hear the trigger.",
+    jargon:[["Sidechain","letting one sound control a processor on another sound — like a conversation where you instinctively lower your voice whenever the other person talks."],["Trigger","the signal that tells the processor when to act (here, the kick)."],["Pumping","the rhythmic duck-and-recover in volume that makes a track 'breathe' with the kick."]],
+    links:[["Manual: Sidechain","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=rbuTKgcteKo"]] },
+
+  { cat:"prin", dev:"Cutoff & Resonance",
+    prompt:"Every filter has <b>Cutoff</b> and <b>Resonance</b>. What does each do?",
+    answer:"<b>Cutoff</b> is the frequency where a filter starts removing sound — on a low-pass, everything above it rolls off (darker); on a high-pass, everything below (thinner, cleaner). <b>Resonance</b> adds a boost or 'whistle' right at the cutoff point, emphasizing it. Sweeping the cutoff (with an LFO or automation) is the classic tension/build move; adding resonance makes that sweep sing.",
+    you:"Your automated Auto Filters and the LPF in the brake-piano rack are all cutoff moves.",
+    tryThis:"On a synth, set a low-pass, add some resonance, and slowly automate the cutoff upward over 8 bars into the drop.",
+    jargon:[["Cutoff","the frequency where the filter begins cutting."],["Resonance","a peak/whistle right at the cutoff that emphasizes it."],["LPF / HPF","low-pass filter (keeps lows) / high-pass filter (keeps highs)."]],
+    links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Filter types",
+    prompt:"You see <b>LP</b>, <b>HP</b>, <b>BP</b> and <b>Notch</b> on filters. What does each keep or remove?",
+    answer:"A filter's <b>type</b> decides which frequencies survive. <b>Low-pass (LPF)</b> keeps the lows, removes the highs (darkens). <b>High-pass (HPF)</b> keeps the highs, removes the lows (thins, cleans out rumble). <b>Band-pass</b> keeps a middle band and removes above and below (telephone/radio effect). <b>Notch</b> is the opposite — it removes one narrow band while keeping the rest (surgical problem-fixing).",
+    you:"'LPF' in your brake-piano rack is a low-pass; your bass EQ 'cutting sub-100' is a high-pass move.",
+    tryThis:"High-pass everything except the kick and bass below ~100 Hz — the mix instantly cleans up and the low end gets room.",
+    jargon:[["Low-pass / High-pass","keeps lows / keeps highs."],["Band-pass","keeps only a middle band."],["Notch","removes only a narrow band — for killing a specific resonance."]],
+    links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"LFO",
+    prompt:"You keep seeing '<b>LFO</b>' on devices like Auto Pan, Auto Filter and Chorus. What is it, in plain terms?",
+    answer:"<b>LFO</b> stands for <b>Low-Frequency Oscillator</b>. It's a slow wave that's too low to hear as a sound — instead of making noise, it <i>automatically moves a control for you</i>, up and down, over and over. Point an LFO at a filter's cutoff and you get a sweep; at volume and you get a tremolo; at pan and you get auto-panning. You set its <b>Rate</b> (how fast — free in Hz, or synced to the beat) and its <b>Amount/Depth</b> (how far it pushes the control).",
+    you:"It's the engine behind your automated Auto Filters, your Auto Pan panning, and the shimmer in the Chorus on your lead.",
+    tryThis:"On a synth, add <b>Auto Filter</b>, turn on its LFO, sync it to 1/4, and raise the amount. Hear the filter open and close on its own, in time.",
+    jargon:[["LFO (Low-Frequency Oscillator)","an inaudible slow wave that wiggles a knob for you automatically — like a tiny robot hand turning a control back and forth in rhythm."],["Rate","how fast the LFO moves — free-running in Hz, or locked to the song's tempo."],["Amount / Depth","how far the LFO pushes the control away from where you set it."]],
+    links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Q / bandwidth",
+    prompt:"On an EQ band you can make it wide or narrow — that's <b>Q</b>. When do you want high vs low Q?",
+    answer:"<b>Q</b> (bandwidth) sets how wide or narrow an EQ band is. <b>High Q</b> = a narrow, surgical band — use it to notch out one nasty resonance or ring without touching the rest. <b>Low Q</b> = a wide, gentle band — for broad tonal shaping (a little more air, a warmer body). Cuts are often high-Q (precise); musical boosts are often low-Q (broad and natural).",
+    you:"Your 'really high Q around 10 kHz' on the clap and '4–5k / 8–10k' on the lead vocals are surgical cuts.",
+    tryThis:"Boost a narrow high-Q band and sweep it to <i>find</i> a harsh resonance, then flip the boost to a cut to remove it.",
+    jargon:[["Q / bandwidth","how wide an EQ band is — high Q is narrow/surgical, low Q is wide/gentle."],["Resonance (in a sound)","a frequency that rings louder than the rest — often what you hunt with a high-Q cut."]],
+    links:[["Manual: EQ Eight","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Mid / Side",
+    prompt:"What's the difference between the <b>Mid</b> and the <b>Side</b> of a stereo signal — and why treat them separately?",
+    answer:"<b>Mid</b> is what the left and right channels share — the center of your mix (kick, bass, snare, lead vocal). <b>Side</b> is what differs between them — the width (reverb, wide synths, room). Viewing sound in Mid/Side lets you treat 'the center' and 'the width' as separate faders: brighten the sides without touching the core, or narrow the lows without narrowing the highs. Found in EQ Eight (M/S mode), Utility (Width) and Roar (Mid Side routing).",
+    you:"You used EQ Eight in mid/side on your drum group — center and width handled independently.",
+    tryThis:"In EQ Eight M/S, high-pass just the Sides below ~200 Hz. The stereo image opens without thinning the middle.",
+    jargon:[["Mid","the shared center content of a stereo signal."],["Side","the difference between left and right — the stereo width."]],
+    links:[["Manual: EQ Eight","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Stereo width & mono",
+    prompt:"Why do pros keep the bass <b>mono</b> but let the highs go <b>wide</b>?",
+    answer:"<b>Mono</b> means one signal, dead center; <b>stereo width</b> is how far a sound spreads left-to-right. Low frequencies carry most of the energy, and wide/out-of-phase lows can partly cancel and sound weak (or misbehave on club systems), so keeping everything below ~120 Hz mono gives a <b>solid, phase-safe low end</b>. Highs are where width feels good and does no harm — so you save the stereo spread for them.",
+    you:"Your Utility Width / Bass-Mono moves are exactly this: tighten the lows, widen the tops.",
+    tryThis:"Put a Utility on the master and engage Bass Mono ~120 Hz. The low end gets noticeably more solid and centered.",
+    jargon:[["Mono","a single centered signal (no left/right difference)."],["Width","how far a sound spreads across the stereo field."],["Phase cancellation","when left and right fight and partly cancel — why wide lows can sound weak."]],
+    links:[["Manual: Utility","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Sync divisions",
+    prompt:"Delays and LFOs can be <b>synced</b> to the beat in values like 1/8, Dotted and Triplet. What do those mean?",
+    answer:"When a time-based effect is <b>synced</b>, its timing locks to your tempo in note values instead of milliseconds. <b>1/4, 1/8, 1/16</b> are straight divisions of the bar. <b>Dotted</b> is 1.5× longer than the plain value (a 1/8-dotted feels loose and 'swung,' great for that spacious dub-delay bounce). <b>Triplet</b> squeezes three into the space of two (a rolling, galloping feel). Synced effects always sit in the groove; unsynced (ms) is for tight doubling or special cases.",
+    you:"Your lead-vocal Echo used a double sync (L 1/8, R 1/4) — two different divisions bouncing across the stereo field.",
+    tryThis:"On a delay, compare 1/8 vs 1/8-dotted at the same tempo. Dotted is the classic 'wide, swung' delay you hear all over house.",
+    jargon:[["Sync","locking an effect's timing to the song tempo instead of milliseconds."],["Dotted","1.5× the note length — a looser, swung feel."],["Triplet","three notes in the space of two — a rolling feel."]],
+    links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Feedback",
+    prompt:"On delays, choruses and flangers there's a <b>Feedback</b> control. What is it feeding back?",
+    answer:"<b>Feedback</b> routes a portion of an effect's output back into its own input. On a <b>delay/echo</b>, more feedback = more repeats (each echo re-feeds the line, so it can trail toward infinity). On <b>chorus/flanger/phaser</b>, feedback intensifies the resonant, hollow character. Push it high and an effect can <b>self-oscillate</b> — building on itself into a runaway tone.",
+    you:"Your synth-pluck delay used ~30% feedback — a few audible repeats, not an endless trail.",
+    tryThis:"On a delay, raise feedback from 10% → 60% and hear the tail go from one echo to a long rhythmic cascade. Careful past ~80%.",
+    jargon:[["Feedback","sending an effect's output back into itself — more = more repeats / intensity."],["Self-oscillation","when feedback is so high the effect sustains and builds on its own."]],
+    links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Parallel processing",
+    prompt:"Why blend a <i>heavily crushed</i> copy of a sound <b>under</b> the original instead of just compressing it hard?",
+    answer:"That's <b>parallel processing</b> (parallel compression when it's a compressor). The dry original keeps its natural <b>transients</b> — the punch and snap — while the crushed copy underneath adds <b>body and sustain</b>. Blended, you get power <i>and</i> life, instead of the flat, lifeless sound of just squashing everything. Do it with a return track, a rack chain, or a device's own <b>Dry/Wet</b> knob.",
+    you:"Your clap's 'Drum Full Parallel' rack is exactly this — and it's the heart of what Guido's teaching you on the drums right now.",
+    tryThis:"On the drum group, add a Glue Compressor, smash it (Ratio 4:1, ~6–8 dB reduction), then pull Dry/Wet to ~35%. Instant parallel compression.",
+    jargon:[["Parallel processing","blending a processed copy under the dry original, instead of replacing it."],["Transient","the punchy attack at the start of a sound — what the dry copy preserves."]],
+    links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Gain staging",
+    prompt:"What is <b>gain staging</b>, and why do healthy EQ curves usually sit <i>below</i> 0 dB?",
+    answer:"<b>Gain staging</b> means keeping levels sensible at every step so nothing clips and each device 'sees' a healthy signal (not too hot, not too weak). Boosting frequencies pushes level up and can drive the next device too hard, so a clean approach is to <b>cut problems first</b> and only add makeup gain where you truly need it. That's why good EQ curves are mostly cuts (below 0 dB) — you carve, rather than pile up boosts that stack into clipping.",
+    you:"Your EQ curves that 'ramp up but stay under zero' are good gain-staging instinct — subtractive, not additive.",
+    tryThis:"On a busy track, solve tone by cutting (a dip here, a high-pass there) before you reach for any boost. Watch your meters stay out of the red.",
+    jargon:[["Gain staging","managing levels through the chain so nothing clips and every device gets a healthy input."],["Clipping","when a signal exceeds the maximum and distorts (goes into the red)."],["Subtractive EQ","fixing tone by cutting frequencies rather than boosting."]],
+    links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  // ===== DYNAMICS =====
+  { cat:"dyn", dev:"Compressor",
+    prompt:"When do you reach for the plain <b>Compressor</b> instead of the Glue Compressor?",
+    answer:"The <b>Compressor</b> is Live's surgical, do-anything dynamics tool — use it to control a <i>single</i> element. It has an adjustable <b>knee</b>, <b>Peak vs RMS</b> detection (fast transient-catching vs smooth loudness-riding), a full <b>sidechain</b> with its own EQ, and Dry/Wet for parallel compression. Reach for it to tame a vocal, tighten a bass, tuck a snare, or set up kick-triggered ducking. (Gluing a whole group is the Glue's job.)",
+    you:"You have Compressors on the bass, synth pluck, main pad (sidechained), vocals and several FX — several later bypassed as Guido rebuilds the dynamics in Part 2.",
+    tryThis:"On the vocal: slow-ish attack to keep consonants, ratio ~3:1, threshold for 3–5 dB reduction, then makeup to match. It should sit steadier, not quieter.",
+    jargon:[["Knee","how gradually compression engages around the threshold (soft = smooth, hard = aggressive)."],["Peak vs RMS","reacting to fast spikes vs to average loudness."],["Sidechain EQ","filtering what the compressor 'listens' to, so it reacts to specific frequencies."]],
+    links:[["Manual: Compressor","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"dyn", dev:"Glue Compressor",
+    prompt:"You want your whole <b>drum bus</b> to feel like one glued unit. Why is the <b>Glue Compressor</b> right, and where does it go?",
+    answer:"The <b>Glue Compressor</b> is an analog-modeled bus compressor (built with Cytomic, based on a classic 80s SSL console). It's made to sit on a <b>Group or Main</b> track and fuse multiple sources into one cohesive, slightly-colored whole. Unlike the regular Compressor it has <b>no adjustable knee</b> (the knee sharpens as ratio rises), plus a <b>Range</b> limit, <b>Soft Clip</b> for taming peaks, and <b>Dry/Wet</b> for parallel glue. Rule of thumb: Compressor = control one thing; Glue = make many things feel like one.",
+    you:"You already did this right — Glue sits on your drum group (and another on the bass with a sidechain filter).",
+    tryThis:"Drum-group Glue: Ratio 2:1, Attack 10 ms, Release Auto, threshold for ~2–4 dB reduction. Bypass on/off — listen for 'tighter,' not 'quieter.'",
+    jargon:[["Bus / group","a channel several tracks feed into so you can process them together — a 'drum bus' is all drums on one channel."],["Glue","making separate sounds feel like one cohesive unit."],["Soft Clip","gentle clipping that tames loud peaks and adds a little color."]],
+    links:[["Manual: Glue Compressor","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=7xEZa1IlW5Q"]] },
+
+  { cat:"dyn", dev:"Multiband Dynamics (OTT)",
+    prompt:"<b>OTT</b> makes synths instantly bigger. It's a preset of <b>Multiband Dynamics</b> — so what's it doing that a normal compressor doesn't?",
+    answer:"A normal compressor does <b>downward compression</b> — it turns <i>loud</i> parts down. <b>Multiband Dynamics</b> (where <b>OTT</b> lives) also does <b>upward compression</b> — it turns <i>quiet</i> parts <i>up</i> — and it does both across <b>three separate frequency bands</b> at once (split by <b>crossovers</b>). OTT cranks both directions hard on lows, mids and highs, so quiet detail gets lifted and loud peaks pulled down, per band — which is why synths sound huge, bright and in-your-face. Easy to overdo.",
+    you:"You ran OTT on the <b>bass and synth pluck</b> (later bypassed on the bass in Part 2). At 100% it flattens aggressively.",
+    tryThis:"Instead of 100% OTT, pull the <b>Amount</b> to ~25–35% — you keep the polish without the lifeless, pumping flatten.",
+    jargon:[["Downward vs upward compression","downward turns loud parts down; upward turns quiet parts up. Both shrink the gap between loud and soft, making a sound denser and 'bigger.'"],["Band","a frequency range (low / mid / high) processed on its own."],["Crossover","the frequency where the device splits one band from the next."]],
+    links:[["Manual: Multiband Dynamics","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"dyn", dev:"Drum Buss",
+    prompt:"Your kit sounds thin and messy, so you reach for <b>Drum Buss</b>. What four jobs is it doing at once — and which knob adds punch?",
+    answer:"<b>Drum Buss</b> is a one-stop drum processor that bundles four jobs into a single device. (1) A built-in <b>Comp</b> — a fixed compressor that 'glues' the drums into one kit. (2) <b>Distortion</b> in three flavors: <i>Soft</i> gently rounds the loud peaks for warmth, <i>Medium</i> clamps them harder for grit, <i>Hard</i> chops them flat and adds low-end for the most aggressive tone. (3) <b>Transients</b> — up to exaggerate the initial 'crack' of each hit (punch), down to tighten and de-rattle. (4) Low-end shaping — <b>Boom</b> adds a tuned sub-bass resonance to fatten the kick, while <b>Crunch</b> adds bite to the mid-highs and <b>Damp</b> tames the harshness that creates. The <b>Transients</b> knob is your punch control.",
+    you:"This is the device on your <b>Kick 1</b> — now you can see why it changed so much at once.",
+    tryThis:"Solo the kick. Push <b>Transients</b> to +30% (hear the click sharpen), add a little <b>Boom</b> (hear it fatten), then A/B the <b>Comp</b> toggle. One control at a time.",
+    jargon:[["Transient","the split-second spike at the very start of a hit — before the body. It's what makes a drum feel punchy."],["Glue","when a compressor makes separate sounds move together as one unit."],["Waveshaping (soft/medium/hard)","reshaping the waveform to add harmonics — 'soft' rounds peaks gently, 'hard' chops them flat for grit."]],
+    links:[["Manual: Drum Buss","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=_okKGKp5a9I"]] },
+
+  { cat:"dyn", dev:"Limiter",
+    prompt:"It's the last device on your master. Why is a <b>Limiter</b> called a 'brickwall,' and which mode do you pick for the final export?",
+    answer:"A <b>Limiter</b> is a compressor turned up to the extreme — an <b>infinite ratio</b>, meaning it acts like a hard wall: no matter how loud the incoming signal pushes, the output can't cross the <b>Ceiling</b> you set. That's the 'brickwall.' Its job on the master is to raise overall loudness while guaranteeing nothing clips. Pick the ceiling mode by purpose: <i>Standard</i> for transparent limiting, <i>Soft Clip</i> to add a touch of color/punch near the ceiling, and <b>True Peak</b> for the final export — it prevents peaks that hide <i>between</i> the digital samples and would otherwise distort after streaming or conversion.",
+    you:"This is exactly where Guido's mastering stage lands — last on your <b>Main</b> track, after mastering EQ and compression.",
+    tryThis:"Ceiling −1.0 dB, <b>True Peak</b> on, then raise <b>Input Gain</b> until it's loud but the kick keeps its snap. A few dB of gain reduction is plenty.",
+    jargon:[["Infinite ratio (∞:1)","'ratio' is how hard a compressor pushes loud parts down. Infinite = a hard ceiling; nothing gets past it — like your head hitting a low ceiling no matter how high you jump."],["Ceiling","the maximum output level you allow — the wall the sound can't cross."],["True Peak / inter-sample peak","a peak that appears between the digital sample points; True Peak mode catches it so your track doesn't distort after conversion or streaming."]],
+    links:[["Manual: Limiter","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=Gvbf90IffRo"]] },
+
+  // ===== EQ & FILTER =====
+  { cat:"eq", dev:"EQ Eight",
+    prompt:"<b>EQ Eight</b> is your most-used device. What are its three <b>modes</b> — Stereo, L/R, M/S — and why run two EQ Eights on one track?",
+    answer:"<b>EQ Eight</b> gives you up to eight parametric bands to reshape tone. Its <b>modes</b> change what the curve acts on: <b>Stereo</b> (one curve on both channels), <b>L/R</b> (separate left and right curves), and <b>M/S</b> (separate curves for the center and the width). Why two on one track? Different jobs: the <b>first = corrective</b> (cut rumble, boxiness, harshness) placed <i>before</i> compression so the compressor isn't reacting to junk; the <b>second = tonal</b> (air, presence) placed after. Fix first, flavor last — try naming them 'CUT' and 'TONE.'",
+    you:"EQ Eight is on nearly everything; on the drum group you used M/S, and you stack two EQs on the main pad and others.",
+    tryThis:"Rename your first EQ 'CUT' (all high-passing and notching here) and the second 'TONE' (only boosts). Your chains instantly make sense.",
+    jargon:[["Parametric band","an EQ point where you choose the frequency, how much to boost/cut, and how wide (Q)."],["M/S mode","editing the center (Mid) and width (Side) with separate curves."],["Corrective vs tonal EQ","cutting problems early vs shaping character late."]],
+    links:[["Manual: EQ Eight","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"eq", dev:"Auto Filter",
+    prompt:"A plain filter stays put. What makes <b>Auto Filter</b> different — and what does its <b>envelope follower</b> do?",
+    answer:"<b>Auto Filter</b> is a filter that can <i>move its own cutoff</i> — that's the 'auto.' It moves two ways: an <b>LFO</b> sweeps the cutoff rhythmically, and an <b>envelope follower</b> makes the cutoff react to how loud the signal is (or to an external sidechain) — so the filter opens on loud hits and closes on quiet ones. Add <b>Resonance</b> for a whistle at the cutoff, and <b>Drive</b> to distort as it filters. 'Legacy' is just the older filter model kept for compatibility with imported course files.",
+    you:"Your Kick 1 has a grouped pair of automated Auto Filters, and you carried in 'Auto Filter Legacy' twice from the course project files.",
+    tryThis:"On a riser, automate the <b>cutoff</b> from ~200 Hz up to 18 kHz over 8 bars with a bit of <b>resonance</b>. Tension → release into the drop.",
+    jargon:[["Cutoff","the frequency where the filter starts removing sound; sweeping it is the classic 'opening up' move."],["Resonance","a boost/whistle right at the cutoff that emphasizes it."],["Envelope follower","makes a control react to the signal's loudness — here, louder = filter opens more. Like a light that brightens the harder you clap."]],
+    links:[["Manual: Auto Filter","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=7CHuX_V0pD0"]] },
+
+  { cat:"eq", dev:"Utility",
+    prompt:"You want your <b>sub centered</b> but your <b>highs wide</b>. Which <b>Utility</b> features get you there — and what else is this little device for?",
+    answer:"<b>Utility</b> is your level/stereo/mono Swiss-army knife. For your goal: <b>Bass Mono</b> folds the lows below a set point to mono (solid, phase-safe bottom) while <b>Width</b> (or Mid/Side mode) keeps the highs spread. It also does <b>Gain</b> (great for automating fades without touching the fader), <b>Balance</b> (pan), <b>Mono</b> (a mix-check collapse), <b>Mute</b> (placed mid-chain, it can cut the feed into a reverb without killing its tail), and <b>DC</b> (removes sub-audible offset before nonlinear effects).",
+    you:"You leaned on Utility a lot — often automating its Gain, and in the bass 'Shaper + 2 Utilities' pseudo-sidechain.",
+    tryThis:"On the bass, turn on Bass Mono (~120 Hz). Kick and bass stop fighting for the center — the low end gets noticeably more solid.",
+    jargon:[["Bass Mono","folding low frequencies to mono for a stronger, phase-safe low end."],["Width","how far the signal spreads in stereo (0% = mono)."],["Gain automation","writing volume moves on the Utility knob instead of the channel fader."]],
+    links:[["Manual: Utility","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  // ===== DISTORTION & CHARACTER =====
+  { cat:"dist", dev:"Roar — routing",
+    prompt:"<b>Roar</b> has a <b>Routing</b> menu — Single, Serial, Parallel, Multi Band, Mid Side, Feedback. What's the big idea, and what does <b>Multi Band</b> do?",
+    answer:"<b>Roar</b> is a dynamic saturation device, and its <b>Routing</b> mode decides the <i>structure</i> of how the signal is distorted. <b>Single</b> = one saturation stage. <b>Serial</b> = two stages in a row (stacked grit). <b>Parallel</b> = two independent stages you blend between. <b>Multi Band</b> splits the sound into <b>Low / Mid / High</b> (set by two <b>crossover</b> filters) so you can saturate each band on its own — perfect for drums and full mixes, since you can add grit to the mids without frying the bass. <b>Mid Side</b> saturates center vs width separately; <b>Feedback</b> re-feeds the output for resonant, wild tones.",
+    you:"You ran Roar in <b>Multi Band</b> on your drum group (Low/Mid/High) — band-by-band saturation adds density where you dial it.",
+    tryThis:"On the drum bus, Multi Band Roar: add a little saturation to the <i>Mid</i> band only, leaving the Low clean. Grit without losing sub.",
+    jargon:[["Saturation","gentle distortion that adds harmonic warmth and perceived loudness."],["Routing mode","the structural path the signal takes through the device's stages."],["Crossover","the frequency where the sound is split into separate bands."]],
+    links:[["Manual: Roar","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=ETzf6O9-6us"]] },
+
+  { cat:"dist", dev:"Roar — shaper",
+    prompt:"Inside <b>Roar</b>, each gain stage has <b>Shaper Amount</b>, <b>Shaper Bias</b>, a <b>Shaper Type</b> dropdown and a filter. What do Amount and Bias each do?",
+    answer:"The <b>Shaper</b> is the actual distortion curve. <b>Shaper Amount</b> sets <i>how much</i> saturation — how hard the signal is pushed into the non-linear parts of the curve (more = more distortion). <b>Shaper Bias</b> <i>offsets</i> the signal to create <b>asymmetrical</b> distortion; moderate settings sound like a 'broken circuit,' extreme settings can make it drop out to quiet. The <b>Shaper Type</b> dropdown picks the flavor of curve (12 options, from <i>Soft Sine</i>'s smooth warmth to harder, noisier, fractal curves), and a per-stage <b>filter</b> can sit before or after the shaper.",
+    you:"In your Multi Band Roar, each of the Low/Mid/High bands has its own Amount/Bias/type — that's a lot of the 'grit' character on your drums.",
+    tryThis:"Pick Soft Sine, raise Amount for warmth, then slowly add Bias — hear it move from clean to gritty and asymmetrical.",
+    jargon:[["Shaper Amount","how much saturation is applied (intensity)."],["Shaper Bias","an offset that makes the distortion asymmetrical — adds 'broken/character' grit."],["Shaper Type","the shape of the distortion curve — sets the flavor from smooth to harsh."]],
+    links:[["Manual: Roar","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"dist", dev:"Overdrive",
+    prompt:"Your bass is clean but boring, so you try <b>Overdrive</b>. What do <b>Drive</b>, the <b>X-Y band</b>, and <b>Tone</b> each do?",
+    answer:"<b>Overdrive</b> is a distortion effect modeled on classic guitar pedals — it adds grit and <b>harmonics</b>. The <b>X-Y pad</b> is a <b>band-pass filter</b> placed <i>before</i> the distortion: drag horizontally to choose <i>which</i> frequencies get distorted, vertically to set how wide that band is. <b>Drive</b> sets how much distortion (note: even 0% isn't fully clean). <b>Tone</b> is a post-distortion brightness control — higher = more highs. <b>Dynamics</b> controls how much it compresses as you drive harder.",
+    you:"Overdrive sits on your bass, synth pluck and lead — you flagged it as unfamiliar. The X-Y band is the trick: park it on the mids for a focused growl.",
+    tryThis:"On the bass: set the X-Y band over the mids, raise <b>Drive</b> slowly. Hear the 'growl' appear in just that zone. Back <b>Tone</b> off if it gets fizzy.",
+    jargon:[["Band-pass filter","a filter that only lets a band of frequencies through (cutting above and below) — so you distort just that zone."],["Drive","how hard you push the signal into distortion."],["Harmonics","new related frequencies distortion adds on top — what makes a sound richer or grittier."]],
+    links:[["Manual: Overdrive","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"dist", dev:"Vocoder",
+    prompt:"You put a <b>Vocoder</b> on the snare to 'lift the mids.' What is it actually doing — and what are the <b>carrier</b> and <b>modulator</b>?",
+    answer:"A <b>Vocoder</b> stamps the <i>rhythmic, spectral shape</i> of one sound onto another. The <b>modulator</b> is the sound whose movement you want to copy (a voice, drums); the <b>carrier</b> is the sound you actually hear (a synth/pad). It splits both into many frequency <b>bands</b> and uses the modulator's energy in each band to control the carrier's volume in that band — the classic 'talking synth/robot voice.' It <i>felt</i> like a mid-boost on your snare because speech and percussion energy pile up in the mids, so that's where the movement landed.",
+    you:"On your snare, the Vocoder was imposing mid-focused spectral energy — that's why it read as a mid lift.",
+    tryThis:"Load Vocoder on a drum loop (modulator), set the carrier to a sustained pad. The pad now pulses with the drums' shape — instant rhythmic texture.",
+    jargon:[["Carrier","the sound you actually hear — usually a rich synth or pad."],["Modulator","the sound whose rhythm/shape gets stamped onto the carrier (a voice, drums)."],["Band","one slice of the frequency range; vocoders match energy band-by-band between the two sounds."]],
+    links:[["Manual: Vocoder","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"dist", dev:"Saturator",
+    prompt:"You want clean <b>warmth</b> on a synth without obvious distortion. Why <b>Saturator</b>, and what's its clever <b>Color</b> trick?",
+    answer:"<b>Saturator</b> is a <b>waveshaping</b> effect that adds warmth, punch or dirt by gently reshaping the waveform — from subtle analog color to full distortion. <b>Drive</b> pushes the signal harder into the shaping curve (more harmonics); the <b>Curve Type</b> dropdown picks the flavor (Analog Clip is smooth, Digital Clip is hard, Soft Sine is warm, etc.). Its <b>Color</b> trick uses two linked filters — an EQ applied <i>before</i> the shaper and inverted <i>after</i> it — so you can, say, pull the bass out before saturating: only the mids/highs get dirty while the low end stays clean and full.",
+    you:"Guido introduced Saturator in Part 2 — it's the controlled cousin of your Overdrive and Roar, best for clean warmth and glue.",
+    tryThis:"On a synth: Analog Clip, raise Drive a little, then enable Color and cut the lows pre-shaper. Warmth and harmonics up top, sub still tight.",
+    jargon:[["Waveshaping","reshaping the waveform to add harmonics — the mechanism behind saturation/distortion."],["Drive","how hard the signal is pushed into the shaping curve."],["Color (filter trick)","EQ before the shaper, undone after — lets you choose which frequencies get saturated."]],
+    links:[["Manual: Saturator","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  // ===== TIME-BASED =====
+  { cat:"time", dev:"Delay",
+    prompt:"What does the plain <b>Delay</b> device do, and how do <b>sync</b>, <b>feedback</b> and its <b>filter</b> shape the repeats?",
+    answer:"<b>Delay</b> is a clean digital delay with two channels. Each side's time can be set in <b>beat divisions</b> (Sync on) or milliseconds (Sync off). <b>Feedback</b> sets how many repeats you get (more = longer trail). Its built-in <b>filter</b> sits in the feedback path, so each repeat gets a little darker/thinner and the echoes don't clutter the mix. It also has <b>Ping Pong</b> (bounce L↔R), a subtle <b>modulation</b> for analog-ish wobble, and <b>Freeze</b> to hold and loop the current buffer.",
+    you:"Delay is across your bass, synth pluck (L3/R6, dry/wet 17%, fb 30%), pad, lead and vocals — short offsets widen, feedback adds a trail.",
+    tryThis:"On a pluck: sync 1/8-dotted, feedback ~30%, then dial the delay's filter down so repeats sit behind the dry note instead of on top.",
+    jargon:[["Beat division","delay time locked to the tempo (1/8, 1/16…) instead of milliseconds."],["Feedback","how many times the echo repeats."],["Ping Pong","repeats that bounce between left and right."]],
+    links:[["Manual: audio effects","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=Ss5yOq8nQK4"]] },
+
+  { cat:"time", dev:"Echo",
+    prompt:"When do you use <b>Echo</b> instead of Delay, and what's in its <b>Character</b> tab?",
+    answer:"<b>Echo</b> is the characterful cousin of Delay — a modulation delay with two independent lines plus vintage flavor. Same core (Left/Right times, <b>Sync</b> with Notes/Triplet/Dotted/16th, Feedback, Ping Pong/Mid-Side), but it adds a <b>Character</b> tab: <b>Gate</b> (mute quiet repeats), <b>Ducking</b> (pull the echoes down while you're playing so they bloom in the gaps), <b>Noise</b> (vintage hiss) and <b>Wobble</b> (irregular tape-style time drift). Reach for Echo when you want the delay to feel analog, animated and out of the way of the dry signal.",
+    you:"You used Echo on the <b>lead vocals</b> — double sync (L 1/8, R 1/4), dry/wet 30%, decay 50%, stereo — a bouncing rhythmic tail that ducks under the vocal.",
+    tryThis:"On a vocal throw: turn on <b>Ducking</b> so the echo stays quiet while singing and blooms in the pauses. Bypass to hear how much space it added.",
+    jargon:[["Modulation delay","a delay that can subtly move its time for movement / character."],["Ducking","lowering the wet signal while there's input, so echoes fill the gaps."],["Wobble","tape-style irregular time drift for vintage feel."]],
+    links:[["Manual: Echo","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=inMwdangbA0"]] },
+
+  { cat:"time", dev:"Reverb",
+    prompt:"You add <b>Reverb</b> to a dry vocal. What do <b>Predelay</b>, <b>Size</b> and <b>Decay</b> each control?",
+    answer:"<b>Reverb</b> simulates a physical space — the wash of reflections that follows a sound. <b>Predelay</b> is the tiny gap (in ms) before the first echo arrives; a longer predelay keeps the dry vocal clear up front and makes the room feel bigger. <b>Size</b> is the room's volume — large sounds spacious and diffuse, very small sounds tight and metallic. <b>Decay</b> is how long the tail takes to fade (how long the space 'rings'). The <b>early reflections</b> are the first distinct bounces; the <b>diffusion tail</b> is the smooth wash after them, which you can filter so it isn't boomy or fizzy.",
+    you:"Your <b>main pad</b> stacks a low+high-cut reverb, then a high-cut reverb — the filters shape the wash so it doesn't muddy the lows or fizz up top.",
+    tryThis:"On a vocal: Predelay ~20 ms (keeps words clear), Decay ~1.8 s, then high-cut the reverb so the tail isn't harsh. Bypass to hear how dry it was.",
+    jargon:[["Predelay","the pause before the reverb starts. Longer = bigger-feeling room, and it keeps the dry sound clear."],["Decay","how long the reverb tail takes to die away."],["Early reflections vs diffusion tail","the first distinct wall-bounces vs the smooth wash that follows."]],
+    links:[["Manual: Reverb","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  // ===== MODULATION =====
+  { cat:"mod", dev:"Auto Pan-Tremolo",
+    prompt:"Panning mode vs Tremolo mode on <b>Auto Pan-Tremolo</b> — what does each one modulate? (They're now the same device.)",
+    answer:"Same LFO engine, different target. <b>Panning</b> moves the signal's <b>position</b> across the stereo field (left↔right). <b>Tremolo</b> modulates the signal's <b>amplitude</b> (rhythmic volume, staying centered). In Live 12.3 the device was renamed <b>Auto Pan-Tremolo</b> to reflect both modes. You set the LFO's rate (free or synced), depth, and a Modulation Attack that keeps transients centered/preserved.",
+    you:"You always chose Panning (for width/movement) and never Tremolo — the right call for your goal. Tremolo would be a rhythmic volume pulse (helicopter chop, synth stutter).",
+    tryThis:"On a hat loop: Panning mode, sync the LFO to 1/8, keep Amount low for subtle stereo life. Then flip to Tremolo and hear it throb in volume instead.",
+    jargon:[["LFO","the slow wave doing the moving — see the LFO card."],["Panning","modulating stereo position (left↔right)."],["Tremolo","modulating volume up and down (stays centered)."]],
+    links:[["Manual: Auto Pan-Tremolo","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=-g9qyHVSd_k"]] },
+
+  { cat:"mod", dev:"Chorus-Ensemble",
+    prompt:"How does <b>Chorus-Ensemble</b> make a thin mono synth sound lush and wide?",
+    answer:"<b>Chorus-Ensemble</b> layers slightly delayed, slightly <b>detuned</b> copies of your signal and modulates their timing with an <b>LFO</b> — so a single mono sound becomes a shimmering, wider ensemble (one voice becoming a small choir). <b>Rate</b> sets the modulation speed (low = gentle phasing, high = drastic chorus), <b>Amount</b> the depth, and <b>Feedback</b> intensifies the character (invert it for a hollow tone). <b>Warmth</b> adds gentle distortion/filtering. It has Chorus, Ensemble and Vibrato modes.",
+    you:"It's on your <b>lead</b> (and the brake piano uses a chorus-type move) — that's where the lush width comes from.",
+    tryThis:"On a mono lead: moderate Rate, a little Amount, keep feedback low. Bypass to hear it collapse back to narrow and plain.",
+    jargon:[["Detune","copies slightly out of tune with the original — creates thickness/shimmer."],["Modulated delay","tiny, moving delays that make the copies swirl."],["Vibrato mode","pitch wobble only (feedback disabled)."]],
+    links:[["Manual: Chorus-Ensemble","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=25Uiav5UA9c"]] },
+
+  { cat:"mod", dev:"Phaser-Flanger",
+    prompt:"<b>Phaser-Flanger</b> holds three effects. What's the difference between <b>Phaser</b>, <b>Flanger</b> and <b>Doubler</b>?",
+    answer:"One device, three modulation effects driven by LFOs. <b>Phaser</b> sweeps a set of <b>notch filters</b> through the sound — a lush, wandering 'whoosh' — by feeding a phase-shifted copy back in. <b>Flanger</b> mixes in a very short, time-modulated delayed copy with feedback, creating a metallic <b>comb-filter</b> 'jet-plane' sweep. <b>Doubler</b> adds slightly delayed copies to fake <b>double-tracking</b> — thickness without the obvious sweep. A <b>Safe Bass</b> high-pass keeps the low end out of the effect.",
+    you:"You used the <b>Phaser</b> on your lead-ambient part — 'selected notches, dry/wet 70%' — giving it slow, sweeping motion.",
+    tryThis:"On a pad, compare Phaser vs Flanger at a slow rate. Phaser = smooth wandering notches; Flanger = tighter metallic whoosh.",
+    jargon:[["Notch filter","removes a narrow frequency band; sweeping several creates the phaser sound."],["Comb filter","a series of notches (like a comb) that gives the flanger its metallic tone."],["Double-tracking","stacking near-identical takes for thickness — what Doubler imitates."]],
+    links:[["Manual: Phaser-Flanger","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=bZjzOSqWn1s"]] },
+
+  { cat:"mod", dev:"Shifter",
+    prompt:"<b>Shifter</b> has three modes — <b>Pitch</b>, <b>Freq</b>, <b>Ring</b>. What does each do, and which adds that 'grainy/metallic' edge?",
+    answer:"<b>Shifter</b> moves the pitch or frequency of a sound. <b>Pitch</b> shifts musically in <b>semitones</b> (Coarse) and <b>cents</b> (Fine) — for harmonies/octaves. <b>Freq</b> moves every frequency up/down by a fixed number of <b>Hz</b> (not musical): tiny amounts give subtle tremolo/phasing, larger amounts get <b>dissonant and metallic</b>. <b>Ring</b> is ring modulation — it adds and subtracts a set frequency for clangorous, bell-like tones (Drive distortion lives only here). The grainy/metallic edge you liked comes from small <b>Freq</b> (or Ring) shifting.",
+    you:"You used a shifter 'a little bit to make it more grainy' near the clap — that's the Freq/Ring character.",
+    tryThis:"On a synth stab, use Freq mode with a tiny shift (a few Hz). Hear it shimmer and go slightly metallic. Bypass to lose that grain.",
+    jargon:[["Pitch shift (semitones/cents)","musical transposition — up/down in note steps."],["Frequency shift (Hz)","moving all frequencies by a fixed Hz — non-musical, metallic at higher amounts."],["Ring modulation","adding & subtracting a frequency for bell-like, clangorous tones."]],
+    links:[["Manual: Shifter","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=uqY8K8otbp0"]] },
+
+  { cat:"mod", dev:"Shaper",
+    prompt:"<b>Shaper</b> isn't an audio effect — it's a modulator. What does it actually do, and how did it build your bass 'pseudo-sidechain'?",
+    answer:"<b>Shaper</b> generates a custom <b>breakpoint envelope</b> — a shape you draw — and <b>maps</b> it onto any parameter in Live (up to 8 at once). Think 'a repeating shape that turns a knob for you.' You choose <b>Modulation</b> (adds to the current value, which you can still tweak) or <b>Remote</b> (takes it over), set <b>Bipolar/Unipolar</b> polarity and a <b>Modulation Amount</b>. In your bass trick, Shaper draws a ducking curve and maps it to a <b>Utility's Gain</b>, dipping the bass on every kick — a sidechain-style pump, but hand-drawn, so no clicks on four-on-the-floor.",
+    you:"This is the key to your bass 'Shaper + 2 Utilities' — smoother than a fast sidechain compressor, no ticks.",
+    tryThis:"Add a Shaper, map it to a Utility's Gain on the bass, draw a quick dip on each beat. You've built a click-free sidechain pump.",
+    jargon:[["Modulator","a device that moves other parameters instead of making sound."],["Breakpoint envelope","a shape you draw with points, repeated over time."],["Mapping","assigning a modulator to control a specific knob."]],
+    links:[["Manual: Max for Live devices","https://www.ableton.com/en/manual/max-for-live-devices/"]] },
+
+  // ===== INSTRUMENTS & RACKS =====
+  { cat:"inst", dev:"Wavetable",
+    prompt:"Your bass and plucks are built on <b>Wavetable</b>. What's a 'wavetable,' what does the <b>Position</b> knob do, and why add a <b>sub oscillator</b>?",
+    answer:"<b>Wavetable</b> is a synth whose oscillators play through a <b>wavetable</b> — a stack of many different waveforms. The <b>Position</b> control picks (or sweeps through) which waveform you hear, morphing the tone as it moves — that's the signature 'evolving' Wavetable sound. The <b>sub oscillator</b> adds a simple low tone underneath for weight: at Tone 0% it's a pure sine (clean sub), and you can drop it an octave or two. Two filters plus a modulation section (envelopes + LFOs) shape and animate everything.",
+    you:"Your <b>bass, art pluck, lead and risers</b> are all Wavetable — the sub osc is what makes the bass feel physically low.",
+    tryThis:"On the bass patch, mute the sub osc — hear it thin out. Turn it back on, set its Tone to 0% for a clean sine sub, and drop it one octave.",
+    jargon:[["Wavetable","a stack of waveforms the synth can move between — think a flipbook of different tones."],["Position","which 'page' of that flipbook you're hearing; sweeping it morphs the sound over time."],["Sub oscillator","an extra low tone added below the main sound for weight — felt more than heard."]],
+    links:[["Manual: instruments","https://www.ableton.com/en/manual/live-instrument-reference/"],["Video","https://www.youtube.com/watch?v=9wovKSfR66A"]] },
+
+  { cat:"inst", dev:"Sampler",
+    prompt:"You put a <b>Sampler</b> on your vocals but 'didn't touch the ADSR.' What is ADSR, and what would changing it do?",
+    answer:"<b>Sampler</b> (and its simpler sibling <b>Simpler</b>) plays audio samples as a playable instrument. <b>ADSR</b> is its amplitude envelope — four stages shaping each note's volume over time: <b>Attack</b> (how fast it fades in), <b>Decay</b> (fall to the sustain level), <b>Sustain</b> (the held level while the note is down), <b>Release</b> (the tail after you let go). Leaving it untouched means the sample plays naturally; lengthen Attack and notes fade in, shorten Release and tails cut off fast. Sampler also maps many samples across <b>zones</b> (key/velocity ranges) to build realistic multisampled instruments.",
+    you:"Your vocal Sampler plays with its natural envelope — a good next experiment is shaping Release to control how the tails ring.",
+    tryThis:"On the vocal Sampler, shorten Release and hear notes cut off sooner; lengthen Attack for a soft fade-in. Small moves change the feel a lot.",
+    jargon:[["ADSR","Attack, Decay, Sustain, Release — the four stages shaping a note's volume over time."],["Envelope","a control that changes over the life of a note."],["Multisample / zones","many samples mapped across the keyboard/velocity for realism."]],
+    links:[["Manual: instruments","https://www.ableton.com/en/manual/live-instrument-reference/"],["Video","https://www.youtube.com/watch?v=rKGkthvnDSA"]] },
+
+  { cat:"inst", dev:"Drum Rack",
+    prompt:"What is a <b>Drum Rack</b>, and what are <b>choke groups</b> for?",
+    answer:"A <b>Drum Rack</b> is a container that holds a whole kit on a 4×4 grid, where <b>each pad is its own chain</b> — its own sampler/instrument plus its own effects and mixer. That's why you can process one drum without touching the others. <b>Choke groups</b> let pads silence each other: put an open and closed hi-hat in the same group and triggering the closed hat cuts off the open one — just like a real hi-hat pedal. Drum Racks also have built-in <b>sends/returns</b> so you can share one reverb across the kit.",
+    you:"You built kits in Drum Racks — your <b>replacement kick</b>, and the <b>snare</b> (a 4-instrument percussion rack duplicated and soloed to the snare).",
+    tryThis:"Put your open and closed hats in the same choke group. Now the closed hat cuts the open one — tight, realistic hats.",
+    jargon:[["Chain","one pad's full signal path — instrument + effects + mixer."],["Choke group","pads set to silence each other (like a real hi-hat)."],["Sends/returns","shared effect channels inside the rack the pads can feed."]],
+    links:[["Manual: Drum Racks","https://www.ableton.com/en/manual/instrument-drum-and-effect-racks/"],["Video","https://www.youtube.com/watch?v=Y_tUyHebxko"]] },
+
+  { cat:"inst", dev:"PML custom racks",
+    prompt:"Your course has racks like 'Drum Full Parallel' and a '2×2 Tile' editor. What <i>is</i> a <b>Rack</b>, and how do you see inside one?",
+    answer:"A <b>Rack</b> isn't a single device — it's a <b>container</b> that bundles several devices together and exposes a few big <b>Macro</b> knobs, each wired to control multiple parameters at once. PML's instructors built these: <b>'Drum Full Parallel'</b> is a parallel-compression rack (a crushed copy blended under the dry — see the Parallel card), and the <b>'2×2 Tile'</b> custom editor is just a Rack's Macro panel with a custom look. To demystify any rack, click the <b>unfold/chain-list</b> triangle on its title bar to see the real devices inside, and right-click a <b>Macro</b> to see exactly what it controls.",
+    you:"'Drum Full Parallel' is on your clap; the '2×2 Tile' is on your brake piano — both are just Racks bundling devices behind Macros.",
+    tryThis:"Unfold the 'Drum Full Parallel' rack and look inside — you'll find the dry path plus a heavily-compressed parallel path being blended.",
+    jargon:[["Rack","a container bundling multiple devices into one panel."],["Macro","one big knob wired to control several parameters at once."],["Chain","a parallel signal path inside a rack."]],
+    links:[["Manual: Racks","https://www.ableton.com/en/manual/instrument-drum-and-effect-racks/"]] }
+];
+
+let filter = "all";
+let idx = 0;
+let order = [];
+const stage = document.getElementById('stage');
+const counter = document.getElementById('counter');
+const filtersEl = document.getElementById('filters');
+
+function cssVar(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+function buildFilters(){
+  const present = ["all", ...Object.keys(CATS).filter(c=>CARDS.some(k=>k.cat===c))];
+  filtersEl.innerHTML = present.map(c=>{
+    const label = c==="all" ? "All ("+CARDS.length+")" : CATS[c].label;
+    return `<span class="chip${c===filter?' active':''}" data-c="${c}">${label}</span>`;
+  }).join('');
+  filtersEl.querySelectorAll('.chip').forEach(ch=> ch.addEventListener('click', ()=>{ filter=ch.dataset.c; reshuffle(); }));
+}
+
+function pool(){ return CARDS.map((c,i)=>i).filter(i=> filter==="all" || CARDS[i].cat===filter); }
+
+function reshuffle(){
+  order = pool();
+  for(let i=order.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [order[i],order[j]]=[order[j],order[i]]; }
+  idx=0; buildFilters(); draw();
+}
+
+function draw(){
+  if(order.length===0){ stage.innerHTML='<div class="card">No cards here yet.</div>'; counter.textContent=''; return; }
+  const c = CARDS[order[idx]];
+  const cat = CATS[c.cat];
+  const color = cssVar(cat.v), bg = cssVar(cat.bg);
+  const canAI = (typeof window!=='undefined' && window.cowork && typeof window.cowork.askClaude==='function');
+  stage.innerHTML = `
+  <div class="card">
+    <div class="badges">
+      <span class="badge" style="background:${bg}; color:${color}">${cat.label}</span>
+      <span class="badge dev">${c.dev}</span>
+    </div>
+    <div class="prompt">${c.prompt}</div>
+    <div class="think">Answer it in your head first…</div>
+    <div class="reveal-wrap"><button id="revealBtn">Reveal answer</button></div>
+    <div class="answer" id="answer">
+      <div class="sec"><div class="sec-h">The idea</div><p class="idea">${c.answer}</p></div>
+      <div class="sec"><div class="you">${c.you}</div></div>
+      <div class="sec"><div class="sec-h">Try this</div><div class="try">${c.tryThis}</div></div>
+      <div class="sec"><div class="sec-h">Jargon, decoded</div><div class="jargon">${c.jargon.map(j=>`<p><b>${j[0]}</b> — ${j[1]}</p>`).join('')}</div></div>
+      ${canAI ? `<button class="ai-btn" id="aiBtn">↳ Explain it even simpler</button><div class="ai" id="aiText"></div>` : ``}
+      <div class="links">${c.links.map(x=>`<a href="${x[1]}" target="_blank" rel="noopener">${x[0]} ↗</a>`).join('')}</div>
+    </div>
+  </div>`;
+  counter.textContent = `Card ${idx+1} of ${order.length}${filter==="all"?"":" · "+CATS[filter].label}`;
+
+  document.getElementById('revealBtn').addEventListener('click', function(){
+    document.getElementById('answer').classList.add('show'); this.parentElement.style.display='none';
+  });
+  const aiBtn = document.getElementById('aiBtn');
+  if(aiBtn){
+    aiBtn.addEventListener('click', async ()=>{
+      const box=document.getElementById('aiText'); box.classList.add('show'); aiBtn.style.display='none'; box.textContent='Thinking…';
+      try{
+        const c2 = CARDS[order[idx]];
+        const plain = (c2.answer).replace(/<[^>]+>/g,'');
+        const res = await window.cowork.askClaude("Re-explain this Ableton concept in 2 short sentences with a plain real-world analogy. Use ONLY the provided text; invent no new device details.", [c2.dev+": "+plain]);
+        box.textContent = (typeof res==='string') ? res : (res && (res.text||res.content)) || "Couldn't fetch a simpler take right now.";
+      }catch(e){ box.textContent="Couldn't fetch a simpler take right now."; }
+    });
+  }
+}
+
+function next(){ if(order.length){ idx=(idx+1)%order.length; draw(); window.scrollTo({top:0,behavior:'smooth'}); } }
+document.getElementById('next').addEventListener('click', next);
+reshuffle();
+</script>
+</body>
+</html>
