@@ -57,3 +57,24 @@ _Source: Ableton Live 12 manual. Synced 2026-07-23. See `principles.md` for Dry/
 **In your track:** several reverbs — e.g., the **main pad** used a low+high-cut reverb, then a high-cut reverb; and reverbs sit on lead, vocals, FX, ambience. *Listen for:* the **filters on the reverb** are why you stack two — the first carves the wash (no boomy lows, no fizzy highs), the second sets the final tail tone. Bypass and the sound snaps forward, dry and roomless.
 
 **Sources:** [manual](https://www.ableton.com/en/manual/live-audio-effect-reference/) · [Hybrid Reverb video](https://www.youtube.com/watch?v=yLBIOiM97Vs)
+
+---
+
+## Spectral Time
+**What it is:** A Live 12 Suite **spectral** device that combines **time-freezing** and **spectral delay**. It works in the frequency domain — analyzing the sound into its frequency components and manipulating them over time (resynthesis) — so it does things a normal delay/reverb can't. Two sections, usable alone or serially (Freezer → Delay). A **spectrogram** shows dry (yellow) vs wet (blue).
+
+**Freezer:** captures a snapshot of the spectrum and **sustains it infinitely** (any note becomes an endless pad).
+- **Manual mode:** click **Freeze**; set **Fade In / Fade Out** times (ms) so it eases in/out.
+- **Retrigger mode:** auto-freeze on each **transient** (Onsets, with a **Sensitivity** knob) or at regular **Sync** intervals.
+
+**Delay (spectral delay):** delayed copies of the spectral info.
+- **Time** (Time ms / Notes / 16th / 16th-Triplet / 16th-Dotted via the **Mode** chooser).
+- **Feedback** — builds echo tails.
+- **Shift** — shifts each successive delay's frequencies up/down (progressively metallic/detuned repeats).
+- **Tilt** — skews delay times across frequencies, so the echo **smears** across the spectrum.
+- **Spray / Stereo** — spread and width of Tilt/Spray.
+- **Dry/Wet** — blends the delayed signal (affects the Delay section only).
+
+**In your track:** Guido introduced this. *Use it for:* freezing a lead/pad note into an infinite ambient bed (Freezer), or metallic, smeared, spacey echo tails (spectral Delay). *Listen for:* the Freezer holds a chord forever with no looping artifacts; Shift makes each echo drift more detuned/metallic. Bypass and the sustain/shimmer collapses back to the dry note.
+
+**Sources:** [manual (Spectral Time)](https://www.ableton.com/en/manual/live-audio-effect-reference/) · [Spectral Time video](https://www.youtube.com/watch?v=EBuB6G9ik1A)

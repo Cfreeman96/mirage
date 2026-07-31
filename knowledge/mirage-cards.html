@@ -73,7 +73,7 @@
 <header>
   <div class="kicker">Mirage · Ableton Cards</div>
   <h1>Answer it in your head. Then reveal.</h1>
-  <div class="sub">43 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
+  <div class="sub">53 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
 </header>
 
 <div class="filters" id="filters"></div>
@@ -108,7 +108,7 @@ const CARDS = [
   // ===== PRINCIPLES =====
   { cat:"prin", dev:"Dry / Wet",
     prompt:"What does the <b>Dry/Wet</b> knob actually control — and where should it sit at 100%?",
-    answer:"It's the balance of untouched (<b>dry</b>) vs processed (<b>wet</b>) signal. 0% = effect bypassed, 100% = only the processed sound. On a normal insert you blend to taste; on a <b>return track</b> set it to <b>100%</b>, because the dry already exists on the source track — you're only sending the wet there.",
+    answer:"It's the balance of untouched (<b>dry</b>) vs processed (<b>wet</b>) signal. 0% = effect bypassed, 100% = only the processed sound. On a normal insert you blend to taste; on a <b>return track</b> set it to <b>100%</b>, because the dry already exists on the source track — you're only sending the wet there. A partial setting is really a <b>parallel blend</b> — dry and processed side by side — the same idea as running an effect on its own parallel chain, just with one knob.",
     you:"You set Dry/Wet all over — Delay 17%, Echo 30%, Phaser 70%. Each is a taste balance on an insert.",
     tryThis:"On the synth pluck's Delay, sweep Dry/Wet 0→100% and find where the repeats start crowding the dry note. That sweet spot is usually 15–30%.",
     jargon:[["Dry","the original, untouched signal."],["Wet","the processed signal coming out of the effect."],["Return track","a shared 'effects-only' channel you send several tracks to — like a room full of people sharing one echo chamber down the hall."]],
@@ -242,6 +242,38 @@ const CARDS = [
     jargon:[["Gain staging","managing levels through the chain so nothing clips and every device gets a healthy input."],["Clipping","when a signal exceeds the maximum and distorts (goes into the red)."],["Subtractive EQ","fixing tone by cutting frequencies rather than boosting."]],
     links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
 
+  { cat:"prin", dev:"Harmonics",
+    prompt:"Your instructor keeps saying Overdrive 'adds <b>harmonics</b>' to a lead. What are harmonics, in plain terms?",
+    answer:"Every musical note secretly contains a stack of quieter tones <i>above</i> its main pitch — those are its <b>harmonics</b> (or overtones). That hidden stack is what makes a violin and a synth sound different even on the same note. <b>Distortion/saturation</b> devices (Overdrive, Saturator, Roar) work by <i>manufacturing more of these upper tones</i> that weren't there before. A clean sine wave is like a single voice; adding harmonics turns it into a choir singing the same note with extra edge and sparkle up top. More harmonics = brighter, richer, grittier, more 'alive' — and, crucially, more able to <b>cut through a busy mix</b>.",
+    you:"This is exactly why Overdrive on your lead makes it sit on top of the track: it adds mid-high harmonics so the lead feels present and exciting without just being louder.",
+    tryThis:"On your lead, add Overdrive with the X-Y band on the mids and slowly raise Drive. Toggle it on/off — you're listening for 'cuts through / more exciting,' not 'louder.'",
+    jargon:[["Harmonics / overtones","the quieter tones stacked above a note's main pitch that give it its character."],["Fundamental","the main pitch you actually perceive; the harmonics sit above it."],["Saturation / distortion","the act of adding harmonics by reshaping the waveform — from gentle warmth to full grit."]],
+    links:[["Manual: Overdrive","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Manual: Saturator","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Chain vs track volume",
+    prompt:"Your lead's track fader is at −15.6 dB, and you turn the <b>delay chain</b> inside its rack down to −16 dB. Is that −16 <i>below</i> the track's −15.6 — or something else?",
+    answer:"Something else — they're <b>two separate gain stages</b> at different points in the signal path. <b>Chain volume</b> lives <i>inside the rack</i> and is applied early, relative to the <i>other chains</i>. The <b>track fader</b> is applied last, to the whole rack's combined output. So −16 on the delay chain means the delay is 16 dB quieter than your dry-lead chain — a <b>balance</b> between the two pathways; the −15.6 fader then lowers the entire lead (dry <i>and</i> delay together) by the same amount, without changing that balance. The delay passes through both stages, but the number that matters is the relative one.",
+    you:"This is your lead rack: chain volume sets how the delay sits under the dry lead; the −15.6 fader sets how loud the whole lead sits against your drums.",
+    tryThis:"Move the track fader — dry and delay slide together, balance intact. Move the delay chain's volume — only the echo moves. Two knobs, two jobs.",
+    jargon:[["Gain stage","any point in the signal path where level is set; a signal passes through several in a row."],["Chain volume","a level control inside a rack, relative to the other chains — applied before the track fader."],["Track fader","the channel's main volume, applied last to everything on the track."]],
+    links:[["Manual: Racks","https://www.ableton.com/en/manual/instrument-drum-and-effect-racks/"]] },
+
+  { cat:"prin", dev:"Dotted eighth note",
+    prompt:"What's a <b>dotted eighth note</b>, and how is it different from a regular eighth note?",
+    answer:"A <b>dot</b> adds half of a note's value to it, so a <b>dotted eighth</b> lasts <b>1.5× a regular eighth</b>. In sixteenths: a regular eighth = <b>2 sixteenths</b>, a dotted eighth = <b>3 sixteenths</b>. In beats (4/4, where a quarter = 1 beat): a regular eighth = ½ beat, a dotted eighth = ¾ beat. The dot rule works on any note — a dotted quarter = 1.5 beats, and so on.",
+    you:"This is the secret behind the <b>dotted-eighth delay</b> (1/8D) you'll reach for constantly: because it's 3 sixteenths, the echoes land <i>between</i> your straight notes — that syncopated, rolling, wide bounce. A straight-eighth delay lands on the same grid as your notes, reinforcing it instead of dancing around it.",
+    tryThis:"On a pluck, set a delay to 1/8 vs 1/8-dotted at the same tempo. Straight sits on the grid; dotted gallops between the beats — the classic house/EDM delay feel.",
+    jargon:[["Dot","adds half the note's own value — a dotted eighth = an eighth + a sixteenth."],["Sixteenth note","a quarter of a beat; a regular eighth is 2 of them, a dotted eighth is 3."],["Syncopation","landing notes off the main beats — why dotted delays feel groovy and 'off the grid.'"]],
+    links:[["Manual: audio effects","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"prin", dev:"Bass Mono",
+    prompt:"Why do producers force the low end to <b>mono</b> with <b>Bass Mono</b> — when they work so hard to make everything else wide?",
+    answer:"Two facts about bass drive it. First, <b>you can't locate low frequencies</b> — a sub could be anywhere in the room and you'd never point to it — so making bass <i>stereo/wide</i> gains you nothing perceptually. Second, stereo bass is <b>risky</b>: if the left and right lows differ even slightly (out of phase), those long waveforms partially <b>cancel</b> when combined — in the room, on mono systems, on vinyl, in clubs — leaving a thin, weak, wobbly low end. <b>Bass Mono</b> takes everything <b>below a set frequency</b> (e.g. 120 Hz) and forces L and R to be identical (dead center), while leaving the highs wide. Result: the lows are phase-safe, all their energy stacks in the center for a solid, powerful hit, it translates the same on every system — and you keep your width up top.",
+    you:"This is why Utility's Bass Mono (~120 Hz) sits on your bass and inside Bootsandcats: cheap insurance that the low end is centered and strong everywhere.",
+    tryThis:"On a wide bass or pad, toggle Utility's full <b>Mono</b> button on/off — if the low end drops in level, you had phase cancellation hiding there. Now use <b>Bass Mono</b> instead: the lows firm up while the highs stay wide. That disappearing level drop is the point.",
+    jargon:[["Bass Mono","folds everything below a set frequency to mono (centered), leaving the highs stereo."],["Phase cancellation","when left and right lows differ and partly cancel when combined — thin, weak bass."],["Mono-compatibility","still sounding right when the stereo is summed to mono (clubs, phones and vinyl often do this)."]],
+    links:[["Manual: Utility","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
   // ===== DYNAMICS =====
   { cat:"dyn", dev:"Compressor",
     prompt:"When do you reach for the plain <b>Compressor</b> instead of the Glue Compressor?",
@@ -257,6 +289,14 @@ const CARDS = [
     you:"You already did this right — Glue sits on your drum group (and another on the bass with a sidechain filter).",
     tryThis:"Drum-group Glue: Ratio 2:1, Attack 10 ms, Release Auto, threshold for ~2–4 dB reduction. Bypass on/off — listen for 'tighter,' not 'quieter.'",
     jargon:[["Bus / group","a channel several tracks feed into so you can process them together — a 'drum bus' is all drums on one channel."],["Glue","making separate sounds feel like one cohesive unit."],["Soft Clip","gentle clipping that tames loud peaks and adds a little color."]],
+    links:[["Manual: Glue Compressor","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=7xEZa1IlW5Q"]] },
+
+  { cat:"dyn", dev:"Glue Compressor — Attack & Release",
+    prompt:"On the <b>Glue Compressor</b>, why do Attack and Release feel so different — and when should you use <b>Auto</b> release?",
+    answer:"Watch the units: on the Glue, <b>Attack is in milliseconds</b> and <b>Release is in seconds</b> (easy to mix up). <b>Attack</b> (as fast as 0.01 ms) sets how quickly it clamps once a signal crosses the threshold — a fast attack tames the initial <b>peak</b> of each hit. <b>Release</b> (stepped 0.1 → 2 s, then <b>A</b>) sets how fast it stops compressing after the signal drops back down — fast = punchy and recovers between hits, slow = smoother and holds longer. <b>Auto (A)</b> lets the Glue vary the release to match the material, usually the smoothest, safest default on a bus.",
+    you:"Your delay-chain Glue runs Ratio 4:1, Attack 0.01 ms, fast release — fast attack tames each echo's peak, fast release lets the tail breathe. Heads-up: fast attack + fast release on your ~515 Hz low-passed delay can distort or pump; if it sounds gritty, slow the attack a touch, lengthen release, or switch to Auto.",
+    tryThis:"Solo the delay chain and watch the gain-reduction needle: Attack 0.01 slams it down on each repeat's front; fast release snaps it back between repeats. A/B against Release = Auto to hear which rides smoother.",
+    jargon:[["Attack (ms)","how fast the compressor clamps after crossing the threshold — it grabs the peak."],["Release (s)","how fast it stops compressing after the signal drops — fast = punchy, slow = smooth."],["Auto release","the compressor sets and varies the release time itself, based on the audio."]],
     links:[["Manual: Glue Compressor","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=7xEZa1IlW5Q"]] },
 
   { cat:"dyn", dev:"Multiband Dynamics (OTT)",
@@ -374,6 +414,14 @@ const CARDS = [
     jargon:[["Predelay","the pause before the reverb starts. Longer = bigger-feeling room, and it keeps the dry sound clear."],["Decay","how long the reverb tail takes to die away."],["Early reflections vs diffusion tail","the first distinct wall-bounces vs the smooth wash that follows."]],
     links:[["Manual: Reverb","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
 
+  { cat:"time", dev:"Spectral Time",
+    prompt:"<b>Spectral Time</b> can freeze a sound forever or make shimmering metallic echoes. How does it pull that off?",
+    answer:"<b>Spectral Time</b> works in the <b>spectral (frequency) domain</b> — it splits your sound into its individual frequency components (like a prism splitting light) and manipulates them over time. It has two sections, usable alone or chained (Freezer → Delay). The <b>Freezer</b> captures a snapshot of the sound's spectrum and <b>sustains it infinitely</b> — turning any note or chord into an endless pad — triggered manually (with Fade In/Out) or automatically on <b>transients</b> or synced intervals. The <b>Delay</b> is a <b>spectral delay</b>: <b>Shift</b> detunes each successive echo's frequencies (metallic repeats) and <b>Tilt</b> delays different frequencies by different amounts so the echo <b>smears</b> across the spectrum. <b>Feedback</b> builds the tails; <b>Dry/Wet</b> blends the delayed signal. A spectrogram shows dry (yellow) vs wet (blue) over time.",
+    you:"Guido's using this on your track — reach for the Freezer to turn a lead or pad note into an infinite ambient bed, or the spectral Delay for metallic, spacey echo tails a normal Delay can't make.",
+    tryThis:"On a pad, enable just the Freezer in Manual mode, set a ~200 ms Fade In, and hit Freeze on a lush chord — it sustains forever. Then switch on the Delay and add a little Shift for a metallic shimmer.",
+    jargon:[["Spectral / frequency domain","working with a sound split into its frequency components over time, instead of the raw waveform."],["Freeze","capturing a spectral snapshot and holding it indefinitely — an infinite sustain."],["Shift & Tilt","spectral-delay controls: Shift detunes each echo's frequencies; Tilt delays different frequencies by different amounts, smearing the tail."]],
+    links:[["Manual: Spectral Time","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=EBuB6G9ik1A"]] },
+
   // ===== MODULATION =====
   { cat:"mod", dev:"Auto Pan-Tremolo",
     prompt:"Panning mode vs Tremolo mode on <b>Auto Pan-Tremolo</b> — what does each one modulate? (They're now the same device.)",
@@ -389,6 +437,14 @@ const CARDS = [
     you:"It's on your <b>lead</b> (and the brake piano uses a chorus-type move) — that's where the lush width comes from.",
     tryThis:"On a mono lead: moderate Rate, a little Amount, keep feedback low. Bypass to hear it collapse back to narrow and plain.",
     jargon:[["Detune","copies slightly out of tune with the original — creates thickness/shimmer."],["Modulated delay","tiny, moving delays that make the copies swirl."],["Vibrato mode","pitch wobble only (feedback disabled)."]],
+    links:[["Manual: Chorus-Ensemble","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=25Uiav5UA9c"]] },
+
+  { cat:"mod", dev:"Chorus-Ensemble — modes",
+    prompt:"On <b>Chorus-Ensemble</b>, what's the difference between <b>Chorus</b>, <b>Ensemble</b> and <b>Vibrato</b> modes?",
+    answer:"All three run on the same engine — delayed, pitch-wavering copies of your sound — and differ in how many copies there are and whether they're blended with the dry at all. <b>Chorus</b> adds <b>two</b> time-modulated delayed copies on top of the original for classic width and shimmer. <b>Ensemble</b> uses <b>three</b> copies with evenly spread modulation phases for a richer, smoother, more intense swirl (modeled on a lush '70s pedal). <b>Vibrato</b> adds <i>no</i> copy at all — it just <b>modulates the sound's own pitch</b> more deeply, so you get a wavering warble instead of width (feedback is disabled here).",
+    you:"It's on your lead — Chorus and Ensemble are where the lush width comes from. If you ever want a seasick pitch wobble instead of width, that's Vibrato.",
+    tryThis:"Keep Rate and Amount fixed and flip modes: Chorus widens, Ensemble widens more and lusher, Vibrato instead makes the pitch wobble in place.",
+    jargon:[["Chorus (2 copies)","original + two detuned delayed copies → width and shimmer."],["Ensemble (3 copies)","three copies with spread modulation phases → richer, smoother swirl."],["Vibrato (no copy)","pitch modulation of the sound itself → warble, not width."]],
     links:[["Manual: Chorus-Ensemble","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=25Uiav5UA9c"]] },
 
   { cat:"mod", dev:"Phaser-Flanger",
@@ -414,6 +470,22 @@ const CARDS = [
     tryThis:"Add a Shaper, map it to a Utility's Gain on the bass, draw a quick dip on each beat. You've built a click-free sidechain pump.",
     jargon:[["Modulator","a device that moves other parameters instead of making sound."],["Breakpoint envelope","a shape you draw with points, repeated over time."],["Mapping","assigning a modulator to control a specific knob."]],
     links:[["Manual: Max for Live devices","https://www.ableton.com/en/manual/max-for-live-devices/"]] },
+
+  { cat:"mod", dev:"Bootsandcats (Shaper sidechain)",
+    prompt:"Guido's <b>Bootsandcats</b> rack pumps any track in time with the kick — without real sidechain. How does it actually work?",
+    answer:"<b>Bootsandcats</b> is an Audio Effect Rack that packages the <b>Shaper + 2× Utility</b> trick into drag-and-drop form (the name is the beatbox for a four-on-the-floor kick). Inside, a <b>Shaper</b> draws a repeating 'duck' curve — dip down on the beat, ramp back up — and <b>maps it onto a Utility's Gain</b>. With the Shaper's <b>Rate set to 1/4</b> (tempo-synced), the duck fires four times per bar, so the track's volume pumps in perfect time with a four-on-the-floor kick — no kick routing, no compressor. The Macros expose the controls: <b>Boots</b> = how deep the pump is, <b>Rate</b> = how fast, <b>Flip it</b> = invert the curve.",
+    you:"This is the packaged version of the Shaper + 2-Utility pseudo-sidechain already on your bass. Drop it on the tracks you want to duck — bass, pads, chords — <b>not</b> the kick.",
+    tryThis:"Put Bootsandcats on your bass, set Rate to 1/4, and raise Boots until it breathes with the kick. Mute the kick and the bass still pumps on every beat — because it's synced, not triggered.",
+    jargon:[["Four-on-the-floor","a kick on every beat (1,2,3,4) — the backbone of house; 'boots and cats' is how you beatbox it."],["Shaper","a Max for Live modulator that draws a repeating shape and maps it to a parameter (here, Utility Gain)."],["Synced vs triggered","the pump follows the tempo grid (always in time) instead of reacting to an audio kick."]],
+    links:[["Manual: Utility","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Manual: Shaper (M4L)","https://www.ableton.com/en/manual/max-for-live-devices/"]] },
+
+  { cat:"mod", dev:"Bootsandcats — why two Utilities",
+    prompt:"The <b>Bootsandcats</b> rack has <b>two Utilities</b>, not one. What's the advantage of splitting it in two?",
+    answer:"It's <b>division of labor and clean gain staging</b>. <b>Utility #1</b> is the <b>duck stage</b> — the Shaper modulates only <i>its</i> Gain, so it does exactly one job: the rhythmic volume pump. <b>Utility #2</b> is a <b>stable stage</b> at fixed gain that handles <b>Width</b> (stereo) and <b>Bass Mono</b>, and sets the final output. Keeping them separate means the pumping never disturbs your stereo image or mono-bass, and your output level stays independent of <i>how deep</i> you pump. If one Utility did everything, changing the pump depth would also shift your final level and tangle with your width/bass settings — much harder to control. Bonus: bass-mono at both stages keeps the low end solid all the way through the pump.",
+    you:"On your rack that's exactly why Utility #1's Gain reads a moving −11.3 dB (being ducked) while Utility #2 sits at 0 dB with Width 100% — one pumps, one stays put.",
+    tryThis:"Open the rack and watch Utility #1's Gain needle move with the beat (that's the Shaper), while Utility #2's Gain stays still. Raise Boots — only #1 reacts; your width and output level stay stable.",
+    jargon:[["Gain staging","managing level at each step so one control's job doesn't mess up another's."],["Duck stage","the Utility whose Gain the Shaper modulates to create the pump."],["Bass Mono","folding the lows to mono so the low end stays solid even while the level pumps."]],
+    links:[["Manual: Utility","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
 
   // ===== INSTRUMENTS & RACKS =====
   { cat:"inst", dev:"Wavetable",
@@ -446,7 +518,15 @@ const CARDS = [
     you:"'Drum Full Parallel' is on your clap; the '2×2 Tile' is on your brake piano — both are just Racks bundling devices behind Macros.",
     tryThis:"Unfold the 'Drum Full Parallel' rack and look inside — you'll find the dry path plus a heavily-compressed parallel path being blended.",
     jargon:[["Rack","a container bundling multiple devices into one panel."],["Macro","one big knob wired to control several parameters at once."],["Chain","a parallel signal path inside a rack."]],
-    links:[["Manual: Racks","https://www.ableton.com/en/manual/instrument-drum-and-effect-racks/"]] }
+    links:[["Manual: Racks","https://www.ableton.com/en/manual/instrument-drum-and-effect-racks/"]] },
+
+  { cat:"inst", dev:"Audio Effect Rack",
+    prompt:"How do you make a <b>delay</b> run <i>parallel</i> to your dry lead — two independent pathways you can balance separately — with an <b>Audio Effect Rack</b>?",
+    answer:"An <b>Audio Effect Rack</b> is a container that can hold multiple <b>chains</b> running in <b>parallel</b>: every chain gets the <i>same</i> input at once, processes it through its own devices, and the outputs are mixed back together. So you make one chain your <b>dry lead</b> (its sound design) and a second chain your <b>delay</b> — both fed the same source, blended at the output, each with its own volume slider. That's the 'two pathways, fine-tune both without sacrificing one' setup: the delayed layer is a fully separate signal you can filter and ping-pong independently, instead of relying on a single delay's dry/wet.",
+    you:"This is the rack you're building on your lead — Chain 1 = the lead's sound design, Chain 2 = a ping-pong delay low-passed to ~515 Hz so only the low end echoes, sitting dark and distinct under the bright dry lead.",
+    tryThis:"Select your lead's devices → Group (Cmd/Ctrl+G) to make the Rack (Chain 1). Open the Chain List, drop a Delay into the empty area below to start Chain 2, set it to Ping Pong + low-pass ~515 Hz, then balance the two chain volume sliders. Solo each chain to dial it.",
+    jargon:[["Chain","one parallel signal path inside a rack — with its own devices, volume and pan."],["Parallel vs serial","parallel chains each get the same input and are summed at the output; serial = one device after another."],["Chain List","the panel on the rack's left edge where chains branch; the drop area below adds a new chain."]],
+    links:[["Manual: Racks","https://www.ableton.com/en/manual/instrument-drum-and-effect-racks/"],["Video: Parallel effect chains","https://www.youtube.com/watch?v=PGxvwjX0dU0"]] }
 ];
 
 let filter = "all";

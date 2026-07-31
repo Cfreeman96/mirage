@@ -74,3 +74,11 @@ Same LFO engine; the difference is the *target*: position vs. loudness.
 **In your track:** this is the key to your **"Shaper + 2× Utility" pseudo-sidechain** on the bass. The Shaper draws a ducking curve and modulates a **Utility's Gain** in time with the beat — so the bass dips on each kick *without* the clicks/ticks a fast real sidechain compressor can cause on four-on-the-floor. *Listen for:* a smooth, tick-free volume "breathing" locked to the kick; disable the Shaper and the pumping motion stops.
 
 **Sources:** [manual (Max for Live devices)](https://www.ableton.com/en/manual/max-for-live-devices/)
+
+### "Bootsandcats" — Guido's Shaper sidechain rack
+A custom **Audio Effect Rack** that packages the Shaper + 2× Utility trick for four-on-the-floor house (the name is the beatbox for a steady 4/4 kick). How it works:
+- A **Shaper** draws a repeating "duck" curve (dip on the beat, ramp back up) and **maps it onto Utility #1's Gain**. With **Rate = 1/4** (tempo-synced), it ducks four times per bar — pumping in time with the kick, with no kick routing and no compressor (so no ticks).
+- **Macros** expose the controls: **Boots** = pump depth, **Rate** = speed (note division), **Flip it** = invert the curve.
+- **Usage:** drop it on tracks you want to duck (bass, pads, chords) — **not** the kick.
+
+**Why two Utilities:** division of labor + gain staging. **Utility #1** is the *duck stage* — the Shaper modulates only its Gain (one clean job: the pump). **Utility #2** is a *stable stage* at fixed gain handling **Width** and **Bass Mono** and the final output. Splitting them means the pumping never disturbs the stereo image or mono-bass, and the output level stays independent of pump depth. One Utility doing everything would couple those together and be far harder to control. Bass-mono at both stages keeps the lows solid through the pump. (On Charlie's rack: Utility #1 shows a moving −11.3 dB Gain — being ducked — while Utility #2 sits at 0 dB, Width 100%.)

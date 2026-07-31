@@ -22,6 +22,11 @@ A distilled, personalized cache of the Ableton Live 12 manual, covering every de
 - **2026-07-23** — Initial build. All notes grounded in Live 12 manual / release notes. Note: Live 12.3 renamed *Auto Pan* → *Auto Pan-Tremolo*.
 - **2026-07-23** — Added **Limiter** (→ 01-dynamics) and **Saturator** (→ 03-distortion-character) after Guido's walkthrough. Now 24 devices + 17 principles.
 - **2026-07-23** — Added `principles.md` **Device categories** explainer, and built **`mirage-cards.html`** — the complete reveal-first card app (43 cards: 1 Foundations + 17 principles + 25 device cards, Roar split into routing + shaper). Self-contained, mobile-first, deploy-ready (e.g. Vercel).
+- **2026-07-23** — Added **Harmonics** (principle) and **Audio Effect Rack / parallel chains** cards → app now **45 cards**. Added matching notes to `principles.md` (Harmonics) and `06-instruments-racks.md` (Audio Effect Rack — parallel chains).
+- **2026-07-23** — Added 4 cards — **Chain vs track volume**, **Dotted eighth note**, **Glue Compressor — Attack & Release**, **Chorus-Ensemble — modes** — and enriched the **Dry/Wet** card (partial = parallel blend). App now **49 cards**.
+- **2026-07-23** — Added **Spectral Time** (freeze + spectral delay) → card app now **50 cards**; matching note added to `04-time-based.md`.
+- **2026-07-23** — Added 2 cards for Guido's **Bootsandcats** rack (the Shaper sidechain, + a "why two Utilities" card) → app now **52 cards**; matching note added to `05-modulation.md` under Shaper.
+- **2026-07-23** — Added a dedicated **Bass Mono** card (why mono the lows) → app now **53 cards**.
 
 ## Personalization source
 Charlie's signal chains and course position live in `../../../Music Learning/Producer-Profile.md` (Producer Profile). Update that when his project changes, and these "In your track" notes with it.

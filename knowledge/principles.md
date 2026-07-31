@@ -76,3 +76,6 @@ Blend a heavily-processed copy *under* the dry original instead of replacing it.
 
 ## Gain staging
 Keeping levels sensible at each step so nothing clips and every processor "sees" a healthy signal. EQ curves that sit entirely below 0 dB (cuts, not boosts) are good gain-staging hygiene — carve first, add makeup only where needed.
+
+## Harmonics (overtones)
+Every musical note secretly contains a stack of quieter tones *above* its main pitch (the **fundamental**) — these **harmonics/overtones** are what make a violin and a synth sound different on the same note. **Distortion and saturation** devices (Overdrive, Saturator, Roar, Drum Buss) work by *manufacturing more of these upper tones* that weren't there before. A clean sine wave is a single voice; adding harmonics turns it into a choir singing the same note with extra edge and sparkle up top — brighter, richer, grittier, and more able to **cut through a busy mix**. This is the "why" behind using Overdrive on a lead: it adds mid-high harmonics so the lead feels present and exciting without simply being louder.

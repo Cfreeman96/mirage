@@ -50,6 +50,24 @@ _Source: Ableton Live 12 manual. Synced 2026-07-23. See `principles.md` for Cuto
 
 ---
 
+## Audio Effect Rack — parallel chains
+**What it is:** A container that wraps one or more device **chains** and behaves like a single device in your track. Its power for effects is **parallel chains**: every chain receives the **same input at once**, processes it serially through its own devices, and all chain outputs are **mixed together** to form the Rack's output. Each chain has its own **volume/pan**, plus Solo and Chain-Activator buttons, so you can balance the pathways independently.
+
+**Signal flow:** normally devices are serial (left→right, each feeds the next). A Rack lets you branch into parallel paths instead — great for blending a processed version alongside the dry, without a single dry/wet compromise.
+
+**How to build a parallel path (e.g. dry lead + separate delay):**
+1. Select the lead's devices → **Group** (Cmd/Ctrl+G) → they become **Chain 1** in the Rack.
+2. Click the **Chain List** (left view button) to reveal the chains and the **drop area** below.
+3. Drag a **Delay** into the drop area to start **Chain 2** (gets the same raw input, fully separate signal).
+4. Shape Chain 2 independently — e.g. **Ping Pong** + low-pass ~515 Hz so only the low end echoes, dark and distinct from the dry lead.
+5. Balance with each chain's **volume slider**; **Solo** a chain to hear it alone. Optionally map a chain's volume to a **Macro**.
+
+**In your track:** this is the rack Charlie built on the **lead** — Chain 1 = the lead's sound design (as-is), Chain 2 = a ping-pong delay filtered to ~515 Hz. Two pathways, tuned separately, mixed at the output. *Listen for:* the delayed low-end shadow trailing under the bright dry lead; pull Chain 2's volume down and the shadow recedes without changing the lead itself.
+
+**Sources:** [manual (Instrument/Drum/Effect Racks)](https://www.ableton.com/en/manual/instrument-drum-and-effect-racks/) · [Parallel effect chains](https://www.youtube.com/watch?v=PGxvwjX0dU0)
+
+---
+
 ## PML custom racks (from the course files)
 These aren't stock Ableton devices — they're **Racks** the PML instructors built (a Rack bundles devices + Macro knobs into one panel). Two you flagged:
 
