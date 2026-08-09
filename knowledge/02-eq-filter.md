@@ -61,3 +61,21 @@ _Source: Ableton Live 12 manual. Synced 2026-07-23. See `principles.md` for Cuto
 **In your track:** you used Utility a lot, often with **Gain automation** (a clean way to write fades/level moves), and as part of the **Shaper + 2× Utility** pseudo-sidechain on the bass. *Listen for:* automating Utility Gain creates smooth swells/dips; using Width/Bass-Mono on a wide synth tightens the low end so kick and bass stop fighting.
 
 **Sources:** [manual](https://www.ableton.com/en/manual/live-audio-effect-reference/)
+
+---
+
+## EQ Three
+**What it is:** A **DJ-mixer-style** three-band EQ (Low / Mid / High) built for broad moves and full-band **kills** — the opposite of EQ Eight's surgical precision.
+
+**Key controls:**
+- **Low / Mid / High gain** — each from **−∞ to +6 dB**. The huge cut range (to silence) with a tiny boost range makes it a *remove/kill* tool, not a boost tool.
+- **On/Off (kill) buttons** — per band; instantly cut a band. Great mapped to computer keys or MIDI for live transitions.
+- **3 LEDs** — show signal present in each band (threshold −24 dB), even when a band is off.
+- **FreqLo / FreqHi crossovers** — set the band boundaries (e.g. Lo 500 Hz, Hi 2 kHz → low 0–500, mid 500–2k, high 2k+).
+- **24 dB / 48 dB switch** — slope steepness of the band separation; 48 dB = tighter, cleaner kills with less bleed into neighboring bands.
+
+**Common uses:** DJ-style transitions and drops (kill the bass in a breakdown, slam it back), quick broad tonal sculpting, live performance (map kills to keys), fast removal of a whole frequency range.
+
+**EQ Three vs EQ Eight:** EQ Eight = surgical, 8 parametric bands for detailed mixing/tone. EQ Three = broad 3-band DJ tool for big performance moves and full kills.
+
+**Sources:** [manual (EQ Three)](https://www.ableton.com/en/manual/live-audio-effect-reference/)

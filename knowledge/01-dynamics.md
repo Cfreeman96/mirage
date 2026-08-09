@@ -97,3 +97,37 @@ Each band has an **upper** threshold (downward comp) and a **lower** threshold (
 **In your track:** Guido introduced this in the **mastering** stage — it belongs at the end of your **Main** track, after your mastering EQ/comp. *Listen for:* as you push Input Gain (or lower Threshold in Maximize), the whole track gets louder but peaks never cross the ceiling; push too far and it goes flat/pumpy and transients (the kick's snap) disappear. Use True Peak for the final export.
 
 **Sources:** [manual](https://www.ableton.com/en/manual/live-audio-effect-reference/) · [Limiter video](https://www.youtube.com/watch?v=Gvbf90IffRo)
+
+---
+
+## Split Band Compressor (DIY multiband / de-esser)
+**What it is:** A homemade **multiband compressor** built from native devices (Guido's rack). An **Audio Effect Rack** with **three parallel chains**, each starting with an **EQ Three** that solos one band (chain 1 = Low only, chain 2 = Mid only, chain 3 = High only, via the L/M/H kill buttons). Parallel chains sum back to the full signal, so with no processing it's transparent. Then process one band alone — e.g. a **Compressor only on the High chain** = compress just the highs.
+
+**Settings shown:** crossovers **FreqLow 250 Hz / FreqHi 2.5 kHz**, **48 dB** slope (tight separation). High-chain Compressor with **SC Filter ~7.74 kHz** → clamps only when sibilance spikes = a **dynamic de-esser**.
+
+**Why:** full independent control per band (a whole Compressor, with sidechain filter, on each band) — the transparent, hands-on alternative to OTT/Multiband Dynamics. Put the compressor on the High band to de-ess/tame harsh highs, or the Low band to tighten boomy bass.
+
+**Tradeoff:** splitting and recombining bands can cause slight **phase interaction at the crossovers** — fine for most work, but the reason dedicated multiband/compander tools (with optimized crossovers) exist.
+
+**Ties to:** Audio Effect Rack (parallel chains), EQ Three (kill bands), Compressor (sidechain filter), Multiband Dynamics/OTT.
+
+**Sources:** [manual — EQ Three & Compressor](https://www.ableton.com/en/manual/live-audio-effect-reference/)
+
+---
+
+## Vocal leveling compressor (recipe)
+**Goal:** shrink a vocal's **dynamic range** (gap between loud & quiet) so it sits consistently, without sounding squashed. This is the *how-to-dial-it* recipe — distinct from the Compressor *device* note above.
+
+**Guido's vocal settings:**
+- **Threshold ~−23 dB (low)** — reach into the whole performance, not just peaks → leveling, not just peak-catching.
+- **Ratio ~12:1 (high, near-limiting)** — firm control of the loud parts.
+- **Knee ~18 dB (wide/soft)** — eases that hard ratio in gradually; only the biggest peaks feel the full 12:1.
+- **Attack ~120 ms (slow)** — lets consonants/transients through → stays crisp.
+- **Release ~30 ms (quick)** — recovers between words → natural.
+- **Peak** detection — catches the actual instantaneous peaks.
+- **Makeup ~+5 dB** — lifts it all back up so quiet detail rises to meet the tamed peaks.
+- **SC Filter ~80 Hz** — so low-end thumps/plosives don't trigger it.
+
+**What it does:** loud comes down (compression) + everything comes up (makeup) → dynamic range collapses into something even and forward, but peaks still poke through so it stays authentic, not jumpy. The **high-ratio + wide-knee** pairing is the key: strong control that only fully bites on the loudest moments.
+
+**Sources:** [manual — Compressor](https://www.ableton.com/en/manual/live-audio-effect-reference/)

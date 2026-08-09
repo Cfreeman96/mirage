@@ -27,6 +27,12 @@ A distilled, personalized cache of the Ableton Live 12 manual, covering every de
 - **2026-07-23** — Added **Spectral Time** (freeze + spectral delay) → card app now **50 cards**; matching note added to `04-time-based.md`.
 - **2026-07-23** — Added 2 cards for Guido's **Bootsandcats** rack (the Shaper sidechain, + a "why two Utilities" card) → app now **52 cards**; matching note added to `05-modulation.md` under Shaper.
 - **2026-07-23** — Added a dedicated **Bass Mono** card (why mono the lows) → app now **53 cards**.
+- **2026-07-23** — Added **RX 9 Voice De-click vs De-noise** card in a new **Cleanup** category (note: iZotope RX is third-party, not in the Ableton manual cache) → app now **54 cards**.
+- **2026-07-23** — Added **De-essing** card (Cleanup) — sibilance, the static EQ Eight high-Q cut vs the dynamic Compressor-sidechain method → app now **55 cards**.
+- **2026-07-23** — Added **EQ Three** card (EQ & Filter) — DJ-style 3-band kill EQ vs surgical EQ Eight → app now **56 cards**; matching note added to `02-eq-filter.md`.
+- **2026-07-23** — Added **Split Band Compressor (DIY multiband/de-esser)** card (Dynamics) → app now **57 cards**; matching note in `01-dynamics.md`. NOTE: "Compandr" tool Guido praised could not be verified via web search — awaiting maker/spelling from Charlie before carding the compander comparison.
+- **2026-07-23** — Added **Vocal leveling compressor (recipe)** card (Dynamics) — the settings recipe + dynamic-range reasoning; intentionally distinct from the device-choice "Compressor" card → app now **58 cards**; matching note in `01-dynamics.md`.
+- **2026-07-23** — Audit pass: renamed card category **"Instruments" → "Instruments & Racks"** (so the Audio Effect Rack / PML racks cards fit honestly), and added a **dark-mode toggle** (top-right, choice remembered via localStorage). Optional cross-refs between related-card families held pending Charlie's go-ahead.
 
 ## Personalization source
 Charlie's signal chains and course position live in `../../../Music Learning/Producer-Profile.md` (Producer Profile). Update that when his project changes, and these "In your track" notes with it.

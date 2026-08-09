@@ -18,6 +18,7 @@
     --c-time:#4b4699;   --c-time-bg:#e9e7f6;
     --c-mod:#a53670;    --c-mod-bg:#f7e4ef;
     --c-inst:#5a5148;   --c-inst-bg:#efe9e2;
+    --c-clean:#3f7d7a;  --c-clean-bg:#e2f0ef;
   }
   *{box-sizing:border-box}
   html,body{margin:0}
@@ -37,6 +38,37 @@
   .badges{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; align-items:center}
   .badge{font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:999px; letter-spacing:.02em}
   .badge.dev{background:#f0efec; color:var(--muted)}
+  .cat-found{background:var(--c-found-bg); color:var(--c-found)}
+  .cat-prin{background:var(--c-prin-bg); color:var(--c-prin)}
+  .cat-dyn{background:var(--c-dyn-bg); color:var(--c-dyn)}
+  .cat-eq{background:var(--c-eq-bg); color:var(--c-eq)}
+  .cat-dist{background:var(--c-dist-bg); color:var(--c-dist)}
+  .cat-time{background:var(--c-time-bg); color:var(--c-time)}
+  .cat-mod{background:var(--c-mod-bg); color:var(--c-mod)}
+  .cat-inst{background:var(--c-inst-bg); color:var(--c-inst)}
+  .cat-clean{background:var(--c-clean-bg); color:var(--c-clean)}
+  .topbar{display:flex; justify-content:flex-end; margin:0 2px 2px}
+  .theme-toggle{width:auto; flex:none; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:999px; box-shadow:var(--shadow)}
+  /* ---- Dark mode ---- */
+  body.dark{
+    color-scheme:dark;
+    --bg:#161514; --card:#211f1d; --ink:#ece9e4; --muted:#9a938a; --line:#343029;
+    --accent:#ec6a41; --accent-soft:#3a241b;
+    --c-found:#84accf; --c-found-bg:#1d2733;
+    --c-prin:#d8b566;  --c-prin-bg:#2c2614;
+    --c-dyn:#ea7a6d;   --c-dyn-bg:#331e1b;
+    --c-eq:#54bb9f;    --c-eq-bg:#14302a;
+    --c-dist:#d68f54;  --c-dist-bg:#2f2013;
+    --c-time:#9a95dd;  --c-time-bg:#211e33;
+    --c-mod:#d571a6;   --c-mod-bg:#301e2a;
+    --c-inst:#bcae9f;  --c-inst-bg:#2a2621;
+    --c-clean:#5cb3ad; --c-clean-bg:#122a28;
+  }
+  body.dark .badge.dev{background:#2c2925; color:var(--muted)}
+  body.dark .you{background:#2b1a12}
+  body.dark .ai{background:#1b2430}
+  body.dark .chip.active{background:var(--ink); color:#161514; border-color:var(--ink)}
+  body.dark .bar{background:linear-gradient(180deg,rgba(22,21,20,0),var(--bg) 34%)}
   .prompt{font-size:17px; font-weight:600; line-height:1.45; margin:2px 0 4px}
   .think{font-size:12.5px; color:var(--muted); margin-top:8px; font-style:italic}
   .reveal-wrap{margin-top:14px}
@@ -70,10 +102,11 @@
 </style>
 </head>
 <body>
+<div class="topbar"><button id="themeToggle" class="theme-toggle">☾ Dark</button></div>
 <header>
   <div class="kicker">Mirage · Ableton Cards</div>
   <h1>Answer it in your head. Then reveal.</h1>
-  <div class="sub">53 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
+  <div class="sub">58 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
 </header>
 
 <div class="filters" id="filters"></div>
@@ -90,7 +123,8 @@ const CATS = {
   dist: {label:"Distortion",  v:"--c-dist",  bg:"--c-dist-bg"},
   time: {label:"Time-based",  v:"--c-time",  bg:"--c-time-bg"},
   mod:  {label:"Modulation",  v:"--c-mod",   bg:"--c-mod-bg"},
-  inst: {label:"Instruments", v:"--c-inst",  bg:"--c-inst-bg"}
+  inst: {label:"Instruments & Racks", v:"--c-inst",  bg:"--c-inst-bg"},
+  clean:{label:"Cleanup",     v:"--c-clean", bg:"--c-clean-bg"}
 };
 const M = "https://www.ableton.com/en/manual/live-audio-effect-reference/";
 const MI = "https://www.ableton.com/en/manual/live-instrument-reference/";
@@ -526,7 +560,47 @@ const CARDS = [
     you:"This is the rack you're building on your lead — Chain 1 = the lead's sound design, Chain 2 = a ping-pong delay low-passed to ~515 Hz so only the low end echoes, sitting dark and distinct under the bright dry lead.",
     tryThis:"Select your lead's devices → Group (Cmd/Ctrl+G) to make the Rack (Chain 1). Open the Chain List, drop a Delay into the empty area below to start Chain 2, set it to Ping Pong + low-pass ~515 Hz, then balance the two chain volume sliders. Solo each chain to dial it.",
     jargon:[["Chain","one parallel signal path inside a rack — with its own devices, volume and pan."],["Parallel vs serial","parallel chains each get the same input and are summed at the output; serial = one device after another."],["Chain List","the panel on the rack's left edge where chains branch; the drop area below adds a new chain."]],
-    links:[["Manual: Racks","https://www.ableton.com/en/manual/instrument-drum-and-effect-racks/"],["Video: Parallel effect chains","https://www.youtube.com/watch?v=PGxvwjX0dU0"]] }
+    links:[["Manual: Racks","https://www.ableton.com/en/manual/instrument-drum-and-effect-racks/"],["Video: Parallel effect chains","https://www.youtube.com/watch?v=PGxvwjX0dU0"]] },
+
+  { cat:"clean", dev:"RX 9 Voice De-click vs De-noise",
+    prompt:"Guido used <b>RX 9 Voice De-click</b> and <b>Voice De-noise</b> on a vocal. Both are cleanup tools — what does each one actually remove?",
+    answer:"Both are <b>iZotope RX 9</b> restoration plugins (third-party, not Ableton stock) that <i>remove problems</i> from a recording rather than shape tone — the difference is <b>what kind of noise</b> each targets. <b>Voice De-click</b> removes <b>short, sharp, momentary</b> artifacts — mouth clicks (lip/saliva smacks between words), pops, crackle, edit clicks — by detecting those brief spikes and repairing the waveform across them, leaving the voice intact. <b>Voice De-noise</b> removes <b>constant, steady background</b> noise — hiss, hum, air-conditioning, mic self-noise, room tone — by learning a 'fingerprint' of the ongoing noise and subtracting it across the whole signal. One-liner: <b>De-click = brief spikes; De-noise = the steady carpet underneath.</b>",
+    you:"You've got real vocal parts (Sampler vocals, lead vocals). Clean the source with these <i>first</i> — before compression (which lifts the noise floor) and before reverb/delay (which smear and amplify clicks) — so junk doesn't get amplified downstream.",
+    tryThis:"On a vocal sample: run De-click first to kill mouth clicks, then De-noise for the hiss/room tone. A/B each — the voice should stay natural; if it sounds thin or 'underwater,' you're removing too much, so back the amount off.",
+    jargon:[["De-click","removes short, impulsive artifacts (mouth clicks, pops, crackle) by repairing the waveform across each spike."],["De-noise","removes steady broadband background noise (hiss, hum, room tone) by subtracting a learned noise profile."],["Noise floor","the constant low-level background noise under a recording — compression makes it more audible."],["Restoration","cleaning a recording: removing problems rather than adding character."]],
+    links:[["iZotope RX 9 (third-party)","https://www.izotope.com/en/products/rx.html"]] },
+
+  { cat:"clean", dev:"De-essing",
+    prompt:"A vocal's <b>S</b> sounds come out harsh and clicky. What's <b>de-essing</b>, and how do you do it in Ableton?",
+    answer:"<b>De-essing</b> means taming <b>sibilance</b> — the sharp, hissy energy in 's', 'sh', 't' and 'f' sounds, which usually lives around <b>5–9 kHz</b>. The quick way Guido showed: an <b>EQ Eight</b> band with a <b>high Q</b> (narrow), cutting at the sibilant frequency — find it by boosting a narrow band and sweeping the top end until the 'S' jumps out, then cut there. Just know that EQ cut is <b>static</b> — it's always cutting, so it can dull the whole vocal's highs. The <b>dynamic</b> (cleaner) way: a <b>Compressor</b> with its <b>sidechain EQ</b> set to listen only to that sibilant band, so it ducks <i>only</i> when an 'S' actually spikes and leaves the rest of the highs bright. (A dedicated de-esser plugin does this automatically.)",
+    you:"Your current vocal came pre-processed, so you may not need it — but when you record or use a raw vocal that's spitty on the S's, this is the fix.",
+    tryThis:"In EQ Eight: make a narrow high-Q bell, boost it ~+9 dB, and sweep 4–10 kHz until the 'S' is painfully loud — that's your sibilant frequency. Flip the boost to a cut of a few dB. For a cleaner result, do it dynamically with a Compressor sidechained to that band.",
+    jargon:[["Sibilance","the harsh high-frequency energy in 's/sh/t/f' sounds — typically ~5–9 kHz."],["De-essing","reducing sibilance so vocals aren't clicky or sharp."],["Static vs dynamic","a fixed EQ cut always cuts; a dynamic de-esser only ducks when the 'S' spikes, keeping the highs otherwise bright."],["Sidechain EQ","filtering what a compressor 'listens' to, so it reacts only to a chosen frequency band."]],
+    links:[["Manual: EQ Eight","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Manual: Compressor sidechain","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"eq", dev:"EQ Three",
+    prompt:"Ableton already has EQ Eight — so what's <b>EQ Three</b> for, and why can it only boost +6 dB but cut to −∞?",
+    answer:"<b>EQ Three</b> is a <b>DJ-mixer-style</b> EQ: three broad bands — <b>Low, Mid, High</b> — each with a gain from <b>−∞ to +6 dB</b>. That lopsided range is the whole point: it's built to <b>remove/kill</b> a band, not to boost precisely. Pull the Low to −∞ and the entire bassline vanishes; slam it back for a drop. Each band has an <b>On/Off (kill) button</b> — perfect mapped to a key for live transitions — and three LEDs show what's playing in each band. Two crossover knobs (<b>FreqLo / FreqHi</b>) set where the bands split (e.g. Lo 500 Hz, Hi 2 kHz → low 0–500, mid 500–2k, high 2k+), and a <b>24 dB / 48 dB</b> switch sets how <i>sharply</i> the bands separate (48 = tighter, cleaner kills). Broad performance moves, not surgery.",
+    you:"Different tool from your workhorse EQ Eight: reach for <b>EQ Eight</b> for detailed mixing (cut a resonance, shape tone), and <b>EQ Three</b> for big DJ-style moves — dropping the bass out in a breakdown, killing the highs for a filter effect, or quick 3-band sculpting.",
+    tryThis:"On a full loop, set the 48 dB slope and pull the Low band to −∞ for a breakdown — no bass. Bring it back on the downbeat and it hits like a drop. Map the Low On/Off to a key to do it live.",
+    jargon:[["Kill EQ","an EQ whose bands cut all the way to −∞ (silence) — for fully removing a frequency range."],["Crossover (FreqLo / FreqHi)","the frequencies where the Low/Mid/High bands split."],["24 / 48 dB slope","how steeply the bands separate — 48 dB is tighter and cleaner, so a kill doesn't bleed into neighboring bands."]],
+    links:[["Manual: EQ Three","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"dyn", dev:"Split Band Compressor (DIY multiband)",
+    prompt:"Guido built a <b>Split Band Compressor</b> rack from EQ Threes and a Compressor. What is it, and how does it de-ess?",
+    answer:"It's a <b>homemade multiband compressor</b> made from native devices. An Audio Effect Rack holds <b>three parallel chains</b>, each starting with an <b>EQ Three</b> set to solo one band — chain 1 keeps only <b>Low</b> (Mid + High killed), chain 2 only <b>Mid</b>, chain 3 only <b>High</b>. Because the chains are parallel, Low + Mid + High <b>sum back to the full signal</b> (transparent with nothing processing). The trick: process <i>one band on its own</i> — here a <b>Compressor only on the High chain</b>, so only the highs get compressed while lows/mids pass untouched. Since harsh 'S' sounds live in the highs, that makes it a <b>de-esser</b> — and with the Compressor's SC Filter at ~7.74 kHz it clamps only when sibilance spikes. Crossovers set the splits (FreqLow 250 Hz, FreqHi 2.5 kHz, 48 dB slope).",
+    you:"This ties together four cards you already have: <b>Audio Effect Rack</b> parallel chains, <b>EQ Three</b> (kill bands), <b>Compressor sidechain filter</b> (de-ess), and the multiband idea from <b>OTT</b>. It's the fully-controllable native version of a multiband compressor.",
+    tryThis:"Build it: a Rack with 3 chains, an EQ Three in each soloing L / M / H (FreqLow 250, FreqHi 2.5k, 48 dB). Put a Compressor on the High chain with SC Filter ~7 kHz. Now you're compressing only the harsh highs — a dynamic de-esser.",
+    jargon:[["Multiband compression","splitting audio into frequency bands and compressing each independently."],["Band-splitting (EQ Three ×3)","three parallel EQ Threes each soloing one band, recombined into the full signal."],["Crossover phase tradeoff","splitting then recombining can cause slight phase interaction at the band edges — the cost of DIY vs a dedicated multiband/compander."]],
+    links:[["Manual: EQ Three","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Manual: Compressor","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"dyn", dev:"Vocal leveling compressor (recipe)",
+    prompt:"How do you set a compressor to <b>level a vocal</b> so it sits steady in the mix — and what's it doing to the dynamic range?",
+    answer:"The goal is to shrink the vocal's <b>dynamic range</b> (the gap between its loud and quiet moments) so it stays consistent — without sounding squashed. Guido's recipe: <b>low Threshold</b> (~−23 dB) so it reaches into the whole performance, not just peaks (leveling, not peak-catching); <b>high Ratio</b> (~12:1, near-limiting) for firm control; <b>wide/soft Knee</b> (~18 dB) so that hard ratio eases in gradually and only the biggest peaks feel the full clamp; <b>slow Attack</b> (~120 ms) so consonants/transients pass through and stay crisp; <b>quick Release</b> (~30 ms) so it recovers naturally between words; <b>Peak</b> detection to catch the actual peaks; then <b>Makeup</b> (~+5 dB) to lift it all back up. Loud comes down, quiet comes up, range collapses — but peaks still poke through, so it's even, not lifeless.",
+    you:"This is the vocal chain Guido walked you through. The magic combo is <b>high ratio + wide knee</b>: strong control that only fully bites on the loudest moments, so it never sounds crushed. (The 'Compressor' card is about <i>which</i> compressor to pick — this is <i>how to set it</i>.)",
+    tryThis:"Watch the GR meter: lower Threshold until you're pulling a few dB on the loud words; set Ratio high but widen the Knee so it eases in; keep Attack slow so words stay crisp; then Makeup to match. A/B bypass — same loudness, just steadier.",
+    jargon:[["Dynamic range","the gap between the loudest and quietest moments; leveling shrinks it."],["Leveling vs peak-catching","leveling (low threshold) evens the whole performance; peak-catching (high threshold) only tames rare spikes."],["High ratio + soft knee","strong compression that ramps in gradually — firm on peaks, gentle elsewhere, so it's controlled but transparent."]],
+    links:[["Manual: Compressor","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] }
 ];
 
 let filter = "all";
@@ -559,12 +633,11 @@ function draw(){
   if(order.length===0){ stage.innerHTML='<div class="card">No cards here yet.</div>'; counter.textContent=''; return; }
   const c = CARDS[order[idx]];
   const cat = CATS[c.cat];
-  const color = cssVar(cat.v), bg = cssVar(cat.bg);
   const canAI = (typeof window!=='undefined' && window.cowork && typeof window.cowork.askClaude==='function');
   stage.innerHTML = `
   <div class="card">
     <div class="badges">
-      <span class="badge" style="background:${bg}; color:${color}">${cat.label}</span>
+      <span class="badge cat-${c.cat}">${cat.label}</span>
       <span class="badge dev">${c.dev}</span>
     </div>
     <div class="prompt">${c.prompt}</div>
@@ -601,6 +674,21 @@ function draw(){
 function next(){ if(order.length){ idx=(idx+1)%order.length; draw(); window.scrollTo({top:0,behavior:'smooth'}); } }
 document.getElementById('next').addEventListener('click', next);
 reshuffle();
+
+// Dark mode toggle (choice remembered across visits)
+const themeBtn = document.getElementById('themeToggle');
+function applyTheme(t){
+  if(t==='dark'){ document.body.classList.add('dark'); themeBtn.textContent='☀ Light'; }
+  else { document.body.classList.remove('dark'); themeBtn.textContent='☾ Dark'; }
+}
+let theme='light';
+try{ theme = localStorage.getItem('mirage_theme') || 'light'; }catch(e){}
+applyTheme(theme);
+themeBtn.addEventListener('click', ()=>{
+  theme = document.body.classList.contains('dark') ? 'light' : 'dark';
+  try{ localStorage.setItem('mirage_theme', theme); }catch(e){}
+  applyTheme(theme);
+});
 </script>
 </body>
 </html>
