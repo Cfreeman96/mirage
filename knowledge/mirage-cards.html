@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mirage — Ableton Cards</title>
+<title>Mirage 🏝️</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏝️</text></svg>">
 <style>
   :root{
@@ -48,8 +48,103 @@
   .cat-mod{background:var(--c-mod-bg); color:var(--c-mod)}
   .cat-inst{background:var(--c-inst-bg); color:var(--c-inst)}
   .cat-clean{background:var(--c-clean-bg); color:var(--c-clean)}
-  .topbar{display:flex; justify-content:flex-end; margin:0 2px 2px}
+  .topbar{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin:0 2px 8px}
   .theme-toggle{width:auto; flex:none; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:999px; box-shadow:var(--shadow)}
+  .tabs{display:flex; gap:6px; flex-wrap:wrap}
+  .tab{width:auto; flex:none; font-size:14px; font-weight:700; padding:9px 15px; border-radius:11px; background:var(--card); color:var(--muted)}
+  .tab.active{background:var(--accent); color:#fff; border-color:var(--accent)}
+  section[hidden]{display:none}
+  .search{width:100%; font:inherit; font-size:15px; padding:12px 14px; border-radius:12px; border:1px solid var(--line); background:var(--card); color:var(--ink); margin:0 0 10px; box-shadow:var(--shadow)}
+  .browse-group{margin:16px 0 6px}
+  .browse-group h3{font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin:0 2px 8px; font-weight:700}
+  .browse-item{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); margin-bottom:8px; overflow:hidden}
+  .browse-head{display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer; -webkit-tap-highlight-color:transparent}
+  .browse-title{font-weight:600; font-size:15px}
+  .browse-chev{margin-left:auto; color:var(--muted); font-size:18px; transition:transform .15s ease}
+  .browse-item.open .browse-chev{transform:rotate(90deg)}
+  .browse-body{display:none; padding:0 14px 14px}
+  .browse-item.open .browse-body{display:block}
+  .browse-empty{color:var(--muted); font-size:14px; padding:12px 2px}
+  .hero{background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); padding:20px 18px; margin-bottom:14px}
+  .hero .name{font-size:26px; font-weight:800; letter-spacing:-.02em; margin:4px 0 4px}
+  .hero .tag{color:var(--muted); font-size:14px; line-height:1.5}
+  .jsec{margin:16px 0}
+  .jsec h3{font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:700; margin:0 2px 8px}
+  .jcard{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); padding:14px; margin-bottom:8px; font-size:14.5px}
+  .jcard .goal{font-weight:700; font-size:15px}
+  .jcard .goal-sub{color:var(--muted); font-size:13.5px; margin-top:3px}
+  .jnow{border-left:3px solid var(--accent); background:#fff8f5; padding:11px 13px; border-radius:0 10px 10px 0; font-size:14.5px}
+  body.dark .jnow{background:#2b1a12}
+  .pill{display:inline-block; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:999px; background:var(--c-eq-bg); color:var(--c-eq); margin-right:6px}
+  .brandnav{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+  .brand{font-weight:800; font-size:16px; letter-spacing:-.01em}
+  .hero{background:linear-gradient(135deg, var(--accent-soft), var(--card))}
+  .gymstats{display:flex; gap:10px; margin-bottom:12px}
+  .stat{flex:1; background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); padding:12px 8px; text-align:center}
+  .statnum{font-size:24px; font-weight:800; color:var(--accent)}
+  .statlab{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-top:2px}
+  .gymlast{font-size:14px; color:var(--muted); margin:0 2px 14px}
+  .gymlast b{color:var(--ink)}
+  .dots{display:inline-flex; gap:4px; margin-left:8px; vertical-align:middle}
+  .dot{width:11px; height:11px; border-radius:3px; background:var(--line)}
+  .dot.on{background:var(--accent)}
+  .drill{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); padding:14px; margin-bottom:10px}
+  .drill-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px}
+  .drill-name{font-weight:700; font-size:15px}
+  .drill-desc{font-size:13px; color:var(--muted); margin-top:2px}
+  .drill-count{font-size:20px; font-weight:800; white-space:nowrap}
+  .drill-count span{font-size:13px; color:var(--muted); font-weight:600}
+  .bar-wrap{height:8px; background:var(--line); border-radius:99px; overflow:hidden; margin:11px 0}
+  .bar-fill{height:100%; background:var(--accent); border-radius:99px; transition:width .2s ease}
+  .drill-btns{display:flex; gap:8px}
+  .rep-plus{flex:none; width:auto; background:var(--accent); color:#fff; border-color:var(--accent); font-weight:700; padding:11px 16px; border-radius:10px}
+  .rep-minus{flex:none; width:auto; padding:11px 16px; border-radius:10px; font-weight:700}
+  .tool{width:auto; flex:none; font-size:13px; font-weight:600; padding:10px 14px; border-radius:10px}
+  .gymnote{font-size:12px; color:var(--muted); margin-top:10px; line-height:1.5}
+  .rep-note{flex:1; width:auto; min-width:0; font:inherit; font-size:13px; padding:10px 11px; border-radius:10px; border:1px solid var(--line); background:var(--bg); color:var(--ink)}
+  .goalcard{background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); padding:16px; margin-bottom:14px}
+  .goalrow{display:flex; justify-content:space-between; align-items:center; gap:10px}
+  .goaltitle{font-weight:700; font-size:15px}
+  .goalnums{font-size:15px; color:var(--muted)}
+  .goalnums b{color:var(--ink); font-size:20px}
+  .goalinput{width:52px; font:inherit; font-size:15px; text-align:center; padding:4px 6px; border-radius:8px; border:1px solid var(--line); background:var(--bg); color:var(--ink)}
+  .cyc{font-size:11px; font-weight:700; color:var(--c-eq); background:var(--c-eq-bg); padding:2px 7px; border-radius:999px; vertical-align:middle; margin-left:4px}
+  .logbox{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); overflow:hidden}
+  .logrow{display:flex; align-items:center; gap:10px; padding:10px 13px; border-bottom:1px solid var(--line); font-size:13.5px}
+  .logrow:last-child{border-bottom:none}
+  .logdrill{font-weight:700; flex:none}
+  .lognote{color:var(--muted); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .logtime{color:var(--muted); font-size:12px; flex:none; margin-left:auto}
+  .seg{display:flex; gap:6px; margin:0 0 12px; flex-wrap:wrap}
+  .segbtn{width:auto; flex:none; font-size:13px; font-weight:700; padding:8px 13px; border-radius:9px; background:var(--card); color:var(--muted)}
+  .segbtn.active{background:var(--accent); color:#fff; border-color:var(--accent)}
+  .barchart{display:flex; gap:6px; align-items:flex-end; background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); padding:14px 12px; overflow-x:auto}
+  .bcol{flex:1; min-width:24px; display:flex; flex-direction:column; align-items:center; gap:4px}
+  .bcol-val{font-size:11px; color:var(--muted); height:14px}
+  .btrack{height:90px; width:100%; display:flex; align-items:flex-end}
+  .bbar{width:100%; background:var(--accent); border-radius:5px 5px 0 0; min-height:2px; transition:height .2s ease}
+  .blab{font-size:10.5px; font-weight:700; white-space:nowrap}
+  .bsub{font-size:10px; color:var(--muted)}
+  .hmwrap{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); padding:14px; overflow-x:auto}
+  .hmgrid{display:flex; gap:3px; min-width:max-content}
+  .hmcol{display:flex; flex-direction:column; gap:3px}
+  .hmcell{width:11px; height:11px; border-radius:2px; background:var(--line); display:inline-block}
+  .hmcell.hlx{background:transparent}
+  .hmcell.hl0{background:var(--line)}
+  .hmcell.hl1{background:var(--accent); opacity:.30}
+  .hmcell.hl2{background:var(--accent); opacity:.55}
+  .hmcell.hl3{background:var(--accent); opacity:.78}
+  .hmcell.hl4{background:var(--accent); opacity:1}
+  .hmleg{display:flex; align-items:center; gap:4px; font-size:11px; color:var(--muted); margin-top:8px}
+  .wdpanel{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); padding:14px; margin-top:10px}
+  .wdtitle{font-size:13px; font-weight:700; margin-bottom:10px}
+  .wdhint{color:var(--muted); font-weight:400}
+  .wdchart{display:flex; gap:8px; align-items:flex-end}
+  .wdcol{flex:1; display:flex; flex-direction:column; align-items:center; gap:4px}
+  .wdtrack{height:56px; width:100%; display:flex; align-items:flex-end}
+  .wdbar{width:100%; background:var(--c-eq); border-radius:5px 5px 0 0; min-height:2px}
+  .wdlab{font-size:11px; font-weight:700}
+  .wdval{font-size:10px; color:var(--muted)}
   /* ---- Dark mode ---- */
   body.dark{
     color-scheme:dark;
@@ -103,17 +198,43 @@
 </style>
 </head>
 <body>
-<div class="topbar"><button id="themeToggle" class="theme-toggle">☾ Dark</button></div>
+<div class="topbar">
+  <div class="brandnav">
+    <span class="brand">Mirage 🏝️</span>
+    <nav class="tabs">
+      <button class="tab active" data-view="journey">Home</button>
+      <button class="tab" data-view="quiz">Quiz</button>
+      <button class="tab" data-view="browse">Browse</button>
+      <button class="tab" data-view="gym">Gym</button>
+    </nav>
+  </div>
+  <button id="themeToggle" class="theme-toggle">☾ Dark</button>
+</div>
 <header>
   <div class="kicker">Mirage · Ableton Cards</div>
-  <h1>Answer it in your head. Then reveal.</h1>
-  <div class="sub">58 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
+  <h1 id="viewTitle">Answer it in your head. Then reveal.</h1>
+  <div class="sub" id="viewSub">60 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
 </header>
 
+<section id="view-quiz">
 <div class="filters" id="filters"></div>
 <div id="stage"></div>
 <div class="bar"><button id="next" class="primary">Next card →</button></div>
 <div class="mini" id="counter"></div>
+</section>
+
+<section id="view-browse" hidden>
+  <input id="browseSearch" class="search" type="search" placeholder="Search devices &amp; concepts…">
+  <div id="browseList"></div>
+</section>
+
+<section id="view-journey" hidden>
+  <div id="journey"></div>
+</section>
+
+<section id="view-gym" hidden>
+  <div id="gym"></div>
+</section>
 
 <script>
 const CATS = {
@@ -449,6 +570,22 @@ const CARDS = [
     jargon:[["Predelay","the pause before the reverb starts. Longer = bigger-feeling room, and it keeps the dry sound clear."],["Decay","how long the reverb tail takes to die away."],["Early reflections vs diffusion tail","the first distinct wall-bounces vs the smooth wash that follows."]],
     links:[["Manual: Reverb","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
 
+  { cat:"time", dev:"Delay filter (the orange dot)",
+    prompt:"On the <b>Delay</b>, what does the orange dot in the graph do when you drag it around?",
+    answer:"That dot is the Delay's built-in <b>band-pass filter</b>, and it shapes the <b>tone of the echoes</b> (not the dry sound). <b>Drag left/right = frequency</b> — left makes the repeats darker/bassier, right makes them brighter/thinner. <b>Drag up/down = Width</b> — how narrow or wide that band is (narrow = a focused, resonant, telephone-y echo; wide = fuller repeats). Because it's a <i>band-pass</i>, it cuts <b>both</b> below and above the band, so the echoes become a focused slice of the sound. And since the filter sits <b>in the feedback loop</b>, every repeat gets filtered again — so the echoes get progressively more focused as they trail, which keeps a delay from piling into mush.",
+    you:"This is the single most useful move on a delay: filter the repeats so they tuck behind the dry sound instead of cluttering. Pull the dot down/left to darken echoes so they sit back.",
+    tryThis:"On a synth delay, drag the dot toward the highs and narrow the Width — the echoes turn thin and distant. Then sweep it low — dark and dubby. Same repeats, totally different vibe.",
+    jargon:[["Band-pass filter","passes a band of frequencies and cuts both below and above it — the echoes become a focused slice."],["Frequency (dot left/right)","which band the echoes emphasize — left = darker, right = brighter."],["Width (dot up/down)","how narrow or wide that band is — narrow = focused/resonant, wide = fuller."]],
+    links:[["Manual: Delay","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=Ss5yOq8nQK4"]] },
+
+  { cat:"time", dev:"Echo vs Delay",
+    prompt:"Ableton has both <b>Delay</b> and <b>Echo</b>. When do you reach for which?",
+    answer:"They share the same skeleton (two delay lines, sync, feedback, ping-pong), but they're built for different jobs. <b>Delay</b> is the <b>clean, precise utility echo</b> — transparent, one band-pass filter, LFO, smoothing modes. Reach for it when you want a tidy echo that sits neatly out of the way. <b>Echo</b> is the <b>character/vibe echo</b> — it's Delay <i>plus</i> a whole personality: <b>two separate filters</b> (HP + LP with resonance) for fuller tone-sculpting, a <b>Modulation tab</b> (LFO + envelope to wobble time/filter for tape-warble and shimmer), a <b>Character tab</b> (Gate, Ducking, Noise, Wobble — analog grit and tape flutter), and a <b>built-in Reverb</b>. One line: <b>Delay = clean echo; Echo = vintage echo with tone, motion, grit, and space baked in.</b>",
+    you:"Anything Delay does, Echo does too — Echo just adds dual filters, modulation, analog character, and reverb. Delay when you want controlled; Echo when you want warm, dubby and full of vibe.",
+    tryThis:"Put both on a synth stab at the same 1/8-dotted time. Delay = a clean repeat; Echo with a little Wobble + a low-pass + Ducking = a warm, moving echo that breathes under the dry.",
+    jargon:[["Delay","the clean, surgical digital delay — precise and out of the way."],["Echo","the characterful delay — dual filters, modulation, analog 'Character' (noise/wobble), and reverb built in."],["Ducking","(Echo's Character tab) pulls the echoes down while the dry plays, so they bloom in the gaps."]],
+    links:[["Manual: Echo","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Manual: Delay","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
   { cat:"time", dev:"Spectral Time",
     prompt:"<b>Spectral Time</b> can freeze a sound forever or make shimmering metallic echoes. How does it pull that off?",
     answer:"<b>Spectral Time</b> works in the <b>spectral (frequency) domain</b> — it splits your sound into its individual frequency components (like a prism splitting light) and manipulates them over time. It has two sections, usable alone or chained (Freezer → Delay). The <b>Freezer</b> captures a snapshot of the sound's spectrum and <b>sustains it infinitely</b> — turning any note or chord into an endless pad — triggered manually (with Fade In/Out) or automatically on <b>transients</b> or synced intervals. The <b>Delay</b> is a <b>spectral delay</b>: <b>Shift</b> detunes each successive echo's frequencies (metallic repeats) and <b>Tilt</b> delays different frequencies by different amounts so the echo <b>smears</b> across the spectrum. <b>Feedback</b> builds the tails; <b>Dry/Wet</b> blends the delayed signal. A spectrogram shows dry (yellow) vs wet (blue) over time.",
@@ -690,6 +827,180 @@ themeBtn.addEventListener('click', ()=>{
   try{ localStorage.setItem('mirage_theme', theme); }catch(e){}
   applyTheme(theme);
 });
+
+// ---- Views: Quiz / Browse / Journey ----
+const VIEWS = {
+  journey:{title:"Mirage", sub:""},
+  quiz:   {title:"Answer it in your head. Then reveal.", sub: CARDS.length+" cards · principles + all your devices · jargon decoded."},
+  browse: {title:"Browse the library.", sub:"Search and skim every device, principle and technique."},
+  gym:    {title:"The Gym.", sub:"Rack up reps. Keep the streak alive."}
+};
+const viewTitle = document.getElementById('viewTitle');
+const viewSub = document.getElementById('viewSub');
+let browseBuilt=false, journeyBuilt=false;
+function stripTags(s){ return s.replace(/<[^>]+>/g,''); }
+function showView(v){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.view===v));
+  document.getElementById('view-quiz').hidden = v!=='quiz';
+  document.getElementById('view-browse').hidden = v!=='browse';
+  document.getElementById('view-journey').hidden = v!=='journey';
+  document.getElementById('view-gym').hidden = v!=='gym';
+  document.querySelector('header').style.display = (v==='journey') ? 'none' : 'block';
+  viewTitle.textContent = VIEWS[v].title;
+  viewSub.textContent = VIEWS[v].sub;
+  if(v==='browse' && !browseBuilt){ buildBrowse(); browseBuilt=true; }
+  if(v==='journey'){ buildJourney(); }
+  if(v==='gym'){ buildGym(); }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.tab').forEach(t=> t.addEventListener('click', ()=>showView(t.dataset.view)));
+
+function buildBrowse(){
+  const listEl = document.getElementById('browseList');
+  const searchEl = document.getElementById('browseSearch');
+  function render(q){
+    q=(q||'').trim().toLowerCase();
+    let html='';
+    Object.keys(CATS).forEach(catKey=>{
+      const items = CARDS.filter(c=>c.cat===catKey && (!q || (c.dev+' '+stripTags(c.prompt)+' '+stripTags(c.answer)).toLowerCase().includes(q)));
+      if(!items.length) return;
+      html += '<div class="browse-group"><h3>'+CATS[catKey].label+' · '+items.length+'</h3>';
+      items.forEach(c=>{
+        html += '<div class="browse-item"><div class="browse-head">'
+          + '<span class="badge cat-'+c.cat+'">'+CATS[c.cat].label+'</span>'
+          + '<span class="browse-title">'+c.dev+'</span>'
+          + '<span class="browse-chev">›</span></div>'
+          + '<div class="browse-body">'
+          + '<div class="sec"><div class="sec-h">The idea</div><p class="idea">'+c.answer+'</p></div>'
+          + '<div class="sec"><div class="you">'+c.you+'</div></div>'
+          + '<div class="sec"><div class="sec-h">Try this</div><div class="try">'+c.tryThis+'</div></div>'
+          + '<div class="sec"><div class="sec-h">Jargon, decoded</div><div class="jargon">'+c.jargon.map(j=>'<p><b>'+j[0]+'</b> — '+j[1]+'</p>').join('')+'</div></div>'
+          + '<div class="links">'+c.links.map(x=>'<a href="'+x[1]+'" target="_blank" rel="noopener">'+x[0]+' ↗</a>').join('')+'</div>'
+          + '</div></div>';
+      });
+      html += '</div>';
+    });
+    listEl.innerHTML = html || '<div class="browse-empty">No matches.</div>';
+    listEl.querySelectorAll('.browse-head').forEach(h=> h.addEventListener('click', ()=> h.parentElement.classList.toggle('open')));
+  }
+  render('');
+  searchEl.addEventListener('input', ()=>render(searchEl.value));
+}
+
+function buildJourney(){
+  const j = document.getElementById('journey');
+  j.innerHTML =
+   '<div class="hero">'
+   + '<div style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700">Artist</div>'
+   + '<div class="name">Mirage 🏝️</div>'
+   + '<div class="tag">Learning electronic music production in Ableton — building toward a first finished, self-produced track.</div>'
+   + '</div>'
+   + (function(){var s=gymStats();var nudge=(!s.last)?"Time to step into the gym.":(s.lastTxt==="today"?"You showed up today. 🔥":(s.streak>0?"Keep the streak alive.":"Been a minute — get back in the gym."));return '<div class="jsec"><h3>In the gym</h3><div class="jcard"><span class="pill">'+s.streak+'-day streak</span><span class="pill">'+s.week+' this week</span><span class="pill">'+s.total+' total</span> <b>Last session: '+s.lastTxt+'.</b> '+nudge+'</div></div>';})()
+   + '<div class="jsec"><h3>Where I am now</h3>'
+   + '<div class="jcard"><div class="jnow">PML327 Part 1 (Start to Finish) — complete. Now in <b>Guido\'s Mixing &amp; Mastering</b> course, working through the vocal / delay / limiter chain — building the ear for compression, delay, and signal flow.</div></div>'
+   + '</div>'
+   + '<div class="jsec"><h3>The goals</h3>'
+   + '<div class="jcard"><div class="goal">1 · Produce music in Ableton</div><div class="goal-sub">Finish a full original electronic track, mixed &amp; mastered, that I\'m genuinely proud of.</div></div>'
+   + '<div class="jcard"><div class="goal">2 · Learn to DJ</div><div class="goal-sub">Starts after the first finished, self-produced track.</div></div>'
+   + '<div class="jcard"><div class="goal">3 · Build the Mirage brand</div><div class="goal-sub">For the joy of creation — an artist identity, on my own terms.</div></div>'
+   + '</div>'
+   + '<div class="jsec"><h3>The library</h3>'
+   + '<div class="jcard"><span class="pill">'+CARDS.length+' cards</span><span class="pill">'+Object.keys(CATS).length+' categories</span> Every Ableton device &amp; concept I\'ve hit, grounded in the Live 12 manual and my own track. Use <b>Quiz</b> to drill, <b>Browse</b> to look things up.</div>'
+   + '</div>';
+}
+
+// ---- Gym / practice tracker (saved in localStorage) ----
+const DRILLS = [
+  {id:"bassline", name:"Basslines", target:25, desc:"Write & sound-design a fresh bassline from scratch."},
+  {id:"synth", name:"Synth patches", target:25, desc:"Design a lead / pad / pluck from an init patch."},
+  {id:"drums", name:"Drum grooves", target:25, desc:"Build an original 8-bar drum pattern."},
+  {id:"chords", name:"Chords & melodies", target:25, desc:"Write a progression + topline, in key."},
+  {id:"echo", name:"Echo / delay chains", target:25, desc:"Design a delay that sits behind the dry."},
+  {id:"mix", name:"Mixing moves", target:25, desc:"One focused fix: comp, EQ, or de-ess a part."},
+  {id:"loops", name:"Finished loops", target:25, desc:"A polished 8-bar loop you'd be proud to drop."}
+];
+const DRILL_NAME = {}; DRILLS.forEach(function(d){ DRILL_NAME[d.id]=d.name; });
+function gymLoad(){ try{ var d=JSON.parse(localStorage.getItem('mirage_gym'))||{}; if(!d.reps)d.reps={}; if(!d.log)d.log=[]; if(!d.weeklyGoal)d.weeklyGoal=20; return d; }catch(e){ return {reps:{}, log:[], weeklyGoal:20}; } }
+function gymSave(d){ try{ localStorage.setItem('mirage_gym', JSON.stringify(d)); }catch(e){} }
+function gymAddRep(id, note){ var d=gymLoad(); d.reps[id]=(d.reps[id]||0)+1; d.log.push({t:Date.now(), d:id, n:(note||"").trim()}); gymSave(d); }
+function gymRemoveRep(id){ var d=gymLoad(); if((d.reps[id]||0)>0){ d.reps[id]--; for(var i=d.log.length-1;i>=0;i--){ if(d.log[i].d===id){ d.log.splice(i,1); break; } } gymSave(d); } }
+function gymSetGoal(v){ var d=gymLoad(); d.weeklyGoal=Math.max(1, v||1); gymSave(d); }
+function dayKey(t){ var dt=new Date(t); return dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate(); }
+function relTime(t){ var s=(Date.now()-t)/1000; if(s<60)return 'just now'; if(s<3600)return Math.floor(s/60)+'m ago'; if(s<86400)return Math.floor(s/3600)+'h ago'; var days=Math.floor(s/86400); return days===1?'yesterday':days+' days ago'; }
+function gymStats(){
+  var d=gymLoad(), now=Date.now(), DAY=86400000;
+  var total=0; for(var k in d.reps){ total+=d.reps[k]; }
+  var week=d.log.filter(function(e){return now-e.t < 7*DAY;}).length;
+  var last=d.log.length ? Math.max.apply(null, d.log.map(function(e){return e.t;})) : null;
+  var lastTxt = last ? relTime(last) : 'never';
+  var set={}; d.log.forEach(function(e){ set[dayKey(e.t)]=1; });
+  var streak=0, cur=new Date();
+  if(!set[dayKey(now)]) cur.setDate(cur.getDate()-1);
+  while(set[dayKey(cur.getTime())]){ streak++; cur.setDate(cur.getDate()-1); }
+  return {total:total, week:week, last:last, lastTxt:lastTxt, streak:streak, goal:d.weeklyGoal};
+}
+var insightView='year'; try{ insightView=localStorage.getItem('mirage_iview')||'year'; }catch(e){}
+function gymCountsByDay(){ var d=gymLoad(), m={}; d.log.forEach(function(e){ var k=dayKey(e.t); m[k]=(m[k]||0)+1; }); return m; }
+function weekStart(t){ var dt=new Date(t); var day=(dt.getDay()+6)%7; dt.setDate(dt.getDate()-day); dt.setHours(0,0,0,0); return dt; }
+function seriesDaily(n){ var m=gymCountsByDay(), out=[], now=new Date(); for(var i=n-1;i>=0;i--){ var dt=new Date(now); dt.setDate(dt.getDate()-i); out.push({label:(dt.getMonth()+1)+'/'+dt.getDate(), sub:['S','M','T','W','T','F','S'][dt.getDay()], count:m[dayKey(dt.getTime())]||0}); } return out; }
+function seriesWeekly(n){ var d=gymLoad(), b={}; d.log.forEach(function(e){ var k=dayKey(weekStart(e.t).getTime()); b[k]=(b[k]||0)+1; }); var out=[], now=weekStart(Date.now()); for(var i=n-1;i>=0;i--){ var dt=new Date(now); dt.setDate(dt.getDate()-i*7); out.push({label:(dt.getMonth()+1)+'/'+dt.getDate(), sub:'wk', count:b[dayKey(dt.getTime())]||0}); } return out; }
+function seriesMonthly(n){ var d=gymLoad(), b={}; d.log.forEach(function(e){ var dt=new Date(e.t); b[dt.getFullYear()+'-'+dt.getMonth()]=(b[dt.getFullYear()+'-'+dt.getMonth()]||0)+1; }); var MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; var out=[], now=new Date(); for(var i=n-1;i>=0;i--){ var dt=new Date(now.getFullYear(), now.getMonth()-i, 1); out.push({label:MN[dt.getMonth()], sub:String(dt.getFullYear()).slice(2), count:b[dt.getFullYear()+'-'+dt.getMonth()]||0}); } return out; }
+function byWeekday(){ var d=gymLoad(), a=[0,0,0,0,0,0,0]; d.log.forEach(function(e){ a[new Date(e.t).getDay()]++; }); return a; }
+function gymHeatmap(){ var m=gymCountsByDay(), end=new Date(); end.setHours(23,59,59,999); var start=weekStart(end.getTime()); start.setDate(start.getDate()-52*7); var cur=new Date(start), weeks=[]; while(cur<=end){ var col=[]; for(var day=0;day<7;day++){ var future=cur>end; col.push({k:dayKey(cur.getTime()), c:future?null:(m[dayKey(cur.getTime())]||0), future:future}); cur.setDate(cur.getDate()+1); } weeks.push(col); } return weeks; }
+function barChart(series){ var max=1; series.forEach(function(x){ if(x.count>max)max=x.count; }); var bars=series.map(function(x){ return '<div class="bcol"><div class="bcol-val">'+(x.count||'')+'</div><div class="btrack"><div class="bbar" style="height:'+Math.round(x.count/max*100)+'%"></div></div><div class="blab">'+x.label+'</div><div class="bsub">'+(x.sub||'')+'</div></div>'; }).join(''); return '<div class="barchart">'+bars+'</div>'; }
+function heatLevel(c){ if(c==null)return 'hlx'; if(c===0)return 'hl0'; if(c<3)return 'hl1'; if(c<6)return 'hl2'; if(c<10)return 'hl3'; return 'hl4'; }
+function drawHeatmap(){ var weeks=gymHeatmap(); var cols=weeks.map(function(col){ return '<div class="hmcol">'+col.map(function(cell){ return '<span class="hmcell '+heatLevel(cell.future?null:cell.c)+'" title="'+cell.k+': '+(cell.c==null?0:cell.c)+' reps"></span>'; }).join('')+'</div>'; }).join(''); return '<div class="hmwrap"><div class="hmgrid">'+cols+'</div></div><div class="hmleg">Less <span class="hmcell hl0"></span><span class="hmcell hl1"></span><span class="hmcell hl2"></span><span class="hmcell hl3"></span><span class="hmcell hl4"></span> More</div>'; }
+function drawInsights(){ var box=document.getElementById('insights'); if(!box)return; var html=''; if(insightView==='daily')html=barChart(seriesDaily(14)); else if(insightView==='weekly')html=barChart(seriesWeekly(10)); else if(insightView==='monthly')html=barChart(seriesMonthly(12)); else html=drawHeatmap(); var wd=byWeekday(), names=['S','M','T','W','T','F','S'], wmax=1; wd.forEach(function(v){ if(v>wmax)wmax=v; }); var wbars=wd.map(function(v,i){ return '<div class="wdcol"><div class="wdtrack"><div class="wdbar" style="height:'+Math.round(v/wmax*100)+'%"></div></div><div class="wdlab">'+names[i]+'</div><div class="wdval">'+v+'</div></div>'; }).join(''); html+='<div class="wdpanel"><div class="wdtitle">Reps by weekday <span class="wdhint">— spot your free days</span></div><div class="wdchart">'+wbars+'</div></div>'; box.innerHTML=html; }
+function buildGym(){
+  var el=document.getElementById('gym');
+  function render(){
+    var d=gymLoad(), s=gymStats(), now=Date.now(), DAY=86400000;
+    var set={}; d.log.forEach(function(e){ set[dayKey(e.t)]=1; });
+    var dots=''; for(var i=6;i>=0;i--){ var t=now-i*DAY; dots+='<span class="dot'+(set[dayKey(t)]?' on':'')+'"></span>'; }
+    var wpct=Math.min(100, Math.round(s.week/s.goal*100));
+    var html='<div class="goalcard">'
+      + '<div class="goalrow"><div class="goaltitle">This week</div>'
+      + '<div class="goalnums"><b>'+s.week+'</b> / <input id="weeklyGoal" class="goalinput" type="number" min="1" value="'+s.goal+'"> reps</div></div>'
+      + '<div class="bar-wrap"><div class="bar-fill" style="width:'+wpct+'%"></div></div>'
+      + '<div class="gymlast"><b>'+s.streak+'</b>-day streak · <b>'+s.total+'</b> total · last in the gym <b>'+s.lastTxt+'</b> <span class="dots">'+dots+'</span></div>'
+      + '</div>';
+    DRILLS.forEach(function(dr){
+      var reps=d.reps[dr.id]||0, cycles=Math.floor(reps/dr.target), curc=reps%dr.target, pct=Math.round(curc/dr.target*100);
+      html += '<div class="drill"><div class="drill-top"><div><div class="drill-name">'+dr.name+(cycles>0?' <span class="cyc">×'+cycles+' done</span>':'')+'</div><div class="drill-desc">'+dr.desc+'</div></div>'
+        + '<div class="drill-count">'+curc+'<span>/'+dr.target+'</span></div></div>'
+        + '<div class="bar-wrap"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
+        + '<div class="drill-btns"><button class="rep-minus" data-id="'+dr.id+'">–</button>'
+        + '<input class="rep-note" data-id="'+dr.id+'" type="text" placeholder="optional note — what did you make?">'
+        + '<button class="rep-plus" data-id="'+dr.id+'">+1</button></div></div>';
+    });
+    html += '<div class="jsec"><h3>Insights</h3><div class="seg" id="insightSeg">'
+      + '<button class="segbtn" data-v="daily">Daily</button><button class="segbtn" data-v="weekly">Weekly</button><button class="segbtn" data-v="monthly">Monthly</button><button class="segbtn" data-v="year">Year</button>'
+      + '</div><div id="insights"></div></div>';
+    var recent = d.log.slice(-15).reverse();
+    var logHtml='';
+    recent.forEach(function(e){ logHtml += '<div class="logrow"><span class="logdrill">'+(DRILL_NAME[e.d]||e.d)+'</span>'+(e.n?'<span class="lognote">'+e.n+'</span>':'<span class="lognote"></span>')+'<span class="logtime">'+relTime(e.t)+'</span></div>'; });
+    html += '<div class="jsec"><h3>Recent activity</h3><div class="logbox">'+(logHtml||'<div class="browse-empty" style="padding:14px">No reps logged yet — tap +1 on a drill.</div>')+'</div></div>';
+    html += '<div class="gymtools"><button id="gymExport" class="tool">⬇ Back up my data</button></div>';
+    html += '<div class="gymnote">'+"Reps & notes save in this browser and persist on your live site. They won't carry into the Claude preview, and clearing browser data resets them — so back up now and then."+'</div>';
+    el.innerHTML=html;
+    el.querySelectorAll('.rep-plus').forEach(function(b){ b.addEventListener('click', function(){ var note=el.querySelector('.rep-note[data-id="'+b.dataset.id+'"]'); gymAddRep(b.dataset.id, note?note.value:''); render(); }); });
+    el.querySelectorAll('.rep-minus').forEach(function(b){ b.addEventListener('click', function(){ gymRemoveRep(b.dataset.id); render(); }); });
+    var gi=document.getElementById('weeklyGoal'); if(gi) gi.addEventListener('change', function(){ gymSetGoal(parseInt(gi.value,10)); render(); });
+    var exp=document.getElementById('gymExport'); if(exp) exp.addEventListener('click', gymExport);
+    el.querySelectorAll('.segbtn').forEach(function(b){ b.classList.toggle('active', b.dataset.v===insightView); b.addEventListener('click', function(){ insightView=b.dataset.v; try{localStorage.setItem('mirage_iview',insightView);}catch(e){} el.querySelectorAll('.segbtn').forEach(function(x){x.classList.toggle('active', x.dataset.v===insightView);}); drawInsights(); }); });
+    drawInsights();
+  }
+  render();
+}
+function gymExport(){
+  try{
+    var data=localStorage.getItem('mirage_gym')||'{"reps":{},"log":[]}';
+    var blob=new Blob([data],{type:'application/json'});
+    var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='mirage-gym-backup.json'; a.click();
+  }catch(e){}
+}
+
+showView('journey');
 </script>
 </body>
 </html>
