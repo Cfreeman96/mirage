@@ -145,6 +145,21 @@
   .wdbar{width:100%; background:var(--c-eq); border-radius:5px 5px 0 0; min-height:2px}
   .wdlab{font-size:11px; font-weight:700}
   .wdval{font-size:10px; color:var(--muted)}
+  .labhero{background:linear-gradient(135deg, var(--accent-soft), var(--card)); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); padding:18px; margin-bottom:12px}
+  .labkicker{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:700}
+  .labtitle{font-size:20px; font-weight:800; letter-spacing:-.01em; margin:3px 0}
+  .labsub{font-size:14px; color:var(--muted); line-height:1.5}
+  .labpick{display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap}
+  #labRandom{width:auto; flex:none}
+  .labselect{flex:1; min-width:150px; font:inherit; font-size:14px; padding:11px 12px; border-radius:11px; border:1px solid var(--line); background:var(--card); color:var(--ink)}
+  .labcard{background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); padding:16px}
+  .labeff{font-size:17px; margin-bottom:6px}
+  .labsrc{font-size:15px; font-weight:600}
+  .labknobs{font-size:15px; font-weight:600; color:var(--accent)}
+  .labproto{margin:4px 0 0; padding-left:20px; font-size:14.5px; line-height:1.6}
+  .labproto li{margin:2px 0}
+  .labnote{width:100%; font:inherit; font-size:14px; padding:11px 12px; border-radius:11px; border:1px solid var(--line); background:var(--bg); color:var(--ink); min-height:64px; margin:14px 0 10px; resize:vertical}
+  .labstatus{font-size:13px; color:var(--c-eq); font-weight:700; margin-top:8px; min-height:16px}
   /* ---- Dark mode ---- */
   body.dark{
     color-scheme:dark;
@@ -205,7 +220,8 @@
       <button class="tab active" data-view="journey">Home</button>
       <button class="tab" data-view="quiz">Quiz</button>
       <button class="tab" data-view="browse">Browse</button>
-      <button class="tab" data-view="gym">Gym</button>
+      <button class="tab" data-view="gym">Reps</button>
+      <button class="tab" data-view="lab">Lab</button>
     </nav>
   </div>
   <button id="themeToggle" class="theme-toggle">☾ Dark</button>
@@ -234,6 +250,10 @@
 
 <section id="view-gym" hidden>
   <div id="gym"></div>
+</section>
+
+<section id="view-lab" hidden>
+  <div id="lab"></div>
 </section>
 
 <script>
@@ -833,7 +853,8 @@ const VIEWS = {
   journey:{title:"Mirage", sub:""},
   quiz:   {title:"Answer it in your head. Then reveal.", sub: CARDS.length+" cards · principles + all your devices · jargon decoded."},
   browse: {title:"Browse the library.", sub:"Search and skim every device, principle and technique."},
-  gym:    {title:"The Gym.", sub:"Rack up reps. Keep the streak alive."}
+  gym:    {title:"Reps.", sub:"Rack up reps. Keep the streak alive."},
+  lab:    {title:"Effect Lab.", sub:"Learn one device by ear, across a few loops."}
 };
 const viewTitle = document.getElementById('viewTitle');
 const viewSub = document.getElementById('viewSub');
@@ -845,12 +866,14 @@ function showView(v){
   document.getElementById('view-browse').hidden = v!=='browse';
   document.getElementById('view-journey').hidden = v!=='journey';
   document.getElementById('view-gym').hidden = v!=='gym';
+  document.getElementById('view-lab').hidden = v!=='lab';
   document.querySelector('header').style.display = (v==='journey') ? 'none' : 'block';
   viewTitle.textContent = VIEWS[v].title;
   viewSub.textContent = VIEWS[v].sub;
   if(v==='browse' && !browseBuilt){ buildBrowse(); browseBuilt=true; }
   if(v==='journey'){ buildJourney(); }
   if(v==='gym'){ buildGym(); }
+  if(v==='lab'){ buildLab(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('.tab').forEach(t=> t.addEventListener('click', ()=>showView(t.dataset.view)));
@@ -919,7 +942,7 @@ const DRILLS = [
   {id:"mix", name:"Mixing moves", target:25, desc:"One focused fix: comp, EQ, or de-ess a part."},
   {id:"loops", name:"Finished loops", target:25, desc:"A polished 8-bar loop you'd be proud to drop."}
 ];
-const DRILL_NAME = {}; DRILLS.forEach(function(d){ DRILL_NAME[d.id]=d.name; });
+const DRILL_NAME = {}; DRILLS.forEach(function(d){ DRILL_NAME[d.id]=d.name; }); DRILL_NAME.efflab="Effect Lab";
 function gymLoad(){ try{ var d=JSON.parse(localStorage.getItem('mirage_gym'))||{}; if(!d.reps)d.reps={}; if(!d.log)d.log=[]; if(!d.weeklyGoal)d.weeklyGoal=20; return d; }catch(e){ return {reps:{}, log:[], weeklyGoal:20}; } }
 function gymSave(d){ try{ localStorage.setItem('mirage_gym', JSON.stringify(d)); }catch(e){} }
 function gymAddRep(id, note){ var d=gymLoad(); d.reps[id]=(d.reps[id]||0)+1; d.log.push({t:Date.now(), d:id, n:(note||"").trim()}); gymSave(d); }
@@ -998,6 +1021,57 @@ function gymExport(){
     var blob=new Blob([data],{type:'application/json'});
     var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='mirage-gym-backup.json'; a.click();
   }catch(e){}
+}
+
+// ---- Effect Lab ----
+var LAB_SOURCES=["🥁 a drum loop","🎛️ a bassline","✨ a synth pluck","🌫️ a pad / chord","🎯 a lead","🎤 a vocal / one-shot","🎩 a hi-hat loop","🎹 piano / keys"];
+var LAB_EFFECTS=[
+  {n:"Compressor",k:"Threshold · Ratio · Attack/Release"},
+  {n:"Glue Compressor",k:"Threshold · Ratio · Makeup"},
+  {n:"EQ Eight",k:"Frequency · Gain · Q"},
+  {n:"EQ Three",k:"Low/Mid/High kills · crossovers"},
+  {n:"Auto Filter",k:"Cutoff · Resonance · LFO amount"},
+  {n:"Utility",k:"Gain · Width · Bass Mono"},
+  {n:"Roar",k:"Drive · Shaper Amount · Shaper Bias"},
+  {n:"Overdrive",k:"Drive · Tone · X-Y band"},
+  {n:"Saturator",k:"Drive · Curve type · Color"},
+  {n:"Vocoder",k:"Carrier · Bands · Formant"},
+  {n:"Delay",k:"Time (sync) · Feedback · Filter dot"},
+  {n:"Echo",k:"Time · Feedback · Character (Wobble/Ducking)"},
+  {n:"Reverb",k:"Predelay · Decay · Size"},
+  {n:"Spectral Time",k:"Freeze / Fade · Shift · Feedback"},
+  {n:"Auto Pan-Tremolo",k:"Rate · Amount · Pan vs Tremolo"},
+  {n:"Chorus-Ensemble",k:"Rate · Amount · Mode"},
+  {n:"Phaser-Flanger",k:"Mode · Rate · Feedback"},
+  {n:"Shifter",k:"Mode (Pitch/Freq/Ring) · Amount · Dry/Wet"},
+  {n:"Drum Buss",k:"Drive · Transients · Boom"},
+  {n:"Multiband Dynamics (OTT)",k:"Amount · Bands · Up/Down"},
+  {n:"Limiter",k:"Input · Ceiling · Release"}
+];
+var labEffect=null, labSources=[];
+function labPickSources(){ var pool=LAB_SOURCES.slice(), out=[]; for(var i=0;i<3 && pool.length;i++){ out.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0]); } return out; }
+function labAssign(eff){ labEffect = eff || LAB_EFFECTS[Math.floor(Math.random()*LAB_EFFECTS.length)]; labSources = labPickSources(); }
+function buildLab(){
+  var el=document.getElementById('lab');
+  if(!labEffect) labAssign();
+  function render(){
+    var opts='<option value="">Pick a device…</option>'+LAB_EFFECTS.map(function(e,i){ return '<option value="'+i+'"'+((labEffect&&labEffect.n===e.n)?' selected':'')+'>'+e.n+'</option>'; }).join('');
+    el.innerHTML=
+      '<div class="labhero"><div class="labkicker">Effect Lab</div><div class="labtitle">Learn a device by ear.</div>'
+      + '<div class="labsub">Loop a few contrasting sounds, drop one effect, and sweep its knobs to hear what it does to each — no full track required.</div></div>'
+      + '<div class="labpick"><button id="labRandom" class="primary">🎲 Surprise me</button><select id="labSelect" class="labselect">'+opts+'</select></div>'
+      + '<div class="labcard"><div class="labeff">Today\'s device: <b>'+labEffect.n+'</b></div>'
+      + '<div class="sec"><div class="sec-h">Build loops with</div><div class="labsrc">'+labSources.join('&nbsp;&nbsp;·&nbsp;&nbsp;')+'</div></div>'
+      + '<div class="sec"><div class="sec-h">Sweep these</div><div class="labknobs">'+labEffect.k+'</div></div>'
+      + '<div class="sec"><div class="sec-h">Protocol</div><ol class="labproto"><li>Loop each source in Session view.</li><li>Solo one, drop <b>'+labEffect.n+'</b>, and sweep each knob to its extremes.</li><li>Note what it does to <i>that</i> sound.</li><li>Move to the next source — hear how it differs.</li></ol></div>'
+      + '<textarea id="labNote" class="labnote" placeholder="What did you hear? e.g. Predelay keeps the vocal clear; long decay washes the pad."></textarea>'
+      + '<button id="labLog" class="primary">✓ Log this lab session</button><div id="labStatus" class="labstatus"></div></div>'
+      + '<div class="jsec"><h3>First time? Build your loop bank</h3><div class="jcard">In Session view, drop a looping clip on 4–5 tracks — drums, bass, a synth, a pad, a vocal/one-shot. Save it (File → Save Live Set as Template, or just keep a "Lab" Set you duplicate). Reopen it anytime, drop an effect on a track, and audition across all of them.</div></div>';
+    document.getElementById('labRandom').addEventListener('click', function(){ labAssign(); render(); });
+    document.getElementById('labSelect').addEventListener('change', function(){ if(this.value!==''){ labEffect=LAB_EFFECTS[parseInt(this.value,10)]; labSources=labPickSources(); render(); } });
+    document.getElementById('labLog').addEventListener('click', function(){ var note=document.getElementById('labNote').value.trim(); gymAddRep('efflab', labEffect.n+(note?' — '+note:'')); document.getElementById('labStatus').textContent='Logged ✓ — added to your Reps. Nice work.'; document.getElementById('labNote').value=''; });
+  }
+  render();
 }
 
 showView('journey');
