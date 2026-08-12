@@ -86,3 +86,20 @@ Two **LFOs**, an **Envelope Follower** (with external sidechain), and a **Noise*
 **In your track:** Guido introduced this in Part 2. It's the cousin of your Overdrive and Roar (all add harmonics), but Saturator is the go-to for **clean warmth/color** with precise control. *Listen for:* Drive thickens and adds harmonic richness/loudness; the **Color** trick keeps your sub clean while saturating the mids/highs — bypass and the sound gets thinner and more sterile.
 
 **Sources:** [manual](https://www.ableton.com/en/manual/live-audio-effect-reference/)
+
+---
+
+## Redux
+**What it is:** A **lo-fi / bitcrush** effect that *degrades* the signal on purpose — from warm 8-bit grit to harsh digital destruction. Uses two digital techniques: **downsampling** and **bit reduction**. It's the *digital* dirt counterpart to Overdrive/Saturator/Roar (analog dirt).
+
+**Key controls:**
+- **Downsampling — Rate:** lowers the **sample rate** (throws away *time* resolution), adding gritty **inharmonic / aliasing** tones. Lower = harsher, more "digital."
+- **Jitter:** adds noise/randomness to the downsampler's clock → noisier sound + increased stereo width.
+- **Pre / Post filters:** *Pre* filters before downsampling (reduces bandwidth into the process); *Post* is a low-pass after downsampling (reduces harsh imaging), tunable via the Post-Filter Octave slider.
+- **Bit reduction — Bit depth:** the quantizer lowers **volume** resolution → the classic **bitcrush** (steppy, 8-bit crunch). The amplitude/**Shape** curve takes it from subtle to drastic.
+
+**Common uses:** add edge/character to a clean sound, or trash a loop into lo-fi texture; digital aliasing FX; warm 8-bit fatness.
+
+**In your track:** a new effect Charlie is experimenting with. *Listen for:* pulling **Rate** down adds gritty aliasing; dropping **Bit** depth adds steppy crunch; a **Post** low-pass softens the harsh top. A touch = character; a lot = destruction.
+
+**Sources:** [manual (Redux)](https://www.ableton.com/en/manual/live-audio-effect-reference/) · [Redux video](https://www.youtube.com/watch?v=71A5FC272L0)

@@ -160,6 +160,21 @@
   .labproto li{margin:2px 0}
   .labnote{width:100%; font:inherit; font-size:14px; padding:11px 12px; border-radius:11px; border:1px solid var(--line); background:var(--bg); color:var(--ink); min-height:64px; margin:14px 0 10px; resize:vertical}
   .labstatus{font-size:13px; color:var(--c-eq); font-weight:700; margin-top:8px; min-height:16px}
+  .toolform{display:flex; flex-direction:column; gap:8px; margin-bottom:14px}
+  .tinput{width:100%; font:inherit; font-size:14px; padding:11px 12px; border-radius:11px; border:1px solid var(--line); background:var(--bg); color:var(--ink)}
+  .toolitem{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); padding:14px; margin-bottom:8px}
+  .toolhead{display:flex; align-items:center; gap:8px}
+  .toolname{font-weight:700; font-size:16px}
+  .toolstatus{font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; background:var(--c-eq-bg); color:var(--c-eq); cursor:pointer}
+  .tooldel{width:auto; flex:none; margin-left:auto; padding:6px 11px; border-radius:9px; font-weight:700; font-size:14px; color:var(--muted)}
+  .toolvia{font-size:12.5px; color:var(--muted); margin-top:4px}
+  .toolnote{font-size:14px; margin-top:6px; line-height:1.5}
+  .keybox{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); overflow:hidden}
+  .keyrow{display:flex; align-items:center; gap:12px; padding:10px 13px; border-bottom:1px solid var(--line); font-size:14px}
+  .keyrow:last-child{border-bottom:none}
+  .kbd{flex:none; min-width:66px; text-align:center; font-weight:700; font-size:13px; padding:6px 10px; border-radius:8px; background:var(--bg); border:1px solid var(--line); box-shadow:0 1px 0 var(--line)}
+  .kdesc{flex:1}
+  .keydel{width:auto; flex:none; margin-left:auto; padding:5px 10px; border-radius:8px; font-weight:700; font-size:14px; color:var(--muted)}
   /* ---- Dark mode ---- */
   body.dark{
     color-scheme:dark;
@@ -222,6 +237,8 @@
       <button class="tab" data-view="browse">Browse</button>
       <button class="tab" data-view="gym">Reps</button>
       <button class="tab" data-view="lab">Lab</button>
+      <button class="tab" data-view="tools">Tools</button>
+      <button class="tab" data-view="keys">Shortcuts</button>
     </nav>
   </div>
   <button id="themeToggle" class="theme-toggle">☾ Dark</button>
@@ -229,7 +246,7 @@
 <header>
   <div class="kicker">Mirage · Ableton Cards</div>
   <h1 id="viewTitle">Answer it in your head. Then reveal.</h1>
-  <div class="sub" id="viewSub">60 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
+  <div class="sub" id="viewSub">61 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
 </header>
 
 <section id="view-quiz">
@@ -254,6 +271,14 @@
 
 <section id="view-lab" hidden>
   <div id="lab"></div>
+</section>
+
+<section id="view-tools" hidden>
+  <div id="tools"></div>
+</section>
+
+<section id="view-keys" hidden>
+  <div id="keys"></div>
 </section>
 
 <script>
@@ -444,10 +469,10 @@ const CARDS = [
 
   { cat:"prin", dev:"Bass Mono",
     prompt:"Why do producers force the low end to <b>mono</b> with <b>Bass Mono</b> — when they work so hard to make everything else wide?",
-    answer:"Two facts about bass drive it. First, <b>you can't locate low frequencies</b> — a sub could be anywhere in the room and you'd never point to it — so making bass <i>stereo/wide</i> gains you nothing perceptually. Second, stereo bass is <b>risky</b>: if the left and right lows differ even slightly (out of phase), those long waveforms partially <b>cancel</b> when combined — in the room, on mono systems, on vinyl, in clubs — leaving a thin, weak, wobbly low end. <b>Bass Mono</b> takes everything <b>below a set frequency</b> (e.g. 120 Hz) and forces L and R to be identical (dead center), while leaving the highs wide. Result: the lows are phase-safe, all their energy stacks in the center for a solid, powerful hit, it translates the same on every system — and you keep your width up top.",
+    answer:"Two facts about bass drive it. First, <b>you can't locate low frequencies</b> — a sub could be anywhere in the room and you'd never point to it — so making bass <i>stereo/wide</i> gains you nothing perceptually. Second, stereo bass is <b>risky</b>: if the left and right lows differ even slightly (out of phase), those long waveforms partially <b>cancel</b> when combined — in the room, on mono systems, on vinyl, in clubs — leaving a thin, weak, wobbly low end. <b>Bass Mono</b> takes everything <b>below a set frequency</b> (e.g. 120 Hz) and forces L and R to be identical (dead center), while leaving the highs wide. Result: the lows are phase-safe, all their energy stacks in the center for a solid, powerful hit, it translates the same on every system — and you keep your width up top. <b>When to break it (Guido's note):</b> match the low end to the <i>section's job</i>. In a <b>breakdown</b> or atmospheric section — often kickless and going for dreamy immersion — letting the sub/bass go <b>wide</b> is a feature, not a bug (no kick to clash with, and width <i>is</i> the emotion you want). So: mono for power (drops); wide for feeling (breakdowns).",
     you:"This is why Utility's Bass Mono (~120 Hz) sits on your bass and inside Bootsandcats: cheap insurance that the low end is centered and strong everywhere.",
     tryThis:"On a wide bass or pad, toggle Utility's full <b>Mono</b> button on/off — if the low end drops in level, you had phase cancellation hiding there. Now use <b>Bass Mono</b> instead: the lows firm up while the highs stay wide. That disappearing level drop is the point.",
-    jargon:[["Bass Mono","folds everything below a set frequency to mono (centered), leaving the highs stereo."],["Phase cancellation","when left and right lows differ and partly cancel when combined — thin, weak bass."],["Mono-compatibility","still sounding right when the stereo is summed to mono (clubs, phones and vinyl often do this)."]],
+    jargon:[["Bass Mono","folds everything below a set frequency to mono (centered), leaving the highs stereo."],["Phase cancellation","when left and right lows differ and partly cancel when combined — thin, weak bass."],["Mono-compatibility","still sounding right when the stereo is summed to mono (clubs, phones and vinyl often do this)."],["Match the section's job","the real rule — mono lows where power &amp; translation matter (drops); wide lows where immersion matters (breakdowns)."]],
     links:[["Manual: Utility","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
 
   // ===== DYNAMICS =====
@@ -565,6 +590,14 @@ const CARDS = [
     jargon:[["Waveshaping","reshaping the waveform to add harmonics — the mechanism behind saturation/distortion."],["Drive","how hard the signal is pushed into the shaping curve."],["Color (filter trick)","EQ before the shaper, undone after — lets you choose which frequencies get saturated."]],
     links:[["Manual: Saturator","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
 
+  { cat:"dist", dev:"Redux",
+    prompt:"You want that <b>lo-fi / 8-bit / crushed</b> digital grit. What is <b>Redux</b> doing to get it?",
+    answer:"<b>Redux</b> is a lo-fi degradation effect built from two digital tricks. <b>Downsampling</b> (the <b>Rate</b> knob) lowers the <b>sample rate</b> — it throws away <i>time</i> resolution, adding gritty inharmonic <b>aliasing</b> tones (lower = harsher, more 'digital'). <b>Bit reduction</b> (the quantizer / <b>Bit</b> depth) throws away <i>volume</i> resolution — the classic <b>bitcrush</b> that turns smooth sounds into crunchy, steppy 8-bit grit, with a <b>Shape</b> curve from subtle to drastic. Extras: <b>Jitter</b> adds noise/randomness to the downsampler (noisier, wider), and <b>Pre/Post filters</b> tame or shape the artifacts. Range: warm 8-bit fatness → harsh digital destruction.",
+    you:"A new toy you're experimenting with — great for adding edge/character to a clean sound or trashing a loop into lo-fi texture. It's the <i>digital</i> dirt counterpart to your Overdrive / Saturator / Roar (which are <i>analog</i> dirt).",
+    tryThis:"On a synth or drum loop: pull <b>Rate</b> down for aliasing grit, then drop <b>Bit</b> depth for crunch. Add a <b>Post</b> low-pass to soften the harsh top and a little <b>Jitter</b> for width. A touch = character; a lot = destruction.",
+    jargon:[["Downsampling (Rate)","lowering the sample rate — throws away time detail, adds gritty aliased tones."],["Bit reduction (bitcrush)","lowering bit depth — throws away volume detail, giving steppy '8-bit' crunch."],["Jitter","noise added to the downsampler's clock — noisier, wider, more unstable."]],
+    links:[["Manual: Redux","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=71A5FC272L0"]] },
+
   // ===== TIME-BASED =====
   { cat:"time", dev:"Delay",
     prompt:"What does the plain <b>Delay</b> device do, and how do <b>sync</b>, <b>feedback</b> and its <b>filter</b> shape the repeats?",
@@ -656,11 +689,11 @@ const CARDS = [
     links:[["Manual: Shifter","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=uqY8K8otbp0"]] },
 
   { cat:"mod", dev:"Shaper",
-    prompt:"<b>Shaper</b> isn't an audio effect — it's a modulator. What does it actually do, and how did it build your bass 'pseudo-sidechain'?",
-    answer:"<b>Shaper</b> generates a custom <b>breakpoint envelope</b> — a shape you draw — and <b>maps</b> it onto any parameter in Live (up to 8 at once). Think 'a repeating shape that turns a knob for you.' You choose <b>Modulation</b> (adds to the current value, which you can still tweak) or <b>Remote</b> (takes it over), set <b>Bipolar/Unipolar</b> polarity and a <b>Modulation Amount</b>. In your bass trick, Shaper draws a ducking curve and maps it to a <b>Utility's Gain</b>, dipping the bass on every kick — a sidechain-style pump, but hand-drawn, so no clicks on four-on-the-floor.",
-    you:"This is the key to your bass 'Shaper + 2 Utilities' — smoother than a fast sidechain compressor, no ticks.",
-    tryThis:"Add a Shaper, map it to a Utility's Gain on the bass, draw a quick dip on each beat. You've built a click-free sidechain pump.",
-    jargon:[["Modulator","a device that moves other parameters instead of making sound."],["Breakpoint envelope","a shape you draw with points, repeated over time."],["Mapping","assigning a modulator to control a specific knob."]],
+    prompt:"<b>Shaper</b> confused you before — it's the modulator inside <b>Bootsandcats</b>. In plain terms, what does it actually do?",
+    answer:"Easiest way in: <b>Shaper is like an LFO, but you <i>draw the shape yourself</i>.</b> It's a <b>modulator</b> — it makes no sound; instead it <b>moves a knob for you</b>, over and over, following a shape you draw. That shape is a <b>breakpoint envelope</b> (a curve made of draggable points). You set how fast it repeats (<b>Rate</b> — free, or tempo-synced), then <b>Map</b> it to a parameter: click <b>Map</b>, then click the knob you want it to control (up to 8). <b>Modulation</b> mode <i>adds</i> its movement on top of the knob's current value (still tweakable); <b>Remote</b> takes the knob over completely. <b>Bipolar</b> swings both above and below the value; <b>Unipolar</b> pushes one direction only; <b>Amount</b> = how far it pushes.",
+    you:"This is the engine inside <b>Bootsandcats</b> — the thing you're using right now. There, the Shaper draws a 'duck' curve and maps it to a Utility's <b>Gain</b>, dipping the bass on every beat (a hand-drawn, click-free sidechain). That's basically the <i>only</i> place you've used it — exactly why the card felt abstract before it had something to point to.",
+    tryThis:"Open the Shaper inside Bootsandcats and just look: the drawn curve dips down and ramps back up — that shape <i>is</i> the pump. Drag one of its breakpoints and watch the bass ducking change. Drawn shape → mapped to Utility Gain = the whole trick.",
+    jargon:[["Modulator","a device that moves other parameters instead of making sound — like an LFO or Shaper."],["Breakpoint envelope","the shape you draw out of draggable points; it loops over and over."],["Map","click Map, then click a knob to make the Shaper control it (up to 8 knobs)."],["Modulation vs Remote","Modulation adds movement on top of the knob's value (still tweakable); Remote takes the knob over fully."],["Bipolar / Unipolar","Bipolar swings both ways around the value; Unipolar pushes one direction only."]],
     links:[["Manual: Max for Live devices","https://www.ableton.com/en/manual/max-for-live-devices/"]] },
 
   { cat:"mod", dev:"Bootsandcats (Shaper sidechain)",
@@ -854,7 +887,9 @@ const VIEWS = {
   quiz:   {title:"Answer it in your head. Then reveal.", sub: CARDS.length+" cards · principles + all your devices · jargon decoded."},
   browse: {title:"Browse the library.", sub:"Search and skim every device, principle and technique."},
   gym:    {title:"Reps.", sub:"Rack up reps. Keep the streak alive."},
-  lab:    {title:"Effect Lab.", sub:"Learn one device by ear, across a few loops."}
+  lab:    {title:"Effect Lab.", sub:"Learn one device by ear, across a few loops."},
+  tools:  {title:"Third-party tools.", sub:"Suggested by people worth listening to — capture now, explore later."},
+  keys:   {title:"Shortcuts.", sub:"Ableton keys worth keeping — search, and add your own."}
 };
 const viewTitle = document.getElementById('viewTitle');
 const viewSub = document.getElementById('viewSub');
@@ -867,6 +902,8 @@ function showView(v){
   document.getElementById('view-journey').hidden = v!=='journey';
   document.getElementById('view-gym').hidden = v!=='gym';
   document.getElementById('view-lab').hidden = v!=='lab';
+  document.getElementById('view-tools').hidden = v!=='tools';
+  document.getElementById('view-keys').hidden = v!=='keys';
   document.querySelector('header').style.display = (v==='journey') ? 'none' : 'block';
   viewTitle.textContent = VIEWS[v].title;
   viewSub.textContent = VIEWS[v].sub;
@@ -874,6 +911,8 @@ function showView(v){
   if(v==='journey'){ buildJourney(); }
   if(v==='gym'){ buildGym(); }
   if(v==='lab'){ buildLab(); }
+  if(v==='tools'){ buildTools(); }
+  if(v==='keys'){ buildKeys(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('.tab').forEach(t=> t.addEventListener('click', ()=>showView(t.dataset.view)));
@@ -1035,6 +1074,7 @@ var LAB_EFFECTS=[
   {n:"Roar",k:"Drive · Shaper Amount · Shaper Bias"},
   {n:"Overdrive",k:"Drive · Tone · X-Y band"},
   {n:"Saturator",k:"Drive · Curve type · Color"},
+  {n:"Redux",k:"Rate (downsample) · Bit depth · Jitter"},
   {n:"Vocoder",k:"Carrier · Bands · Formant"},
   {n:"Delay",k:"Time (sync) · Feedback · Filter dot"},
   {n:"Echo",k:"Time · Feedback · Character (Wobble/Ducking)"},
@@ -1072,6 +1112,125 @@ function buildLab(){
     document.getElementById('labLog').addEventListener('click', function(){ var note=document.getElementById('labNote').value.trim(); gymAddRep('efflab', labEffect.n+(note?' — '+note:'')); document.getElementById('labStatus').textContent='Logged ✓ — added to your Reps. Nice work.'; document.getElementById('labNote').value=''; });
   }
   render();
+}
+
+// ---- Third-party tools (suggested; capture, revisit later) ----
+function toolsLoad(){ try{ var v=localStorage.getItem('mirage_tools'); if(v) return JSON.parse(v); }catch(e){} return null; }
+function toolsSave(a){ try{ localStorage.setItem('mirage_tools', JSON.stringify(a)); }catch(e){} }
+var SEED_TOOLS=[
+  {name:"Type A — AudioThing", via:"Guido", note:"Enhancer plugin — reportedly a better take on what OTT does for thickening vocals."},
+  {name:"RX — iZotope", via:"Guido", note:"Audio-restoration suite (De-click, De-noise, etc.). Clean the vocal FIRST — OTT/Type A exaggerate clicks & noise if the source isn't clean."}
+];
+function toolsSeed(){ var t=toolsLoad()||[]; SEED_TOOLS.forEach(function(sd){ if(!t.some(function(x){return x.name===sd.name;})){ t.push({name:sd.name, via:sd.via, note:sd.note, t:Date.now(), status:"To try"}); } }); toolsSave(t); return t; }
+function toolsAdd(name, via, note){ var t=toolsLoad()||[]; t.unshift({name:name, via:via, note:note, t:Date.now(), status:"To try"}); toolsSave(t); }
+function toolsDelete(i){ var t=toolsLoad()||[]; t.splice(i,1); toolsSave(t); }
+function toolsCycle(i){ var order=["To try","Exploring","Using it","Passed"], t=toolsLoad()||[]; if(t[i]){ t[i].status=order[(order.indexOf(t[i].status)+1)%order.length]; toolsSave(t); } }
+function buildTools(){
+  var el=document.getElementById('tools'); toolsSeed();
+  function render(){
+    var arr=toolsLoad()||[];
+    var html='<div class="jcard toolform">'
+      + '<input id="tName" class="tinput" placeholder="Tool name (e.g. Type A)">'
+      + '<input id="tVia" class="tinput" placeholder="Suggested by (e.g. Guido)">'
+      + '<input id="tNote" class="tinput" placeholder="What it&#39;s for / why (optional)">'
+      + '<button id="tAdd" class="primary" style="width:100%">+ Add tool</button></div>';
+    if(!arr.length) html+='<div class="browse-empty" style="padding:14px">Nothing captured yet.</div>';
+    arr.forEach(function(it,i){
+      html+='<div class="toolitem"><div class="toolhead"><span class="toolname">'+it.name+'</span>'
+        +'<span class="toolstatus" data-i="'+i+'" title="click to change status">'+(it.status||'To try')+'</span>'
+        +'<button class="tooldel" data-i="'+i+'" title="remove">×</button></div>'
+        +'<div class="toolvia">via '+(it.via||'—')+' · '+relTime(it.t)+'</div>'
+        +(it.note?'<div class="toolnote">'+it.note+'</div>':'')+'</div>';
+    });
+    el.innerHTML=html;
+    document.getElementById('tAdd').addEventListener('click', function(){ var n=document.getElementById('tName').value.trim(); if(!n)return; toolsAdd(n, document.getElementById('tVia').value.trim(), document.getElementById('tNote').value.trim()); render(); });
+    el.querySelectorAll('.tooldel').forEach(function(b){ b.addEventListener('click', function(){ toolsDelete(parseInt(b.dataset.i,10)); render(); }); });
+    el.querySelectorAll('.toolstatus').forEach(function(b){ b.addEventListener('click', function(){ toolsCycle(parseInt(b.dataset.i,10)); render(); }); });
+  }
+  render();
+}
+
+// ---- Shortcuts (Ableton keys) ----
+var SEED_SHORTCUTS=[
+  {g:"Transport & global", items:[
+    {k:"Space", d:"Play / Stop"},
+    {k:"Tab", d:"Toggle Session / Arrangement"},
+    {k:"⇧Tab", d:"Toggle Clip / Device view"},
+    {k:"O", d:"Metronome on / off"},
+    {k:"F9", d:"Arrangement Record"},
+    {k:"⌘⇧F9", d:"Session Record"},
+    {k:"⌘⌥5", d:"Show / hide Browser"},
+    {k:"⌘⌥6", d:"Show / hide Groove Pool"},
+    {k:"⌘⌥7", d:"Show / hide Help view"}
+  ]},
+  {g:"Tracks", items:[
+    {k:"⌘T", d:"Insert audio track"},
+    {k:"⌘⇧T", d:"Insert MIDI track"},
+    {k:"⌘G", d:"Group tracks"},
+    {k:"⌘R", d:"Rename selected"},
+    {k:"⌘↑ / ⌘↓", d:"Move selected track or automation lane up / down"},
+    {k:"U", d:"Fold / unfold selected tracks"},
+    {k:"⌥U", d:"Unfold all tracks"},
+    {k:"⌥+ / ⌥−", d:"Set selected tracks to the same height"},
+    {k:"S", d:"Show all tracks (minimize)"},
+    {k:"H", d:"Optimize Arrangement height"},
+    {k:"W", d:"Optimize Arrangement width"}
+  ]},
+  {g:"Automation lanes", items:[
+    {k:"click header", d:"Select an automation lane (⇧-click a range, ⌘-click to add)"},
+    {k:"⌥ + drag", d:"Resize all selected automation lanes together"},
+    {k:"⌘⌫", d:"Clear the envelopes in the selected lanes"},
+    {k:"−", d:"Remove all selected lanes (the lane's − button)"},
+    {k:"Re-Enable", d:"Automation greyed out / overridden? Click the lit Re-Enable Automation button in the Control Bar (or right-click the param → Re-Enable Automation) to restore it."}
+  ]},
+  {g:"Editing & clips", items:[
+    {k:"⌘A", d:"Select all"},
+    {k:"⌘D", d:"Duplicate"},
+    {k:"⌘L", d:"Loop selection"},
+    {k:"⌘E", d:"Split at selection"},
+    {k:"⌘J", d:"Consolidate to one clip"},
+    {k:"⌘Z / ⌘⇧Z", d:"Undo / Redo"},
+    {k:"0", d:"Deactivate (mute) selection"},
+    {k:"⌘⇧U", d:"Quantize"},
+    {k:"⌘⇧C", d:"Capture MIDI"}
+  ]},
+  {g:"Grid", items:[
+    {k:"⌘1", d:"Narrow grid"},
+    {k:"⌘2", d:"Widen grid"},
+    {k:"⌘3", d:"Triplet grid"},
+    {k:"⌘4", d:"Snap to grid on / off"},
+    {k:"⌘5", d:"Fixed / adaptive grid"}
+  ]},
+  {g:"Zoom & view", items:[
+    {k:"Z", d:"Zoom to time selection"},
+    {k:"X", d:"Zoom back out"},
+    {k:"B", d:"Draw (pencil) mode"}
+  ]}
+];
+function keysLoad(){ try{ var v=localStorage.getItem('mirage_keys'); if(v) return JSON.parse(v); }catch(e){} return []; }
+function keysSave(a){ try{ localStorage.setItem('mirage_keys', JSON.stringify(a)); }catch(e){} }
+function keysAdd(k,d){ var a=keysLoad(); a.unshift({k:k,d:d}); keysSave(a); }
+function keysDelete(i){ var a=keysLoad(); a.splice(i,1); keysSave(a); }
+function buildKeys(){
+  var el=document.getElementById('keys');
+  el.innerHTML='<input id="kSearch" class="search" type="search" placeholder="Search shortcuts…">'
+    + '<div class="jcard toolform"><input id="kKeys" class="tinput" placeholder="Keys (e.g. ⌘T)"><input id="kDesc" class="tinput" placeholder="What it does"><button id="kAdd" class="primary" style="width:100%">+ Add shortcut</button></div>'
+    + '<div class="gymnote">Mac keys shown — on Windows, ⌘→Ctrl and ⌥→Alt. Grounded in the Live 12 manual; add your own below.</div>'
+    + '<div id="keyList"></div>';
+  function row(k,d,delI){ return '<div class="keyrow"><span class="kbd">'+k+'</span><span class="kdesc">'+d+'</span>'+(delI!=null?'<button class="keydel" data-ki="'+delI+'">×</button>':'')+'</div>'; }
+  function renderList(){
+    var q=(document.getElementById('kSearch').value||'').trim().toLowerCase();
+    function match(k,d){ return !q || (k+' '+d).toLowerCase().indexOf(q)>-1; }
+    var mine=keysLoad(), html='';
+    var mrows=mine.map(function(it,i){ return match(it.k,it.d)?row(it.k,it.d,i):''; }).join('');
+    if(mrows) html+='<div class="browse-group"><h3>My shortcuts</h3><div class="keybox">'+mrows+'</div></div>';
+    SEED_SHORTCUTS.forEach(function(grp){ var rows=grp.items.filter(function(it){return match(it.k,it.d);}).map(function(it){return row(it.k,it.d,null);}).join(''); if(rows) html+='<div class="browse-group"><h3>'+grp.g+'</h3><div class="keybox">'+rows+'</div></div>'; });
+    var lb=document.getElementById('keyList'); lb.innerHTML = html || '<div class="browse-empty" style="padding:14px">No matches.</div>';
+    lb.querySelectorAll('.keydel').forEach(function(b){ b.addEventListener('click', function(){ keysDelete(parseInt(b.dataset.ki,10)); renderList(); }); });
+  }
+  document.getElementById('kSearch').addEventListener('input', renderList);
+  document.getElementById('kAdd').addEventListener('click', function(){ var k=document.getElementById('kKeys').value.trim(), d=document.getElementById('kDesc').value.trim(); if(!k||!d)return; keysAdd(k,d); document.getElementById('kKeys').value=''; document.getElementById('kDesc').value=''; renderList(); });
+  renderList();
 }
 
 showView('journey');

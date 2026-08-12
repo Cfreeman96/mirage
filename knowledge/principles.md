@@ -63,7 +63,7 @@ How wide or narrow an EQ band is. High Q = surgical (notch out one resonance); l
 A way of viewing stereo: **Mid** = what left and right share (the center — kick, bass, snare, lead vocal); **Side** = what differs (width — reverb, wide synths, room). Lets you EQ/compress/narrow "the center" and "the width" independently. Found in EQ Eight (M/S mode), Utility (Width / Mid-Side), Roar (Mid Side routing).
 
 ## Stereo width & mono
-**Mono** = one signal, dead center. **Stereo** = separate L/R. Width controls how far a sound spreads. Pro default: keep lows (below ~120 Hz) mono for a solid, phase-safe low end; save width for the highs.
+**Mono** = one signal, dead center. **Stereo** = separate L/R. Width controls how far a sound spreads. Pro default: keep lows (below ~120 Hz) mono for a solid, phase-safe low end; save width for the highs. **Exception (Guido):** match the low end to the *section's job* — in a **breakdown** / atmospheric section (often kickless, going for dreamy immersion), letting the bass go **wide** is a feature, not a bug. Mono for power (drops); wide for feeling (breakdowns).
 
 ## Sync divisions
 When a time-based effect (Delay, Echo, Auto Pan, LFO) is **synced**, its timing locks to the tempo in note values: 1/4, 1/8, 1/16, plus **Dotted** (1.5×, a longer swung feel) and **Triplet** (3-in-the-space-of-2, a rolling feel). Unsynced = free milliseconds.
