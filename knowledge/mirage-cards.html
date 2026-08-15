@@ -20,6 +20,7 @@
     --c-mod:#a53670;    --c-mod-bg:#f7e4ef;
     --c-inst:#5a5148;   --c-inst-bg:#efe9e2;
     --c-clean:#3f7d7a;  --c-clean-bg:#e2f0ef;
+    --c-master:#4f5b6b; --c-master-bg:#e6eaf0;
   }
   *{box-sizing:border-box}
   html,body{margin:0}
@@ -48,6 +49,7 @@
   .cat-mod{background:var(--c-mod-bg); color:var(--c-mod)}
   .cat-inst{background:var(--c-inst-bg); color:var(--c-inst)}
   .cat-clean{background:var(--c-clean-bg); color:var(--c-clean)}
+  .cat-master{background:var(--c-master-bg); color:var(--c-master)}
   .topbar{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin:0 2px 8px}
   .theme-toggle{width:auto; flex:none; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:999px; box-shadow:var(--shadow)}
   .tabs{display:flex; gap:6px; flex-wrap:wrap}
@@ -189,6 +191,7 @@
     --c-mod:#d571a6;   --c-mod-bg:#301e2a;
     --c-inst:#bcae9f;  --c-inst-bg:#2a2621;
     --c-clean:#5cb3ad; --c-clean-bg:#122a28;
+    --c-master:#93a1b5; --c-master-bg:#20262f;
   }
   body.dark .badge.dev{background:#2c2925; color:var(--muted)}
   body.dark .you{background:#2b1a12}
@@ -246,7 +249,7 @@
 <header>
   <div class="kicker">Mirage · Ableton Cards</div>
   <h1 id="viewTitle">Answer it in your head. Then reveal.</h1>
-  <div class="sub" id="viewSub">61 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
+  <div class="sub" id="viewSub">72 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
 </header>
 
 <section id="view-quiz">
@@ -291,7 +294,8 @@ const CATS = {
   time: {label:"Time-based",  v:"--c-time",  bg:"--c-time-bg"},
   mod:  {label:"Modulation",  v:"--c-mod",   bg:"--c-mod-bg"},
   inst: {label:"Instruments & Racks", v:"--c-inst",  bg:"--c-inst-bg"},
-  clean:{label:"Cleanup",     v:"--c-clean", bg:"--c-clean-bg"}
+  clean:{label:"Cleanup",     v:"--c-clean", bg:"--c-clean-bg"},
+  master:{label:"Mastering",   v:"--c-master", bg:"--c-master-bg"}
 };
 const M = "https://www.ableton.com/en/manual/live-audio-effect-reference/";
 const MI = "https://www.ableton.com/en/manual/live-instrument-reference/";
@@ -363,6 +367,14 @@ const CARDS = [
     jargon:[["Sidechain","letting one sound control a processor on another sound — like a conversation where you instinctively lower your voice whenever the other person talks."],["Trigger","the signal that tells the processor when to act (here, the kick)."],["Pumping","the rhythmic duck-and-recover in volume that makes a track 'breathe' with the kick."]],
     links:[["Manual: Sidechain","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=rbuTKgcteKo"]] },
 
+  { cat:"prin", dev:"Dynamic EQ — a surgical sidechain (TDR Nova)",
+    prompt:"<b>TDR Nova</b> as a 'better sidechain' — what is a <b>dynamic EQ</b> doing, and what did Guido dial in?",
+    answer:"A <b>dynamic EQ</b> is an EQ where each band works like a <b>compressor built into that band</b>: it only cuts (or boosts) a frequency <b>when that band crosses a threshold</b> (static EQ cuts <i>always</i>; dynamic cuts <i>only when the frequency gets loud</i>). Guido's <b>Band I</b> is a wide (Q 0.40) bell at <b>~20 Hz</b> (deep sub) with flat static gain but <b>Threshold on (−10.2 dB), Ratio 2:1</b> — a <b>dynamic dip in the sub</b>: when the low end spikes past the threshold it ducks ~2:1, otherwise nothing. Attack 100 ms eases in, Release 50 ms lets go fast, and <b>Dry Mix ~78%</b> blends it in parallel so it stays gentle. It's a <b>surgical alternative to sidechain compression</b>: instead of ducking the <i>whole</i> bass on every kick, it only tames the sub band <i>when it's too loud</i> — kick + sub stop piling up boom without gutting the bass.",
+    you:"Guido's point: you <b>don't need this</b> — your low end is already locked tight by <b>Bootsandcats</b> (kick + bass + sub). He showed it as the tool you'd reach for <i>if</i> it weren't controlled. It's the dynamic-EQ cousin of your <b>De-essing</b> trick (a compressor sidechained to one band) — same 'act only when that frequency spikes' idea, aimed at the sub. (The plugin's in your Tools tab.)",
+    tryThis:"Recreate Guido's band to feel it: one bell at 20 Hz, Q 0.40, Gain ~0, Threshold −10.2 dB, Ratio 2:1, Attack 100 ms, Release 50 ms, Dry Mix ~78%. Watch it dip only when the sub gets loud.",
+    jargon:[["Dynamic EQ","an EQ band that acts only when the frequency crosses a threshold — a compressor built into an EQ band."],["Static vs dynamic EQ","static always cuts; dynamic cuts only when that band gets loud (more transparent)."],["Parallel (Dry Mix)","blending the processed band with the untouched signal so the effect stays gentle."]],
+    links:[["TDR Nova (Tokyo Dawn Records)","https://www.tokyodawn.net"]] },
+
   { cat:"prin", dev:"Cutoff & Resonance",
     prompt:"Every filter has <b>Cutoff</b> and <b>Resonance</b>. What does each do?",
     answer:"<b>Cutoff</b> is the frequency where a filter starts removing sound — on a low-pass, everything above it rolls off (darker); on a high-pass, everything below (thinner, cleaner). <b>Resonance</b> adds a boost or 'whistle' right at the cutoff point, emphasizing it. Sweeping the cutoff (with an LFO or automation) is the classic tension/build move; adding resonance makes that sweep sing.",
@@ -400,7 +412,7 @@ const CARDS = [
     answer:"<b>Mid</b> is what the left and right channels share — the center of your mix (kick, bass, snare, lead vocal). <b>Side</b> is what differs between them — the width (reverb, wide synths, room). Viewing sound in Mid/Side lets you treat 'the center' and 'the width' as separate faders: brighten the sides without touching the core, or narrow the lows without narrowing the highs. Found in EQ Eight (M/S mode), Utility (Width) and Roar (Mid Side routing).",
     you:"You used EQ Eight in mid/side on your drum group — center and width handled independently.",
     tryThis:"In EQ Eight M/S, high-pass just the Sides below ~200 Hz. The stereo image opens without thinning the middle.",
-    jargon:[["Mid","the shared center content of a stereo signal."],["Side","the difference between left and right — the stereo width."]],
+    jargon:[["Mid","the shared center content of a stereo signal."],["Side","the difference between left and right — the stereo width."],["vs Left/Right","L/R = the two literal speaker channels (a repair lens); M/S = center vs width (the mix lens you'll usually want)."]],
     links:[["Manual: EQ Eight","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
 
   { cat:"prin", dev:"Stereo width & mono",
@@ -475,6 +487,78 @@ const CARDS = [
     jargon:[["Bass Mono","folds everything below a set frequency to mono (centered), leaving the highs stereo."],["Phase cancellation","when left and right lows differ and partly cancel when combined — thin, weak bass."],["Mono-compatibility","still sounding right when the stereo is summed to mono (clubs, phones and vinyl often do this)."],["Match the section's job","the real rule — mono lows where power &amp; translation matter (drops); wide lows where immersion matters (breakdowns)."]],
     links:[["Manual: Utility","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
 
+  { cat:"master", dev:"Mastering: Limiter goes last",
+    prompt:"In mastering, why must the <b>Limiter be the very last device</b> on your Main — never first, and with nothing (especially EQ) after it?",
+    answer:"The Limiter's job is to <b>guarantee nothing exceeds the ceiling</b> and set the final loudness — so it must have the <b>last word</b> on level. Put <i>any</i> processing after it and you break that promise: an <b>EQ boost after the limiter adds gain and shoves peaks back over the ceiling</b> → clipping / inter-sample peaks, undoing exactly what the limiter just did (even a cut shifts the peaks). It also can't go <i>first</i>: if it clamps peaks before your EQ, compression and saturation, those reshape the signal and <b>re-introduce peaks</b>, wasting the limiting. The rule: <b>shape first, limit last</b> — corrective EQ → compression/glue → saturation/color → stereo, then the <b>Limiter as the final gatekeeper</b>. The <i>only</i> things safe to place after it: <b>metering / spectrum analyzers</b> (they measure, adding nothing) and a <b>Utility used <i>only</i> to cut off the volume at the very end of the song</b> — a clean ending fade/cut, <b>not</b> volume automation throughout the track. It only rides the level <i>down</i> to silence, never boosts, so it can't push past the ceiling. (Throughout-track level moves belong <i>before</i> the limiter or in the mix.)",
+    you:"Guido's rule: Limiter <b>always last</b>, <b>never first</b>, <b>no EQ</b> after it. The only two things he allows after it: a <b>meter / spectrum</b> (measures only) and a <b>Utility <i>only</i> for the end-of-song cutoff</b> (not throughout-track automation). Non-negotiable ordering.",
+    tryThis:"Build your master chain top-down: EQ → comp → color/width → and drop the Limiter on the very end. If you ever feel the urge to tweak <i>after</i> it, do that move <i>before</i> the limiter instead.",
+    jargon:[["Chain order","devices process left-to-right; the last one has the final say on the output level."],["Inter-sample peaks","peaks hiding between the digital samples — why post-limiter gain can clip even when the meter looks under 0 (use True Peak on export)."],["Gatekeeper","the Limiter sets the final ceiling; anything placed after it can only push past that ceiling."]],
+    links:[["Manual: Limiter","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"master", dev:"Mastering: reference tracks & LUFS",
+    prompt:"When you use a <b>reference track</b> to judge mastering loudness, why does the <b>source format</b> matter — and what do you do with an MP3 / YouTube rip?",
+    answer:"A reference only helps if its loudness reading is <b>honest</b>. A <b>WAV (lossless)</b> file is a faithful snapshot of the real master — reference that whenever you can. An <b>MP3 or YouTube download</b> is lossy and often platform-processed, so its <b>LUFS reading isn't fully trustworthy</b> — it tends to read <i>hotter</i> than the true master. Guido's rule of thumb: if all you have is an MP3/YouTube version, <b>knock ~1.5–2 dB off its measured LUFS</b> before treating it as your target, so you're not chasing an inflated number.",
+    you:"Practical: measure your reference's <b>integrated LUFS</b>; if it's an MP3/YT rip, subtract ~1.5–2 to get a fairer loudness target for your own master. Reference the WAV when you can; correct the MP3 when you can't.",
+    tryThis:"Grab the WAV of a reference in your genre, measure its LUFS, and aim your master near it. Only have a YouTube MP3? Take the reading, subtract ~1.5–2 dB, and match that.",
+    jargon:[["LUFS","Loudness Units Full Scale — the standard measure of <i>perceived</i> loudness (what streaming platforms target)."],["Lossless (WAV) vs lossy (MP3)","WAV keeps the full signal; MP3 throws data away and can shift the measured loudness — so WAV is the honest reference."],["Integrated LUFS","the average loudness over the whole track (vs momentary) — the number you match to."]],
+    links:[["Manual: Spectrum / metering","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"master", dev:"Mastering: EQ do's & don'ts",
+    prompt:"Mastering EQ — what's the big 'don't' Guido keeps hammering about cutting the low end?",
+    answer:"<b>Don't cut lows just because a visualizer <i>shows</i> energy there.</b> Mastering EQ makes <b>broad moves on the whole mix</b>, so a high-pass affects <i>everything</i> — including your foundational elements (kick, bass, a lead with some low end). That low energy the analyzer shows usually <b>is</b> your foundation, not junk; over-cutting it weakens the track and hurts how it <b>translates</b> on real systems. Use your ears, not the picture — don't high-pass 'because it looks like it's taking up space.'<br><br><b>Same caution with Mid/Side EQ.</b> Cutting the low end on the <b>Side</b> channel is a common 'tighten the lows' move — but it only works if the low end lives in the <b>Mid</b>. If the bass is intentionally <b>wide/moving</b> (e.g. a breakdown where you didn't mono it), its low energy swings between mid and side — watch it on <b>Ozone Imager</b> (positive = mid, negative = side). A low-<b>Side</b> cut then <b>chops the bass whenever it swings to the sides</b> → the bass audibly cuts in and out. So be intentional: match your M/S low cuts to whether the bass is centered or wide.<br><br><b>Keep the moves small.</b> Mastering EQ is polish, not repair, so tweaks should be gentle. If you catch yourself pushing a band — especially a <b>Mid/Side gain</b> — by <b>4 dB or more</b> on the Main, that's a red flag that the real problem is a <b>mix / production issue in the individual tracks</b>, not a mastering one. Go fix it in the mix instead of band-aiding it on the master.",
+    you:"Ties straight to your Bass Mono nuance: mono-ing the lows works for a centered drop bass, but in a breakdown with a wide bass, cutting the low Side makes it pump in and out. Ears over visualizer — especially near the kick, bass, and the low end of leads.",
+    tryThis:"Before any low-end cut on the master, A/B with your ears (not the analyzer). For M/S: check the bass on Ozone Imager first — if it's swinging to the sides, don't high-pass the Side or you'll gate the bass in and out.",
+    jargon:[["High-pass (low cut)","removes energy below a cutoff — on a master it hits the whole mix, foundation included."],["Translation","how the master holds up across systems (car, club, phone, earbuds)."],["Mid/Side low cut","cutting lows on the Side channel — safe only if the bass low end lives in the Mid, not the sides."],["The 4 dB tell","needing ≥4 dB of EQ on the master means the fix belongs upstream in the mix — mastering EQ should stay subtle."]],
+    links:[["Manual: EQ Eight","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"master", dev:"Mastering: saturation before the limiter",
+    prompt:"Adding <b>saturation before the limiter</b> on the master — why do it, and what are the Roar vs OTT gotchas?",
+    answer:"A touch of saturation before the final limiter adds <b>harmonics</b> → the mix feels <b>louder, warmer, glued and denser</b>, and it gently rounds peaks so the <b>limiter works less hard</b> (more perceived loudness, less pumping). It sits <i>before</i> the limiter, never after. Two Ableton options Guido weighs:<br><br><b>Roar</b> (multiband — low/mid/high) is true saturation. Gotcha: you already run Roar on the <b>drum bus</b>, so adding it on the Main <b>saturates the drums twice</b> → likely harsh, over-cooked distortion. If you saturate the master, go gentle.<br><br><b>OTT</b> isn't really a saturator — it's <i>aggressive multiband up/down compression</i> that adds density/loudness. Its issues on a master: it's <b>heavy-handed</b> (flattens dynamics, kills punch, can fatigue), its <b>upward compression raises the noise floor</b> and pulls up low-level junk (reverb tails, hiss), and it can <b>pump and over-brighten</b> — plus it <i>exaggerates</i> whatever's already there. Use a <b>low Amount (~15–35%)</b> and bypass-compare; it's a color, not a transparent stage.<br><br><b>Order matters:</b> saturation and OTT go <b>before the compressor</b> (which itself sits before the limiter). If you compress first and <i>then</i> start moving things around with OTT/saturation, you undo the dynamics you just set — a complete mess. Flow: <b>corrective EQ → saturation / OTT (harmonics & density) → compressor → limiter.</b>",
+    you:"Ties to your <b>Harmonics</b> card (saturation = manufactured harmonics = loudness/warmth) and the 'clean before you enhance' tools insight (OTT amplifies problems). Your drum-bus Roar is exactly why a second Roar on the Main risks double-saturation.",
+    tryThis:"If you try OTT on the master, start Amount ~20–30% and bypass-compare — listen for 'bigger/denser' without 'flat/harsh/noisy.' For Roar, keep the drive low so you're not double-saturating the drums.",
+    jargon:[["Saturation before the limiter","gentle harmonics that add loudness/glue and round peaks so the limiter works less."],["OTT on a master","aggressive multiband compression — adds density but flattens dynamics, lifts noise, over-brightens if pushed."],["Double-saturation","saturating something already saturated (drum-bus Roar + master Roar) → harshness."],["Order: shape before compress","saturation/OTT go before the compressor; compressing first then reshaping undoes the dynamics."]],
+    links:[["Manual: Roar","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Manual: Multiband Dynamics (OTT)","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"master", dev:"Mastering: Glue Compressor on the master",
+    prompt:"<b>Glue Compressor on the master</b> — why is Guido wary of it, and how would he set it up if you <i>have</i> to?",
+    answer:"On the master, a Glue Compressor gets triggered by the <b>loudest hits (usually the kick)</b> — each kick shoves the mix over the threshold, the comp clamps, and the <b>whole mix dips</b> for a moment. The <b>Release (~0.1 s)</b> sets how long that dip lasts before it recovers, so you get a <b>short dip/pump after every kick</b>. Guido's caution: those dips are only worth it if you <i>want</i> that pumping glue. If your kick and elements are <b>already properly compressed in the mix</b>, master glue just adds <b>unnecessary dips</b> — pumping the whole master for no benefit (and costing punch).<br><br><b>If you must:</b> keep it gentle, and the key control is <b>Range</b> (here 2.36 dB) — it <b>caps the maximum gain reduction</b>, so the comp can only ever pull down ~2.4 dB and the dips stay tiny. Plus <b>Soft Clip on</b> (tames peaks), Ratio ~4:1, threshold set for only 2–3 dB of GR.",
+    you:"The recurring theme: <b>fix it in the mix first</b> — master glue is optional polish, not a place to fix dynamics. The <b>Range</b> knob is the safety valve: it's how you get subtle glue without the whole track pumping on every kick.",
+    tryThis:"If you add Glue to the master: set <b>Range</b> low (~2–3 dB) so it can't over-compress, Soft Clip on, and dial threshold for only 2–3 dB of GR. If the needle dives hard on every kick, your <i>mix</i> needs the fix, not the master.",
+    jargon:[["Range (Glue)","caps how much gain reduction the Glue Compressor can do — the safety valve for gentle master glue."],["Pumping / dips","the whole mix dropping in level on each loud hit (kick), then recovering over the release."],["Soft Clip","gently clips loud peaks (a little color); caps output around −0.5 dB."]],
+    links:[["Manual: Glue Compressor","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"master", dev:"Mastering: inter-sample peaks (True Peak)",
+    prompt:"What are <b>inter-sample peaks</b>, and how does Ableton deal with them?",
+    answer:"Digital audio is a stream of discrete <b>samples</b> (snapshots of the waveform), and your peak meter reads the level <i>at</i> those sample points. But when the signal is converted back to analog (your DAC) or encoded to a lossy format (MP3/AAC), the smooth waveform is <b>reconstructed between the samples</b> — and that curve can <b>peak higher between two samples than either sample itself</b>. That hidden overshoot is an <b>inter-sample peak</b>. So your meter can read −0.1 dB (looks safe) while the actual output pushes <b>over 0 dBFS between samples → clipping/distortion</b>, even though the digital meter never showed it. That's why a master slammed to exactly 0 dB can still distort on playback.<br><br><b>In the manual:</b> Ableton only mentions them in the <b>Limiter's Ceiling mode</b> — <b>True Peak</b> mode 'prevents inter-sample peaks.' It gives you the tool, not the concept.",
+    you:"This is the 'why' behind the True Peak note on your Limiter cards: set the master Limiter to <b>True Peak</b> and leave headroom — ceiling around <b>−1.0 dB</b> (or −0.3) — especially for <b>streaming</b>, which re-encodes to lossy and reveals these overshoots.",
+    tryThis:"On your master Limiter, switch Ceiling mode to <b>True Peak</b> and set the ceiling to −1.0 dB. Now the meter reading and the real (true-peak) output agree — no surprise clipping after conversion or streaming.",
+    jargon:[["Sample","one snapshot of the waveform's level; digital audio is a stream of them, and meters read the sample values."],["Inter-sample peak","an overshoot in the reconstructed waveform that sits <i>between</i> samples — invisible to a normal peak meter."],["True Peak (dBTP)","a mode/measurement that accounts for those between-sample overshoots; the Limiter's True Peak mode catches them."]],
+    links:[["Manual: Limiter","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"master", dev:"Mastering: dithering (& export options)",
+    prompt:"What is <b>dithering</b>, and which Ableton export dither option do you pick?",
+    answer:"Live works internally in <b>32-bit float</b>; you export a finished master to <b>16-bit</b> (streaming/CD). Dropping bit depth <b>rounds every sample to fewer values</b> → <b>quantization error</b>, a gritty distortion worst in quiet parts and fade tails. <b>Dithering adds a tiny bit of random noise <i>before</i> the reduction</b>, scrambling that error into a quiet, benign noise floor instead of distortion. Two iron rules: only when <b>reducing bit depth</b> (skip it if you export 32-bit), and <b>only once ever</b> per file (never re-dither) — so if any processing follows, render 32-bit and don't dither yet.<br><br><b>Ableton's Dither Options dropdown:</b> <b>No Dither</b> (none — for 32-bit, or if you'll process/dither later); <b>Rectangular</b> (least noise, a bit more quantization error); <b>Triangular</b> (the <b>default/safest</b>, best if any further processing is possible); <b>POW-r 1/2/3</b> (progressively stronger, noise <b>shaped above the audible range</b> — for the <b>final master</b> with nothing after).",
+    you:"For your final 16-bit master (nothing after it): <b>POW-r</b> (noise pushed out of hearing) or the safe <b>Triangular</b>. Doing more work after, or exporting 32-bit: <b>No Dither</b>. It's the very last step, paired with True-Peak limiting.",
+    tryThis:"Exporting the finished master to 16-bit WAV for streaming? Bit Depth 16, dither <b>POW-r 2</b> (or Triangular to play safe). Exporting a 32-bit stem to keep working on? <b>No Dither</b>.",
+    jargon:[["Dithering","tiny random noise added before a bit-depth reduction to hide quantization distortion."],["Quantization error","rounding distortion from fewer bit values — worst in quiet passages / fades."],["Bit depth","how many level values per sample (16-bit for streaming; 32-bit float internally)."],["POW-r vs Triangular","POW-r shapes the dither noise out of the audible range (final master); Triangular is the safe all-rounder."]],
+    links:[["Manual: dithering & export","https://www.ableton.com/en/manual/managing-files-and-sets/"]] },
+
+  { cat:"prin", dev:"Sample rate",
+    prompt:"What is <b>sample rate</b>, and why are 44.1 / 48 kHz the standard?",
+    answer:"Digital audio is a <b>scatter of dots</b> — the sample rate is <b>how many of those dots (samples) you take per second</b>. 44.1 kHz = 44,100 snapshots of the waveform every second. More dots = finer time detail and higher frequencies captured. The catch (<b>Nyquist</b>): the highest frequency you can represent is <b>half the sample rate</b> — so 44.1 kHz reaches ~22 kHz, which safely covers human hearing (~20 kHz). That's why <b>44.1 kHz</b> (CD/streaming) and <b>48 kHz</b> (video) are the standards. Higher rates like 88.2/96 kHz give extra headroom for processing, but bigger files and more CPU for no audible frequency gain.",
+    you:"This is the baseline your whole project runs at. It's what <b>oversampling</b> temporarily multiplies, and the reason <b>inter-sample peaks</b> exist (overshoots hide <i>between</i> the dots).",
+    tryThis:"Work at 44.1 or 48 kHz for electronic music — it's plenty. Higher rates won't make your synths sound 'better,' just heavier; reserve them for tracking/processing headroom.",
+    jargon:[["Sample rate","how many samples (waveform snapshots) per second — 44.1 kHz = 44,100/sec."],["Nyquist","the highest frequency representable = half the sample rate (44.1 kHz → ~22 kHz)."],["Why 44.1/48 kHz","they cover the full range of human hearing (~20 kHz) with a little margin."]],
+    links:[["Ableton Live manual","https://www.ableton.com/en/manual/"]] },
+
+  { cat:"prin", dev:"Oversampling",
+    prompt:"What is <b>oversampling</b> (4× vs 12×), and when does it matter?",
+    answer:"Oversampling temporarily runs a device's internal processing at a <b>multiple of the sample rate</b> — <b>more dots</b> for hyper-detail — then converts back down at the output. <b>4×</b> = 4 times the internal resolution, <b>12×</b> = 12 times (one setting, not N passes). Two payoffs: (1) <b>cleaner nonlinear processing</b> — saturation/distortion/limiting create harmonics above <b>Nyquist</b> that would fold back as ugly <b>aliasing</b>; oversampling gives them room, then filters them off → cleaner. (2) <b>accurate true-peak detection</b> — reconstructing the between-sample peaks <i>requires</i> oversampling, so <b>12× reveals a more precise (often slightly higher) true peak than 4×</b>. Higher = cleaner + more accurate, but more CPU, with diminishing returns past 4×.",
+    you:"You'll meet it as the <b>Oversampling</b> toggle on your Glue Compressor and Saturator, and inside the Limiter's <b>True Peak</b> mode. Same 'more dots' idea as your inter-sample-peaks card — applied temporarily.",
+    tryThis:"Turn oversampling on when you're saturating or clipping hard (hear the fizz/aliasing clean up). For the master, use a true-peak limiter — its oversampling is what makes the true-peak reading honest.",
+    jargon:[["Oversampling","temporarily processing at a multiple (4×, 12×) of the sample rate, then downsampling back."],["Aliasing","new harmonics above Nyquist folding back into the audible range as inharmonic junk — oversampling prevents it."],["4× vs 12×","higher = cleaner + more accurate true peak, more CPU; diminishing returns past 4×."]],
+    links:[["Manual: Glue Compressor / Saturator","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
   // ===== DYNAMICS =====
   { cat:"dyn", dev:"Compressor",
     prompt:"When do you reach for the plain <b>Compressor</b> instead of the Glue Compressor?",
@@ -524,6 +608,14 @@ const CARDS = [
     jargon:[["Infinite ratio (∞:1)","'ratio' is how hard a compressor pushes loud parts down. Infinite = a hard ceiling; nothing gets past it — like your head hitting a low ceiling no matter how high you jump."],["Ceiling","the maximum output level you allow — the wall the sound can't cross."],["True Peak / inter-sample peak","a peak that appears between the digital sample points; True Peak mode catches it so your track doesn't distort after conversion or streaming."]],
     links:[["Manual: Limiter","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=Gvbf90IffRo"]] },
 
+  { cat:"dyn", dev:"Compressor vs Limiter (+ what Ratio does)",
+    prompt:"How is a <b>Limiter</b> different from a <b>Compressor</b> — and what does the <b>Ratio</b> knob actually control?",
+    answer:"A limiter <i>is</i> a compressor — just pushed to its extreme, and the knob that separates them is <b>Ratio</b>. Ratio sets <b>how hard</b> the signal is turned down once it crosses the <b>Threshold</b>: at <b>4:1</b>, a signal 4 dB over comes out only 1 dB over — gentle, so the loud parts still poke through. A <b>compressor</b> uses these moderate ratios to <i>shape</i> dynamics (control a vocal, glue a bus, add punch). A <b>limiter</b> uses an <b>infinite ratio (∞:1)</b> — a <b>brickwall</b> — so <i>nothing</i> gets past the ceiling no matter how hard it's hit; it doesn't shape, it <b>caps</b>. Governor vs wall: a compressor eases the loud parts back (you can still creep over the line); a limiter is a hard cap you can't cross.",
+    you:"So: <b>Compressor = shape &amp; glue</b> — a musical tone tool you often want to hear, used anywhere in the chain. <b>Limiter = protect &amp; maximize</b> — a safety ceiling + loudness tool, ideally invisible, almost always last on the Main. It's why Guido could use a limiter creatively on your delay tail: it's just a compressor smashing the echoes against a ceiling.",
+    tryThis:"On one sound, set a compressor to 4:1 — 'controlled but alive.' Then push the ratio toward ∞:1 (or swap in a Limiter) at the same threshold — hear it flatten hard against a ceiling. Same machine, opposite intent.",
+    jargon:[["Ratio","how hard the signal is reduced above the threshold — 4:1 means 4 dB in over becomes 1 dB out."],["Limiting (∞:1)","ratio taken to its extreme — a brickwall the signal can't cross."],["Compressor vs Limiter","compressor shapes dynamics (moderate ratio, you hear it); limiter caps peaks &amp; lifts loudness (∞ ratio, ideally invisible)."]],
+    links:[["Manual: Compressor","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Manual: Limiter","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
   // ===== EQ & FILTER =====
   { cat:"eq", dev:"EQ Eight",
     prompt:"<b>EQ Eight</b> is your most-used device. What are its three <b>modes</b> — Stereo, L/R, M/S — and why run two EQ Eights on one track?",
@@ -543,10 +635,10 @@ const CARDS = [
 
   { cat:"eq", dev:"Utility",
     prompt:"You want your <b>sub centered</b> but your <b>highs wide</b>. Which <b>Utility</b> features get you there — and what else is this little device for?",
-    answer:"<b>Utility</b> is your level/stereo/mono Swiss-army knife. For your goal: <b>Bass Mono</b> folds the lows below a set point to mono (solid, phase-safe bottom) while <b>Width</b> (or Mid/Side mode) keeps the highs spread. It also does <b>Gain</b> (great for automating fades without touching the fader), <b>Balance</b> (pan), <b>Mono</b> (a mix-check collapse), <b>Mute</b> (placed mid-chain, it can cut the feed into a reverb without killing its tail), and <b>DC</b> (removes sub-audible offset before nonlinear effects).",
+    answer:"<b>Utility</b> is your level/stereo Swiss-army knife — its whole job is managing <b>level and stereo without changing tone</b> ('how loud' and 'how wide / where'). For your goal: <b>Bass Mono</b> folds the lows below a set point to mono (solid, phase-safe bottom) while <b>Width</b> (or Mid/Side mode) keeps the highs spread. It also does <b>Gain</b> (great for automating fades without touching the fader), <b>Balance</b> (pan), <b>Mono</b> (a mix-check collapse), <b>Mute</b> (placed mid-chain, it can cut the feed into a reverb without killing its tail), and <b>DC</b> (removes sub-audible offset before nonlinear effects).",
     you:"You leaned on Utility a lot — often automating its Gain, and in the bass 'Shaper + 2 Utilities' pseudo-sidechain.",
     tryThis:"On the bass, turn on Bass Mono (~120 Hz). Kick and bass stop fighting for the center — the low end gets noticeably more solid.",
-    jargon:[["Bass Mono","folding low frequencies to mono for a stronger, phase-safe low end."],["Width","how far the signal spreads in stereo (0% = mono)."],["Gain automation","writing volume moves on the Utility knob instead of the channel fader."]],
+    jargon:[["L/R vs Mid/Side","L/R = the two literal speaker channels (a repair lens); Mid/Side = center (shared) vs width (differences) — the mix lens you'll usually want."],["Mono vs Bass Mono","Mono collapses the <i>whole</i> signal to center (usually a mono-check); Bass Mono collapses only the <i>lows</i>, keeping the highs wide (a permanent low-end move)."],["Phase (Ø)","flips a channel's polarity — a repair tool that fixes cancellation when a sound goes thin or weak (especially in mono)."],["Width","how far the signal spreads in stereo (0% = mono, &gt;100% = wider)."],["Bass Mono","folds the lows to mono for a stronger, phase-safe low end."]],
     links:[["Manual: Utility","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
 
   // ===== DISTORTION & CHARACTER =====
@@ -1119,7 +1211,9 @@ function toolsLoad(){ try{ var v=localStorage.getItem('mirage_tools'); if(v) ret
 function toolsSave(a){ try{ localStorage.setItem('mirage_tools', JSON.stringify(a)); }catch(e){} }
 var SEED_TOOLS=[
   {name:"Type A — AudioThing", via:"Guido", note:"Enhancer plugin — reportedly a better take on what OTT does for thickening vocals."},
-  {name:"RX — iZotope", via:"Guido", note:"Audio-restoration suite (De-click, De-noise, etc.). Clean the vocal FIRST — OTT/Type A exaggerate clicks & noise if the source isn't clean."}
+  {name:"RX — iZotope", via:"Guido", note:"Audio-restoration suite (De-click, De-noise, etc.). Clean the vocal FIRST — OTT/Type A exaggerate clicks & noise if the source isn't clean."},
+  {name:"TDR Nova — Tokyo Dawn Records", via:"Charlie", note:"Free dynamic EQ (parallel) — surgical, frequency-specific dynamic control; great for de-essing and taming resonances that only spike sometimes."},
+  {name:"GMaudio / Noir Labs racks", via:"Guido", note:"Boutique, cheap Ableton racks (~$20–30 for the set). GMaudio (groovmekanik): Clipper, VSEQ, Carver, Space Maker (FX). Noir Labs 'Workflow Bundle': Shortcut Buddy, Volume Buddy, Swiss Army Meter (workflow/metering). Guido will name his specific picks."}
 ];
 function toolsSeed(){ var t=toolsLoad()||[]; SEED_TOOLS.forEach(function(sd){ if(!t.some(function(x){return x.name===sd.name;})){ t.push({name:sd.name, via:sd.via, note:sd.note, t:Date.now(), status:"To try"}); } }); toolsSave(t); return t; }
 function toolsAdd(name, via, note){ var t=toolsLoad()||[]; t.unshift({name:name, via:via, note:note, t:Date.now(), status:"To try"}); toolsSave(t); }
@@ -1169,8 +1263,9 @@ var SEED_SHORTCUTS=[
     {k:"⌘G", d:"Group tracks"},
     {k:"⌘R", d:"Rename selected"},
     {k:"⌘↑ / ⌘↓", d:"Move selected track or automation lane up / down"},
+    {k:"click value + ↑↓", d:"Nudge a clicked value field one step — e.g. click a track's dB, then ↑/↓ to change it ±1 dB"},
     {k:"U", d:"Fold / unfold selected tracks"},
-    {k:"⌥U", d:"Unfold all tracks"},
+    {k:"⌥U", d:"Fold / unfold ALL tracks & groups (toggle — collapses every group at once)"},
     {k:"⌥+ / ⌥−", d:"Set selected tracks to the same height"},
     {k:"S", d:"Show all tracks (minimize)"},
     {k:"H", d:"Optimize Arrangement height"},
