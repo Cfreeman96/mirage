@@ -273,7 +273,7 @@
 <header>
   <div class="kicker">Mirage · Ableton Cards</div>
   <h1 id="viewTitle">Answer it in your head. Then reveal.</h1>
-  <div class="sub" id="viewSub">79 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
+  <div class="sub" id="viewSub">94 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
 </header>
 
 <section id="view-quiz">
@@ -973,7 +973,130 @@ const CARDS = [
     you:"This is the first card in your new Serum space — it'll fill up as you go through the 6-hour course. Cross-reference the Ableton <b>Wavetable</b>, <b>Meld</b>, and <b>Operator</b> cards: those are your bridge into Serum's oscillator concepts. Goal of this course: put the whole picture together — design sounds from scratch, not just process presets.",
     tryThis:"Before lesson 1, open Serum and just scan the <b>wavetable Position</b> on Osc A while holding a note — hear it morph. That's the exact same move as Wavetable's Position; you already understand it.",
     jargon:[["Wavetable synth","a synth whose oscillators play through a stack of waveforms you scan through — Serum and Ableton Wavetable are both this."],["Mod matrix","a routing grid where you connect a modulation source (LFO, envelope) to a destination (pitch, cutoff, wavetable position)."],["Position","which waveform in the table you're hearing; sweeping it morphs the tone — same as Ableton Wavetable."]],
-    links:[["Xfer: Serum","https://xferrecords.com/products/serum"]] }
+    links:[["Xfer: Serum","https://xferrecords.com/products/serum"]] },
+
+  { cat:"serum", dev:"Modulation — dragging an envelope onto a knob",
+    prompt:"In Serum you drag an <b>envelope</b> onto a knob (classically the filter <b>CUTOFF</b>) and the sound comes alive. What is actually happening?",
+    answer:"The one big idea of synthesis: <b>a knob is a static value; a modulation source makes that value move on its own.</b> Set cutoff by hand and it sits at one brightness forever. Drag an <b>envelope</b> onto CUTOFF and you've said 'every time I play a note, let this envelope grab the cutoff, slide it along a shape, then let go' — so the tone <b>evolves across the note</b> instead of sitting still (that 'pew'/'wow' sweep you hear). The pieces: <b>the knob's position = the base (resting) value</b> — where cutoff starts. <b>The envelope = a one-shot ADSR shape retriggered on every note</b> (Attack rises, Decay falls to Sustain, Release fades after key-up) — fast attack + short decay = a plucky snap-open-then-close; slow attack = the brightness blooms in. <b>The colored ring that appears around the knob = the modulation amount (depth)</b> — drag the ring to set how far, and which direction (drag it the other way for negative depth, pulling the filter down). <b>Envelope vs LFO</b>: same drag-to-a-knob move, different motion — an envelope fires <i>once per note</i> (a sweep); an LFO <i>cycles continuously</i> (a wobble). You can stack both on one knob.",
+    you:"This is <i>the</i> core Serum move you'll repeat constantly: pick a destination (cutoff, pitch, wavetable Position, warp), assign a source (Env, LFO, macro), set the depth. Two ways to assign per the manual — <b>drag</b> the ENV/LFO onto the knob (what you found), or <b>right-click the knob → choose a modulation source</b> (same menu bypasses/removes it). <b>Hover</b> any knob to see what's driving it. It's the same source→destination idea as the Ableton mod matrix, just drag-and-drop.",
+    tryThis:"On an init patch: drag <b>Env 2</b> onto <b>CUTOFF</b>, then drag the ring wide. Set Env 2 to fast Attack + short Decay + low Sustain → a plucky filter snap on each note. Now raise the base cutoff a bit and shorten Decay to taste. Swap to dragging an <b>LFO</b> instead to feel wobble vs one-shot sweep.",
+    jargon:[["Modulation","letting a source (envelope, LFO, macro) move a parameter automatically over time, instead of a fixed knob value."],["Destination","the knob being moved (cutoff, pitch, Position, warp). Base knob position = the resting value."],["Source","what does the moving — Env (one-shot per note) or LFO (repeating cycle)."],["Mod amount / ring","the colored ring around a modulated knob; its size = how far the source pushes the value, its direction = positive or negative."],["Envelope vs LFO","envelope = a shape that fires once per note; LFO = a continuous, looping wobble."]],
+    links:[["Xfer: Serum 2 manual","https://xferrecords.com/web-manual/serum-2/welcome"],["Local: Serum2-Manual.md (cached ref)","https://xferrecords.com/products/serum-2"]] },
+
+  // ----- Serum Tier 1: core engine -----
+  { cat:"serum", dev:"Wavetable oscillator — Position & morphing",
+    prompt:"OSC A is playing a <b>wavetable</b>. What is the <b>WT POS</b> (Position) knob, and why is it the heart of the Serum sound?",
+    answer:"A <b>wavetable</b> is a stack of single-cycle waveforms (‘frames’); the oscillator plays <i>one frame at a time</i>. <b>WT POS</b> chooses which frame you hear. Left alone it's a static tone — but <b>sweep or modulate WT POS</b> and the sound morphs continuously from one waveform to the next: that gliding, evolving quality is the signature Serum sound. It's the same idea as Ableton <b>Wavetable</b>'s Position knob, just with a far bigger table library and a built-in editor. The real power comes when you drag an <b>envelope</b> or <b>LFO</b> onto WT POS so the timbre moves on its own across each note.",
+    you:"Your basses, plucks and leads will all be built on this. Everything you learned about Ableton Wavetable's Position transfers directly — WT POS is the same move.",
+    tryThis:"Hold a note and drag <b>WT POS</b> slowly across the table — hear it morph. Then drag <b>Env 2</b> (or an LFO) onto WT POS and set the amount, so it morphs automatically as the note plays.",
+    jargon:[["Wavetable","a stack of single-cycle waveforms the oscillator can move between."],["Frame","one waveform in the table — WT POS picks which frame plays."],["Morph","smoothly moving Position through the table so the tone evolves."]],
+    links:[["Serum 2 manual (cached)","https://xferrecords.com/web-manual/serum-2/welcome"]] },
+
+  { cat:"serum", dev:"Warp modes",
+    prompt:"Each oscillator has a <b>WARP</b> menu (Sync, Bend, PWM, FM…). What does Warp actually do?",
+    answer:"<b>Warp</b> reshapes the oscillator's waveform in real time, squeezing extra harmonics and movement out of a single table — the <b>WARP knob</b> sets the depth, and the <b>&lt; &gt; arrows</b> flip between modes. The important ones: <b>Sync</b> (restarts an internal oscillator for that hard/soft-sync bite; the WARP knob sets its pitch, so raising it shifts harmonics up), <b>Bend +/−</b> (pinch or pull the waveform — 50% = no change), <b>PWM</b> (classic pulse-width, great on square-ish sounds), <b>Asym</b>, <b>Flip</b> (polarity flip), <b>Mirror</b> (an octave-ish doubling), <b>Remap</b> (draw your own transfer curve), plus <b>FM / RM / AM</b> that use another oscillator or the noise osc as the modulator. <b>Off</b> = the raw table.",
+    you:"This is how you get aggressive, rich, metallic timbres <i>without</i> switching wavetables — it manufactures new harmonics, the same 'add overtones' idea as your Ableton distortion cards.",
+    tryThis:"On a saw table: try <b>Sync</b> and raise WARP for the sync sweep; then <b>PWM</b>; then <b>FM From Noise</b>. Use the &lt; &gt; arrows to A/B modes fast.",
+    jargon:[["Warp","real-time reshaping of the waveform for extra harmonics/movement."],["Hard vs soft sync","how sharply the synced restart cuts — WARP Var fades between them."],["Remap","a custom draw-your-own transfer curve applied to the wave."],["FM / RM / AM","frequency / ring / amplitude modulation using another osc or noise as the source."]],
+    links:[["Serum 2 manual (cached)","https://xferrecords.com/web-manual/serum-2/welcome"]] },
+
+  { cat:"serum", dev:"Unison, Detune & Blend",
+    prompt:"How do you get the huge, wide <b>supersaw</b> lead in Serum — what do <b>Unison</b>, <b>Detune</b> and <b>Blend</b> each do?",
+    answer:"<b>Unison</b> stacks multiple copies (‘voices’) of the oscillator and spreads them across pitch and the stereo field. The <b>UNISON</b> count sets how many voices; <b>DETUNE</b> sets how far apart they're tuned — a little = warm thickening, a lot = wide, lush, or chaotically detuned; <b>BLEND</b> sets the level of the outer voices vs the centre one (default 75%, think of it as a wet/dry between the unison and non-unison sound). <b>WARP 1/2 spread</b> scatters the warp amount per voice for extra motion. Many voices + moderate detune = a thick, wide lead; for bass, keep unison/detune modest and the low end mono.",
+    you:"This is your big-lead and riser engine. Remember your mastering principle — <b>mono for power in drops, wide for feeling in breakdowns</b>: use unison width by the section's job.",
+    tryThis:"Set <b>UNISON 7</b>, raise <b>DETUNE</b> until it's lush, leave <b>BLEND</b> ~75%. Then pull detune/voices back and hear it tighten into a focused bass.",
+    jargon:[["Unison voice","one of the stacked copies of the oscillator."],["Detune","how far apart the voices are tuned — width vs thickness."],["Blend","level of the outer voices vs the centre voice (default 75%)."]],
+    links:[["Serum 2 manual (cached)","https://xferrecords.com/web-manual/serum-2/welcome"]] },
+
+  { cat:"serum", dev:"Sub oscillator",
+    prompt:"What's the <b>SUB</b> oscillator for, and how is it different from OSC A/B/C?",
+    answer:"A dedicated oscillator pitched <b>below</b> the main ones, using <b>simple, stable waveforms</b> (sine, square, triangle…) to add clean low-end weight <i>without</i> extra harmonic clutter. <b>OCT</b> and <b>CRS</b> set its octave and coarse pitch. Drop a <b>sine an octave down</b> for a solid sub-bass foundation, or use it to add body under a lead or pad without muddying the highs. It's the exact same role as Ableton Wavetable's sub-oscillator card — weight you feel more than hear.",
+    you:"Your low-end anchor in Serum. Pair with the width principle: keep the sub mono for a phase-safe, powerful bottom.",
+    tryThis:"Enable <b>SUB</b>, pick a sine, set <b>OCT −1</b>, and tuck it under your bass. Toggle it on/off to feel how much weight it adds.",
+    jargon:[["Sub oscillator","a below-the-mains oscillator for clean low-end weight."],["OCT / CRS","octave and coarse pitch controls for the sub."]],
+    links:[["Serum 2 manual (cached)","https://xferrecords.com/web-manual/serum-2/welcome"]] },
+
+  { cat:"serum", dev:"Noise oscillator",
+    prompt:"What does the <b>NOISE</b> oscillator add — and what's its clever second use?",
+    answer:"It's a <b>stereo sample player</b> loaded with factory noise samples (and you can load your own). Layer it to add <b>attack transients, air, grit, texture and realism</b> — e.g. a noise ‘chiff’ on a pluck's attack, or vinyl/air under a pad — and shape it with its own envelope. The clever second use: the noise osc also appears in each wavetable oscillator's <b>WARP</b> section, so you can use the noise sample as an <b>FM/RM/AM modulator</b>. When using it purely as a modulator, turn its own volume down so you only get the modulation effect.",
+    you:"Great for giving a clean synth a real, physical attack, or for grit/texture — the Serum-side version of layering a transient in your Ableton kits.",
+    tryThis:"Add a short noise burst on the attack with a fast-decay envelope on the noise level. Then try loading your own sample (even a drum loop) for a chaotic modulator.",
+    jargon:[["Noise oscillator","a stereo sample player for texture/attack layering; loads factory or your own samples."],["Modulator use","routed inside an osc's WARP as an FM/RM/AM source — drop its volume when used this way."]],
+    links:[["Serum 2 manual (cached)","https://xferrecords.com/web-manual/serum-2/welcome"]] },
+
+  { cat:"serum", dev:"Filter module + the Var knob",
+    prompt:"Serum has two filters. What are the <b>types</b>, what does the <b>VAR</b> knob do, and how do you route oscillators into them?",
+    answer:"Per-voice filters with a large type list — <b>low-pass, high-pass, band-pass, notch, comb, formant/vocal</b> and more — each with a <b>slope</b> (6/12/18/24 dB per octave; steeper = more drastic). <b>CUTOFF</b> sets the corner frequency, <b>RES</b> the resonant peak, <b>DRIVE</b> pushes level into it, <b>MIX</b> blends dry/wet, <b>PAN</b> places it. The <b>VAR</b> knob is a per-type <i>secondary</i> function — e.g. on the Moog-style ladder it's <b>FAT</b> (adds saturation that tames/enriches resonance); on other types it morphs the response. There are <b>two filters</b> you can run in series or parallel, and you send each source in with the routing switches (<b>S</b>ub / <b>A</b> / <b>B</b> / <b>N</b>oise). Modulate CUTOFF — an envelope for a plucky sweep, an LFO for a wobble — this is the core movement move.",
+    you:"Direct bridge from the Ableton Auto Filter you're still internalizing: same cutoff + resonance, plus Serum's Var and per-voice behavior. Getting comfortable here will finally make filters click.",
+    tryThis:"Pick <b>MG Low 24</b>, assign <b>Env 2</b> to CUTOFF with a wide amount and fast decay = a filter pluck. Nudge <b>VAR (FAT)</b> to add saturation as resonance rises.",
+    jargon:[["Cutoff / Resonance","where the filter starts cutting, and the emphasis peak right at that point."],["Slope (dB/oct)","how steeply it cuts — 24 dB is far more drastic than 12."],["Var","a per-filter-type secondary function (e.g. FAT saturation, or morph)."],["Routing switches (S/A/B/N)","which sources feed each filter — Sub, Osc A, Osc B, Noise."]],
+    links:[["Serum 2 manual (cached)","https://xferrecords.com/web-manual/serum-2/welcome"]] },
+
+  // ----- Serum Tier 2: modulation -----
+  { cat:"serum", dev:"Envelopes (anatomy)",
+    prompt:"Serum has <b>ENV 1–4</b>. What are the stages, and which envelope is special?",
+    answer:"Four envelope sources, each a shape that's <b>retriggered on every note</b>, with knobs <b>ATK</b> (attack), <b>HOLD</b>, <b>DEC</b> (decay), <b>SUS</b> (sustain), <b>REL</b> (release) — so it's a <b>DAHDSR</b>, one extra stage (Hold) beyond a plain ADSR. <b>ENV 1 is the amp envelope</b> — always wired to the output volume (it's why every patch has one). <b>ENV 2–4</b> are free: drag their tab onto any knob to modulate it. Edit by dragging the graph or the knobs; the <b>Lock</b> button auto-zooms the display. The <b>LEGATO</b> switch decides whether envelopes retrigger on overlapping notes — off = smooth glide between notes, on = re-fire so every note has the same definition.",
+    you:"Extends your 'drag an envelope onto a knob' card and your Ableton ADSR/Sampler card — same four-stage shape, one extra Hold stage, and ENV 1 = the volume shape.",
+    tryThis:"Shape <b>ENV 2</b>: fast ATK, short DEC, low SUS, then drag it onto CUTOFF for a plucky snap. Lengthen ATK to make the brightness bloom in instead.",
+    jargon:[["DAHDSR","Delay-Attack-Hold-Decay-Sustain-Release — Serum's envelope stages (Hold added vs ADSR)."],["ENV 1 = amp envelope","envelope 1 is permanently the volume shape of the patch."],["Legato / retrigger","whether envelopes re-fire on overlapping notes (off = smooth, on = per-note)."]],
+    links:[["Serum 2 manual (cached)","https://xferrecords.com/web-manual/serum-2/welcome"]] },
+
+  { cat:"serum", dev:"LFOs",
+    prompt:"Serum gives you up to <b>ten LFOs</b> with a draw-your-own graph. What are the key controls?",
+    answer:"An <b>LFO</b> is a repeating shape you <b>draw</b> and route to any knob for continuous motion — wobbles, sweeps, even step-sequenced pitch. LFO 1–6 show by default; 7–10 appear once you use LFO 6. Draw with the <b>Point / Flat / Ramp</b> tools snapped to a <b>GRID</b>. Key controls: <b>TYPE</b> (Normal, Path, Chaos: Lorenz/Rossler, S&amp;H); <b>MODE / Retrig</b> — <b>FREE</b> (follows the host clock), <b>RETRIG</b> (restarts on each note), <b>ENVELOPE</b> (plays one cycle then stops, like an envelope — with an optional <b>loopback point</b>); <b>MONO</b> vs poly; <b>DIRECTION</b> (Forward / Reverse / Ping-Pong); <b>BPM/HZ</b> (tempo-synced note values vs free Hertz) with <b>RATE</b> (speed; right-click for Swing); and a <b>SHAPE</b> menu of presets. In Envelope mode an LFO becomes a fully custom multi-stage envelope.",
+    you:"Your movement engine. Remember the contrast from your modulation card: an <b>envelope fires once per note; an LFO cycles continuously</b> — but LFO 'Envelope mode' blurs the line into a custom one-shot.",
+    tryThis:"On <b>LFO 1</b>: set BPM 1/8, draw a stepped/square shape, assign it to CUTOFF for a wobble. Then flip MODE to <b>Envelope</b> to fire the shape once per note.",
+    jargon:[["LFO","a low-frequency, repeating shape that moves a parameter for you."],["BPM / HZ","tempo-synced note values vs free-running Hertz."],["Retrig modes","Free (host clock), Retrig (per note), Envelope (one cycle then stop, with loopback)."],["S&H","sample-and-hold — random stepped values."]],
+    links:[["Serum 2 manual (cached)","https://xferrecords.com/web-manual/serum-2/welcome"]] },
+
+  { cat:"serum", dev:"Modulation Matrix",
+    prompt:"What's the <b>MATRIX</b> tab, and what can it do that dragging a source onto a knob can't?",
+    answer:"The <b>Modulation Matrix</b> is the tabular list of <i>every</i> modulation connection — up to <b>64 slots</b>, one destination each, from <b>49 sources</b>. Dragging a source onto a knob <b>auto-creates a matrix row</b> (and editing the matrix updates the knob), so the two views stay in sync. What the matrix adds per connection: the main <b>Amount</b>, an <b>Aux source</b> (a second source that scales the first), a <b>curve/remap</b> of the response, and <b>bipolar/unipolar</b> direction. Crucially, some sources are <b>only</b> assignable here (you can't drag them) — including <b>velocity</b>, <b>note / keytrack</b>, and <b>random/chaos</b> sources. Use it to see and fine-tune your whole modulation setup at a glance.",
+    you:"This is the 'big picture' view of the source→destination move you already learned by dragging. Reach for it when you want velocity- or note-based modulation, or to tidy/scale everything.",
+    tryThis:"Open <b>MATRIX</b>, add a row: Source = <b>Velocity</b> → Destination = filter <b>CUTOFF</b>, so harder hits open the filter. Then set an <b>Aux</b> source to scale how much.",
+    jargon:[["Matrix slot","one modulation connection; Serum has 64, plus 49 possible sources."],["Aux source","a second source in a row that scales/multiplies the main source."],["Bipolar","modulation that swings both above and below the base value."],["Matrix-only sources","velocity, note/keytrack, random/chaos — assignable only in the matrix, not by dragging."]],
+    links:[["Serum 2 manual (cached)","https://xferrecords.com/web-manual/serum-2/welcome"]] },
+
+  { cat:"serum", dev:"Macros",
+    prompt:"What are Serum's <b>eight Macros</b>, and the trick that makes them extra powerful?",
+    answer:"Eight <b>macro knobs</b>, each mappable to <b>many parameters at once</b>, so a single knob morphs a whole set — e.g. cutoff + resonance + pan together — for fast sound design and performance. Assign by <b>dragging the macro selector onto a control</b> (a <b>+</b> appears over valid destinations). The trick: a macro can be <b>both a modulation source AND a destination</b> — so you can have another matrix row modulate a macro (as an aux), chaining modulations for complex, evolving behaviour. It's exactly the single-knob idea from your Ableton Macros tab and your '1 Knob Open' recipe, Serum-side.",
+    you:"Direct sibling of your Ableton Macros — the 'one knob opens/widens the whole sound' move. Build performance knobs for your leads and drops here.",
+    tryThis:"Drag <b>Macro 1</b> onto <b>CUTOFF</b> and onto <b>UNISON DETUNE</b> — now one knob opens and widens at once. Add depth or an aux via the matrix.",
+    jargon:[["Macro","one knob wired to many parameters at once."],["Source + destination","a macro can both drive parameters and be driven by the matrix (aux chaining)."]],
+    links:[["Serum 2 manual (cached)","https://xferrecords.com/web-manual/serum-2/welcome"]] },
+
+  // ----- Serum Tier 3: FX, voicing, new engines -----
+  { cat:"serum", dev:"Serum FX rack",
+    prompt:"Serum has its own <b>FX</b> section. How is it organized, and what's in it?",
+    answer:"A built-in effects rack of <b>13 processors</b> you can add in <b>any order and combination</b> (even multiple of the same), plus <b>3 splitter modules</b> (L/H and L/M/H) that let you process only part of the signal. There are three racks — <b>MAIN, BUS 1, BUS 2</b> — each processing its own channel, so you can send different parts of the patch to different effects. The modules cover the essentials: <b>Hyper/Dimension</b> (a micro-delay chorus with 1–7 voices — instant width, can retrigger per note), <b>Chorus, Flanger, Phaser, Distortion, Compressor</b> (single or multiband), <b>EQ, Filter, Delay, Reverb</b> and more. Press <b>⌥F</b> to expand the rack/list view. The upshot: you can finish a sound entirely inside Serum before it ever hits your Ableton chain.",
+    you:"Everything you learned about Ableton's effects applies here — same concepts, now inside the synth. <b>Hyper/Dimension</b> is your quick width tool, echoing the Unison/wide-lead thinking; a multiband <b>Compressor</b> mirrors your OTT/split-band work.",
+    tryThis:"On a lead: add <b>Hyper/Dimension</b> for instant width, then a <b>Compressor</b> (try Multiband) and a <b>Reverb</b>. Drag modules to reorder; ⌥-click a bypass to mute the whole bus.",
+    jargon:[["FX rack","Serum's built-in effects chain — 13 modules, any order, multiple instances."],["Splitter (L/H, L/M/H)","routes only part of the frequency band into following modules."],["MAIN / BUS 1 / BUS 2","three parallel FX racks for routing different parts of the signal."],["Hyper/Dimension","a micro-delay chorus (1–7 voices) for width/thickness."]],
+    links:[["Serum 2 manual (cached)","https://xferrecords.com/web-manual/serum-2/welcome"]] },
+
+  { cat:"serum", dev:"Voicing & Portamento",
+    prompt:"What do the <b>VOICING</b> controls (Mono / Poly / Legato) do — and how do you get a <b>glide</b> like Meld's?",
+    answer:"Voicing decides how notes stack. <b>MONO</b> = one note at a time (a new note steals the old). <b>POLY</b> = how many simultaneous voices are allowed (8 is plenty; 16 is a lot). <b>LEGATO</b> (only audible with MONO on) decides whether envelopes/LFOs <b>retrigger</b> on overlapping notes: on = smooth change (no retrigger), off = each note re-fires with full definition. You can even <b>limit same-note polyphony</b> to keep basses clean. <b>PORTAMENTO</b> is the pitch <b>glide</b> from one note to the next — most useful with MONO on. <b>PORTA</b> sets the glide rate; <b>CURVE</b> shapes the contour (convex = leave quickly then ease in; concave = start slow then rush to pitch); <b>ALWAYS</b> glides even when no note is held; <b>SCALED</b> shortens the glide on small intervals so leads sound natural.",
+    you:"This is the Serum version of your <b>Meld glide</b> lesson: glide lives in <b>MONO</b>, and legato/overlapping notes drive it. Same concept you already fought through — now you'll recognize it instantly.",
+    tryThis:"Turn <b>MONO</b> on, raise <b>PORTA</b>, and play overlapping notes for a smooth slide. Toggle <b>SCALED</b> to tame big jumps, and flip <b>ALWAYS</b> to hear the difference.",
+    jargon:[["Mono / Poly","one note at a time vs a set number of simultaneous voices."],["Legato (retrigger)","with MONO, whether envelopes/LFOs re-fire on overlapping notes (off = smooth glide)."],["Portamento / Porta","the pitch glide between notes; PORTA sets its rate."],["Scaled","shortens the glide on small intervals for natural-sounding leads."]],
+    links:[["Serum 2 manual (cached)","https://xferrecords.com/web-manual/serum-2/welcome"]] },
+
+  { cat:"serum", dev:"Granular synthesis",
+    prompt:"An oscillator can be set to <b>GRANULAR</b>. What is granular synthesis, and when do you reach for it?",
+    answer:"Granular mode breaks a sample into tiny fragments called <b>grains</b> (a few milliseconds each) and recombines them — layering, overlapping, re-pitching, stretching — to build new textures. Because <b>pitch and time are independent</b>, you can stretch a sound without changing its pitch, or freeze and slowly evolve it. It's the route to shimmering, ethereal <b>pads</b>, atmospheres, and glitchy, fragmented effects — even from a simple recording. Set an oscillator to Granular from its header menu. Two notes: it's more <b>CPU-hungry</b> than Wavetable/Sample, and each grain counts toward the voice total.",
+    you:"A genuinely new engine (Serum 2) with no Ableton device you've used as an equivalent — your go-to for evolving textures and ambient beds, perfect for breakdown atmospheres.",
+    tryThis:"Set OSC A to <b>Granular</b>, load a sample, then modulate grain <b>position</b> and <b>size</b> with an LFO for a slowly evolving pad.",
+    jargon:[["Grain","a tiny fragment (a few ms) of a sample."],["Granular mode","recombining many grains into new evolving textures."],["Time/pitch independence","stretch time without changing pitch, or vice-versa."]],
+    links:[["Serum 2 manual (cached)","https://xferrecords.com/web-manual/serum-2/welcome"]] },
+
+  { cat:"serum", dev:"Spectral synthesis",
+    prompt:"An oscillator can be set to <b>SPECTRAL</b>. What does spectral synthesis do?",
+    answer:"Spectral mode generates sound by <b>analyzing a source into its individual frequency components (partials)</b> and letting you manipulate that spectrum <i>directly</i> — add or remove harmonics, shift spectral content over time, morph one texture into another — instead of editing the raw waveform. That gives precise control over timbre and how it <b>evolves</b>, from natural, acoustic-like tones to fully synthetic, morphing soundscapes, and it enables dynamic filtering and detailed spectral editing. Set an oscillator to Spectral from its header menu. Like granular, it's <b>CPU-intensive</b> but unusually flexible.",
+    you:"The other new Serum 2 engine — think of it as sculpting the frequency 'fingerprint' of a sound. It pairs with your EQ/harmonics understanding, but at the synthesis level rather than the mix level.",
+    tryThis:"Set OSC A to <b>Spectral</b>, load a sound, and automate a spectral <b>shift</b> to morph the timbre across a held note.",
+    jargon:[["Partials","the individual frequency components a sound is broken into."],["Spectral domain","working on the frequency spectrum directly rather than the waveform."],["Resynthesis","rebuilding sound from analyzed spectral content."]],
+    links:[["Serum 2 manual (cached)","https://xferrecords.com/web-manual/serum-2/welcome"]] }
 ];
 
 let filter = "all";
@@ -1391,6 +1514,11 @@ var SEED_SHORTCUTS=[
     {k:"⌘⇧U", d:"Quantize"},
     {k:"⌘⇧C", d:"Capture MIDI"}
   ]},
+  {g:"MIDI note editor", items:[
+    {k:"F", d:"Fold to Notes — hide every piano-roll row that has no notes, so only the pitches you're actually using show. Great for tidying a busy clip or reading a drum map. (If the Computer MIDI Keyboard is on, use ⇧F.)"},
+    {k:"G", d:"Fold to Scale — hide rows outside the clip's scale (only when a scale is set on the clip); a handy melodic-composition guide. (⇧G if the Computer MIDI Keyboard is on.)"},
+    {k:"H / W", d:"Optimize height / width — also work inside the clip / MIDI detail view to fit the notes neatly to the pane, not just in the Arrangement."}
+  ]},
   {g:"Grid", items:[
     {k:"⌘1", d:"Narrow grid"},
     {k:"⌘2", d:"Widen grid"},
@@ -1402,6 +1530,20 @@ var SEED_SHORTCUTS=[
     {k:"Z", d:"Zoom to time selection"},
     {k:"X", d:"Zoom back out"},
     {k:"B", d:"Draw (pencil) mode"}
+  ]},
+  {g:"Serum (synth)", items:[
+    {k:"⇧-drag", d:"Serum: fine-tune a knob/slider (hold Shift while dragging any control)"},
+    {k:"⌘-click", d:"Serum: reset a control to its default value"},
+    {k:"⌘F", d:"Serum: jump to the search field in the Presets browser"},
+    {k:"⌥-click save", d:"Serum: save a preset under the same name without the dialog"},
+    {k:"⌥-drag label", d:"Serum: copy an oscillator/filter/FX module to another slot WITHOUT its modulations (drag the module label)"},
+    {k:"⇧⌥-drag label", d:"Serum: copy a module WITH its modulations (Shift-Option-drag the label)"},
+    {k:"⌥F", d:"Serum: expand / revert the FX rack (and the Matrix) list view for more space"},
+    {k:"⌥-click bypass", d:"Serum: bypass ALL FX on a bus (Option-click any bypass button)"},
+    {k:"⌥-drag LFO tab", d:"Serum: copy one LFO's settings to another LFO (drag its tab onto another)"},
+    {k:"⌥-drag LFO→WT", d:"Serum: copy an LFO shape onto a wavetable (drag the LFO tab to a wavetable)"},
+    {k:"⇧⌘-click point", d:"Serum: set an LFO point as the loopback position (Envelope mode)"},
+    {k:"⇧⌥-click", d:"Serum: change a modulation's type (directional / bidirectional) — Shift-Option-click the modulated control"}
   ]}
 ];
 function keysLoad(){ try{ var v=localStorage.getItem('mirage_keys'); if(v) return JSON.parse(v); }catch(e){} return []; }
