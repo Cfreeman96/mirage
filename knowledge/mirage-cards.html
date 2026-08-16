@@ -21,6 +21,7 @@
     --c-inst:#5a5148;   --c-inst-bg:#efe9e2;
     --c-clean:#3f7d7a;  --c-clean-bg:#e2f0ef;
     --c-master:#4f5b6b; --c-master-bg:#e6eaf0;
+    --c-serum:#6d28d9;  --c-serum-bg:#ece4fb;
   }
   *{box-sizing:border-box}
   html,body{margin:0}
@@ -50,6 +51,7 @@
   .cat-inst{background:var(--c-inst-bg); color:var(--c-inst)}
   .cat-clean{background:var(--c-clean-bg); color:var(--c-clean)}
   .cat-master{background:var(--c-master-bg); color:var(--c-master)}
+  .cat-serum{background:var(--c-serum-bg); color:var(--c-serum)}
   .topbar{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin:0 2px 8px}
   .theme-toggle{width:auto; flex:none; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:999px; box-shadow:var(--shadow)}
   .tabs{display:flex; gap:6px; flex-wrap:wrap}
@@ -177,6 +179,25 @@
   .kbd{flex:none; min-width:66px; text-align:center; font-weight:700; font-size:13px; padding:6px 10px; border-radius:8px; background:var(--bg); border:1px solid var(--line); box-shadow:0 1px 0 var(--line)}
   .kdesc{flex:1}
   .keydel{width:auto; flex:none; margin-left:auto; padding:5px 10px; border-radius:8px; font-weight:700; font-size:14px; color:var(--muted)}
+  .macromaps{margin-top:8px; display:flex; flex-direction:column; gap:5px}
+  .macromap{font-size:13px; background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:7px 10px}
+  .trbar{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); padding:14px; margin-bottom:14px}
+  .trbar .trtop{display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:9px}
+  .trpct{font-weight:800; font-size:20px; color:var(--c-serum)}
+  .trcount{font-size:12.5px; color:var(--muted)}
+  .trtrack{height:9px; border-radius:999px; background:var(--bg); border:1px solid var(--line); overflow:hidden}
+  .trfill{height:100%; background:var(--c-serum); width:0%; transition:width .3s ease}
+  .trgroup{margin:16px 0 4px}
+  .trgroup h3{font-size:13px; letter-spacing:.03em; text-transform:uppercase; color:var(--muted); margin:0 2px 7px}
+  .trbox{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); overflow:hidden}
+  .trrow{display:flex; align-items:center; gap:12px; padding:11px 13px; border-bottom:1px solid var(--line); font-size:14px}
+  .trrow:last-child{border-bottom:none}
+  .trname{flex:1; line-height:1.4}
+  .trrow.done .trname{color:var(--muted)}
+  .trstatus{flex:none; cursor:pointer; font-size:11px; font-weight:700; padding:5px 11px; border-radius:999px; -webkit-tap-highlight-color:transparent; white-space:nowrap}
+  .trstatus.noty{background:var(--bg); color:var(--muted); border:1px solid var(--line)}
+  .trstatus.rewatch{background:var(--c-prin-bg); color:var(--c-prin)}
+  .trstatus.done{background:var(--c-serum-bg); color:var(--c-serum)}
   /* ---- Dark mode ---- */
   body.dark{
     color-scheme:dark;
@@ -192,6 +213,7 @@
     --c-inst:#bcae9f;  --c-inst-bg:#2a2621;
     --c-clean:#5cb3ad; --c-clean-bg:#122a28;
     --c-master:#93a1b5; --c-master-bg:#20262f;
+    --c-serum:#b794f6;  --c-serum-bg:#241b38;
   }
   body.dark .badge.dev{background:#2c2925; color:var(--muted)}
   body.dark .you{background:#2b1a12}
@@ -242,6 +264,8 @@
       <button class="tab" data-view="lab">Lab</button>
       <button class="tab" data-view="tools">Tools</button>
       <button class="tab" data-view="keys">Shortcuts</button>
+      <button class="tab" data-view="macros">Macros</button>
+      <button class="tab" data-view="train">Training</button>
     </nav>
   </div>
   <button id="themeToggle" class="theme-toggle">☾ Dark</button>
@@ -249,7 +273,7 @@
 <header>
   <div class="kicker">Mirage · Ableton Cards</div>
   <h1 id="viewTitle">Answer it in your head. Then reveal.</h1>
-  <div class="sub" id="viewSub">72 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
+  <div class="sub" id="viewSub">79 cards · principles + all your devices · jargon decoded · grounded in the Live 12 manual &amp; your own track.</div>
 </header>
 
 <section id="view-quiz">
@@ -284,6 +308,14 @@
   <div id="keys"></div>
 </section>
 
+<section id="view-macros" hidden>
+  <div id="macros"></div>
+</section>
+
+<section id="view-train" hidden>
+  <div id="train"></div>
+</section>
+
 <script>
 const CATS = {
   found:{label:"Foundations", v:"--c-found", bg:"--c-found-bg"},
@@ -295,7 +327,8 @@ const CATS = {
   mod:  {label:"Modulation",  v:"--c-mod",   bg:"--c-mod-bg"},
   inst: {label:"Instruments & Racks", v:"--c-inst",  bg:"--c-inst-bg"},
   clean:{label:"Cleanup",     v:"--c-clean", bg:"--c-clean-bg"},
-  master:{label:"Mastering",   v:"--c-master", bg:"--c-master-bg"}
+  master:{label:"Mastering",   v:"--c-master", bg:"--c-master-bg"},
+  serum: {label:"Serum 2",     v:"--c-serum",  bg:"--c-serum-bg"}
 };
 const M = "https://www.ableton.com/en/manual/live-audio-effect-reference/";
 const MI = "https://www.ableton.com/en/manual/live-instrument-reference/";
@@ -309,6 +342,14 @@ const CARDS = [
     tryThis:"Next time you grab a device, say out loud which of the five you're fixing. Can't name it? You probably don't need the device yet.",
     jargon:[["Dynamics","how loud things are, moment to moment."],["Harmonics","extra related frequencies distortion adds to enrich a sound."],["Tone / EQ","the balance of frequencies — bright vs dark, thin vs full."]],
     links:[["Manual","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  { cat:"found", dev:"Pitch Bend (MIDI notes)",
+    prompt:"What is <b>Pitch Bend</b> on a MIDI note — and how do you draw it in on a note that wasn't performed with a bend?",
+    answer:"<b>Pitch Bend</b> slides a note's pitch up or down smoothly, off the fixed keyboard grid — the swoop into a note, a falling tail, or a subtle scoop that makes a synth line feel human instead of quantized. In Live you edit it <b>per note</b> in the MIDI Note Editor: open the <b>Expression tab</b> (the tab beside the note editor), and each note gets a <b>Pitch</b> lane where you draw breakpoints — drag up to bend sharp, down to bend flat, and shape the curve over the note's length. The <b>Pitch Bend Range</b> sets how far full bend reaches (default <b>±48 semitones</b>); right-click in the pitch-bend area → <b>Pitch Bend Range Settings…</b> to change it, so a small drag can mean a subtle quarter-tone or a dramatic octave dive. Bends drawn this way are <b>per-note</b> — that's MPE-style expression, so overlapping notes can bend independently.",
+    you:"This is how you add glide/scoops to a MIDI line without switching to a synth's portamento — draw the bend right on the note. Handy for expressive leads and vocal-chop-style slides in your tracks.",
+    tryThis:"Double-click a MIDI clip → open the <b>Expression</b> tab → click a note → in its Pitch lane, drag a breakpoint down at the start and up to zero by the end for a classic scoop-up. Right-click → Pitch Bend Range Settings to set how dramatic it gets.",
+    jargon:[["Pitch Bend","a smooth pitch slide off the keyboard grid, up or down."],["Expression tab","the panel in the MIDI Note Editor holding per-note Pitch, Slide and Pressure lanes."],["Pitch Bend Range","how many semitones a full bend covers (default ±48); set via right-click → Pitch Bend Range Settings."],["Per-note / MPE","each note carries its own bend, so overlapping notes can bend independently."]],
+    links:[["Manual: Editing MPE","https://www.ableton.com/en/manual/editing-mpe/"],["KB: pitch bend tuning","https://help.ableton.com/hc/en-us/articles/209774705-Clips-out-of-tune-due-to-pitch-bend-automation"]] },
 
   // ===== PRINCIPLES =====
   { cat:"prin", dev:"Dry / Wet",
@@ -559,6 +600,14 @@ const CARDS = [
     jargon:[["Oversampling","temporarily processing at a multiple (4×, 12×) of the sample rate, then downsampling back."],["Aliasing","new harmonics above Nyquist folding back into the audible range as inharmonic junk — oversampling prevents it."],["4× vs 12×","higher = cleaner + more accurate true peak, more CPU; diminishing returns past 4×."]],
     links:[["Manual: Glue Compressor / Saturator","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
 
+  { cat:"prin", dev:"MIDI Transformations & Generators",
+    prompt:"What are Ableton's <b>MIDI Transformations &amp; Generators</b> — and how do you get <i>out</i> when one takes over your clip?",
+    answer:"Live 12's <b>MIDI Tools</b> live in the Clip View as two panels — <b>Transform</b> and <b>Generate</b> — picked from the <b>Transformation/Generator selector</b>. <b>Transformations</b> reshape your <i>existing</i> selected notes (Arpeggiate, Connect, Ornament, Quantize, Recombine, Span, Strum, Time Warp, Velocity…). <b>Generators</b> create <i>new</i> notes from scratch (<b>Rhythm</b>, Seed, Stacks, Euclidean, Shape…).<br><br><b>The trap:</b> Generators <b>replace the existing notes</b> in the clip/selection, and <b>Auto Apply is ON by default</b> — so the moment you pick <b>Rhythm</b> it fires immediately and keeps regenerating as you touch anything. Feels inescapable.<br><br><b>The way out:</b> <b>⌘Z (undo)</b> to bring your original notes back; turn <b>OFF Auto Apply</b> so it only applies when you click the <b>Generate/Transform</b> button; and <b>close the panel</b> (deselect the tool).",
+    you:"Exactly what happened to you — you picked the <b>Rhythm generator</b>, Auto Apply overwrote your notes, and it kept updating. ⌘Z + turning off Auto Apply is the escape hatch every time.",
+    tryThis:"Play safe: turn <b>Auto Apply off</b> <i>before</i> touching a Generator — now nothing changes until you click Generate, so you can dial settings and bail with no mess. (Transformations need notes selected first; Generators don't.)",
+    jargon:[["Transformation","reshapes existing selected notes (needs a selection) — arpeggiate, quantize, strum, etc."],["Generator","creates new notes from scratch (Rhythm, Euclidean…) — and replaces any existing notes in the range."],["Auto Apply","on by default — the tool fires instantly as you tweak; turn it off to only apply on the Generate/Transform button."]],
+    links:[["Manual: MIDI Tools","https://www.ableton.com/en/manual/midi-tools/"],["Video: MIDI Generators","https://www.youtube.com/watch?v=Z9z1QFyVVCo"]] },
+
   // ===== DYNAMICS =====
   { cat:"dyn", dev:"Compressor",
     prompt:"When do you reach for the plain <b>Compressor</b> instead of the Glue Compressor?",
@@ -607,6 +656,14 @@ const CARDS = [
     tryThis:"Ceiling −1.0 dB, <b>True Peak</b> on, then raise <b>Input Gain</b> until it's loud but the kick keeps its snap. A few dB of gain reduction is plenty.",
     jargon:[["Infinite ratio (∞:1)","'ratio' is how hard a compressor pushes loud parts down. Infinite = a hard ceiling; nothing gets past it — like your head hitting a low ceiling no matter how high you jump."],["Ceiling","the maximum output level you allow — the wall the sound can't cross."],["True Peak / inter-sample peak","a peak that appears between the digital sample points; True Peak mode catches it so your track doesn't distort after conversion or streaming."]],
     links:[["Manual: Limiter","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=Gvbf90IffRo"]] },
+
+  { cat:"dyn", dev:"Gate",
+    prompt:"What does a <b>Gate</b> do, and how is it the <i>opposite</i> of a compressor?",
+    answer:"A <b>Gate</b> passes only signal <b>above</b> a threshold and shuts everything below it — the mirror image of a compressor (which acts on what's <i>above</i> the threshold). Two jobs: <b>kill low-level noise</b> in the gaps (hiss, hum, bleed between hits), or <b>shape a sound</b> by raising the threshold to chop off reverb/delay tails or truncate a natural decay — tightening it up. Key controls: <b>Threshold</b> (the level that opens it), <b>Return / hysteresis</b> (the gap between the open level and the close level — raise it to stop 'chatter' when the signal hovers near the threshold), <b>Attack</b> (how fast it opens), <b>Hold</b> then <b>Release</b> (how long it stays open, then how slowly it closes), and <b>Floor</b> (how much it attenuates when closed — at −inf it fully mutes; at 0 dB it does nothing). It can also be <b>sidechained</b> so a <i>different</i> signal opens the gate.",
+    you:"This is the first device on your <b>clap</b> chain (Gate → Vocoder → EQ8 → short reverb). It cleans up the tail/bleed so the clap is a tight, defined hit before everything after it.",
+    tryThis:"On the clap: raise the Threshold until only the hit gets through and the tail dies, then add a little <b>Hold</b> so it doesn't cut too abruptly. Bump <b>Return</b> up if it starts stuttering.",
+    jargon:[["Gate vs compressor","a gate acts on the QUIET part (shuts below threshold); a compressor acts on the LOUD part (turns down above threshold)."],["Return / hysteresis","the difference between the level that opens the gate and the level that closes it — higher = less rapid open/close 'chatter'."],["Floor","how much the closed gate attenuates: −inf dB = full mute, 0 dB = no effect."],["Hold / Release","how long the gate stays open after the signal drops, then how slowly it closes."]],
+    links:[["Manual: Gate","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
 
   { cat:"dyn", dev:"Compressor vs Limiter (+ what Ratio does)",
     prompt:"How is a <b>Limiter</b> different from a <b>Compressor</b> — and what does the <b>Ratio</b> knob actually control?",
@@ -739,6 +796,14 @@ const CARDS = [
     jargon:[["Spectral / frequency domain","working with a sound split into its frequency components over time, instead of the raw waveform."],["Freeze","capturing a spectral snapshot and holding it indefinitely — an infinite sustain."],["Shift & Tilt","spectral-delay controls: Shift detunes each echo's frequencies; Tilt delays different frequencies by different amounts, smearing the tail."]],
     links:[["Manual: Spectral Time","https://www.ableton.com/en/manual/live-audio-effect-reference/"],["Video","https://www.youtube.com/watch?v=EBuB6G9ik1A"]] },
 
+  { cat:"time", dev:"FX return / throw sends (Guido's four)",
+    prompt:"Why build <b>dedicated FX return tracks</b> instead of putting reverb/delay on each track — and what were the four you and Guido made?",
+    answer:"A <b>return track</b> is a shared effects-only channel: you <b>send</b> any track to it (Dry/Wet on the effects set to <b>100%</b>, because the dry already lives on the source), then <b>automate the send</b> up for a single word or moment — a <b>throw</b>. Advantages over per-track inserts: one lush reverb/delay serves the whole song (CPU + consistency), and you get surgical control — the effect is <i>off</i> until you throw something into it, so it's punctuation, not wallpaper. You built <b>four</b>, each a different flavor of space:<br><br>• <b>LFO delay</b> — a Delay modulated by an LFO (rate 0.16 Hz, depth 27% — a very slow drift), 100% wet, repitch smoothing, L/R offset up to 2.54 ms, feedback 50%, + Reverb (100% wet, ~13 s). <i>Used on the Wavetable lead + heavily on vocals.</i><br>• <b>Breath</b> — Delay 8× synced L/R, feedback 50%, filter 1.37 kHz + 1.62 ping-pong, 100% wet, Limiter −24 dB; Reverb 43%, 14 s decay. <i>A longer tail than the synced vocal delay.</i><br>• <b>Throw</b> (unsynced/time-based) — Delay 3× (freq 1.6 + 2.8), Reverb 60% / 14.1 s, Auto Pan-Tremolo 17% (amount 0.17, freq 1.7). <i>Used on the clap.</i><br>• <b>Lead One</b> — Simple Delay 2×2 synced ping-pong, 100% wet (freq 2.5, width 2.5), Reverb 63% / 6.5 s. <i>Used on the old Wavetable lead.</i>",
+    you:"This was one of the bigger 'pro' upgrades in the course — making your own sends instead of stacking inserts. The move: send tracks in, keep the return's Dry/Wet at 100%, then draw send automation to throw a word or a stab into space exactly when you want it.",
+    tryThis:"Right-click a track area → Insert Return Track. Drop a Delay + Reverb on it, Dry/Wet 100%. On a vocal, ride the send knob up on one word and back down — that word alone flies into the reverb while the rest stays dry.",
+    jargon:[["Return track","a shared effects-only channel several tracks can send to — like a room down the hall everyone shares."],["Send","how much of a track you feed to a return; automate it for a 'throw.'"],["Throw","momentarily sending one word/hit into a big delay/reverb, then pulling it back — a classic vocal move."],["Dry/Wet 100% on a return","the dry already exists on the source track, so the return carries only the wet."]],
+    links:[["Manual: Return tracks & sends","https://www.ableton.com/en/manual/mixing/"],["Recipes: Useful-Macros / Course-1-Recap (your notes)","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
   // ===== MODULATION =====
   { cat:"mod", dev:"Auto Pan-Tremolo",
     prompt:"Panning mode vs Tremolo mode on <b>Auto Pan-Tremolo</b> — what does each one modulate? (They're now the same device.)",
@@ -813,6 +878,22 @@ const CARDS = [
     jargon:[["Wavetable","a stack of waveforms the synth can move between — think a flipbook of different tones."],["Position","which 'page' of that flipbook you're hearing; sweeping it morphs the sound over time."],["Sub oscillator","an extra low tone added below the main sound for weight — felt more than heard."]],
     links:[["Manual: instruments","https://www.ableton.com/en/manual/live-instrument-reference/"],["Video","https://www.youtube.com/watch?v=9wovKSfR66A"]] },
 
+  { cat:"inst", dev:"Meld",
+    prompt:"What is <b>Meld</b>, and what's the one thing that makes <b>Glide</b> actually audible?",
+    answer:"<b>Meld</b> is a <b>bi-timbral macro-oscillator synth</b> (Live 12 Suite): two full engines (A &amp; B) you layer, each with <b>24 oscillator types</b> (six scale-aware), two envelopes + two LFOs, a big mod matrix, and per-engine filters — built for evolving textures, drones, and MPE.<br><br><b>Glide gotcha (from the manual):</b> Glide only slides <b>when you play a note while another is still held down</b> — i.e. <b>legato / overlapping</b> notes. Detached notes have nothing to slide from, so you hear nothing. <b>Portamento</b> = smooth slide; <b>Glissando</b> = stepped (in scale degrees if Scale Awareness is on). And it's only audible with <b>Glide Time above zero</b> — a tiny value like 14.5 ms is nearly instant, so set it high (~1 s) to actually hear it.",
+    you:"This was exactly your bug: you set the Glide Time but weren't playing <b>legato</b> — hold one note, press the next before releasing the first, and it slides. Also bump the time up from 14.5 ms; Guido's ~1.33 s is why his is obvious. <b>Osc Key Tracking</b> must be on for the osc to follow note pitch (off = constant C3, for drones).",
+    tryThis:"In Meld: Glide Time ~1.0 s, Porta on, then play two overlapping notes (hold the first, add the second). Now flip to Gliss to hear the stepped version.",
+    jargon:[["Bi-timbral","two independent synth engines (A + B) layered into one instrument."],["Glide / Portamento","a pitch slide from one note to the next — only happens between overlapping (legato) notes, with Time above zero."],["Osc Key Tracking","on = the oscillator plays the incoming note's pitch; off = a constant C3 (for drones/percussion)."],["Two engines both on","hearing an unwanted plain layer under your sound? The other engine (A or B) is still switched on — turn it off in the Engines section (which engine you've edited is set by the A/B tabs)."]],
+    links:[["Manual: Meld","https://www.ableton.com/en/manual/live-instrument-reference/"],["Video","https://www.youtube.com/watch?v=CBIOSA8NKz0"]] },
+
+  { cat:"inst", dev:"Operator",
+    prompt:"What is <b>Operator</b>, and what does 'FM synthesis' actually mean — how is it different from Wavetable?",
+    answer:"<b>Operator</b> is Ableton's <b>FM synth</b>: four multi-waveform <b>oscillators</b> that can <b>modulate each other's frequency</b> instead of just sounding together. That's the whole idea of <b>FM (frequency modulation)</b> — one oscillator (the <b>modulator</b>) wobbles the pitch of another (the <b>carrier</b>) thousands of times a second, and that wobble is fast enough to stop sounding like vibrato and start creating brand-new harmonics — metallic bells, gnarly basses, glassy electric pianos. How the four oscillators are wired (who modulates whom) is set by the <b>Algorithm</b> — the little diagram of stacked boxes top-left. Each oscillator has its own envelope, plus there's a filter, an LFO and a pitch envelope. Where Wavetable morphs by scanning through a table of shapes, Operator builds complexity by having oscillators bend each other — a different, often edgier route to the same goal of an evolving, rich tone.",
+    you:"You lean on Wavetable and Meld now — Operator is the classic FM box worth knowing when you want that DX7-style bell/e-piano or a biting metallic bass those can't easily make. Guido's tip: try it <i>without</i> the filter first to hear pure FM.",
+    tryThis:"Load an Operator preset, find the <b>Algorithm</b> diagram, and drag one oscillator's <b>level</b> up — hear the tone get more metallic/complex as it modulates the one below it. Then sweep an oscillator's <b>Coarse</b> ratio and listen to the harmonics jump.",
+    jargon:[["FM (frequency modulation)","one oscillator rapidly bending another's pitch — fast enough to create new harmonics rather than audible vibrato."],["Carrier / modulator","carrier = the oscillator you hear; modulator = the one bending the carrier's frequency."],["Algorithm","the wiring diagram that decides which oscillators modulate which (vs which are just heard)."],["Coarse / Fine","the frequency ratio of an oscillator — changing it changes which harmonics FM produces."]],
+    links:[["Manual: Operator","https://www.ableton.com/en/manual/live-instrument-reference/"],["Video","https://www.youtube.com/watch?v=9wovKSfR66A"]] },
+
   { cat:"inst", dev:"Sampler",
     prompt:"You put a <b>Sampler</b> on your vocals but 'didn't touch the ADSR.' What is ADSR, and what would changing it do?",
     answer:"<b>Sampler</b> (and its simpler sibling <b>Simpler</b>) plays audio samples as a playable instrument. <b>ADSR</b> is its amplitude envelope — four stages shaping each note's volume over time: <b>Attack</b> (how fast it fades in), <b>Decay</b> (fall to the sustain level), <b>Sustain</b> (the held level while the note is down), <b>Release</b> (the tail after you let go). Leaving it untouched means the sample plays naturally; lengthen Attack and notes fade in, shorten Release and tails cut off fast. Sampler also maps many samples across <b>zones</b> (key/velocity ranges) to build realistic multisampled instruments.",
@@ -883,7 +964,16 @@ const CARDS = [
     you:"This is the vocal chain Guido walked you through. The magic combo is <b>high ratio + wide knee</b>: strong control that only fully bites on the loudest moments, so it never sounds crushed. (The 'Compressor' card is about <i>which</i> compressor to pick — this is <i>how to set it</i>.)",
     tryThis:"Watch the GR meter: lower Threshold until you're pulling a few dB on the loud words; set Ratio high but widen the Knee so it eases in; keep Attack slow so words stay crisp; then Makeup to match. A/B bypass — same loudness, just steadier.",
     jargon:[["Dynamic range","the gap between the loudest and quietest moments; leveling shrinks it."],["Leveling vs peak-catching","leveling (low threshold) evens the whole performance; peak-catching (high threshold) only tames rare spikes."],["High ratio + soft knee","strong compression that ramps in gradually — firm on peaks, gentle elsewhere, so it's controlled but transparent."]],
-    links:[["Manual: Compressor","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] }
+    links:[["Manual: Compressor","https://www.ableton.com/en/manual/live-audio-effect-reference/"]] },
+
+  // ===== SERUM 2 (new course — sound design) =====
+  { cat:"serum", dev:"Serum 2 — orientation",
+    prompt:"New course starting: <b>Serum 2</b> sound design. Before the first lesson — what <i>is</i> Serum, and how does its signal flow compare to what you know in Ableton?",
+    answer:"<b>Serum 2</b> is a <b>wavetable synthesizer</b> (Xfer Records) — the same core idea as Ableton's Wavetable, but deeper and built entirely around sound design. The mental model transfers cleanly: <b>oscillators</b> generate the raw tone (Serum's are wavetable oscillators — you scan a Position through a stack of waveforms, exactly like Wavetable's Position knob), a <b>filter</b> shapes the tone, and <b>envelopes + LFOs</b> move parameters over time. What Serum adds over Wavetable: a visual <b>wavetable editor</b> (draw/import/warp your own tables), a big flexible <b>mod matrix</b> (drag any source to any destination), a built-in <b>FX rack</b>, and a <b>noise</b> oscillator. So everything you learned about oscillators, Position, sub oscillators, ADSR, LFOs, cutoff/resonance, and unison in the Ableton cards is the foundation — Serum is where you go deep on <i>designing</i> the sound itself rather than mixing it.",
+    you:"This is the first card in your new Serum space — it'll fill up as you go through the 6-hour course. Cross-reference the Ableton <b>Wavetable</b>, <b>Meld</b>, and <b>Operator</b> cards: those are your bridge into Serum's oscillator concepts. Goal of this course: put the whole picture together — design sounds from scratch, not just process presets.",
+    tryThis:"Before lesson 1, open Serum and just scan the <b>wavetable Position</b> on Osc A while holding a note — hear it morph. That's the exact same move as Wavetable's Position; you already understand it.",
+    jargon:[["Wavetable synth","a synth whose oscillators play through a stack of waveforms you scan through — Serum and Ableton Wavetable are both this."],["Mod matrix","a routing grid where you connect a modulation source (LFO, envelope) to a destination (pitch, cutoff, wavetable position)."],["Position","which waveform in the table you're hearing; sweeping it morphs the tone — same as Ableton Wavetable."]],
+    links:[["Xfer: Serum","https://xferrecords.com/products/serum"]] }
 ];
 
 let filter = "all";
@@ -981,7 +1071,9 @@ const VIEWS = {
   gym:    {title:"Reps.", sub:"Rack up reps. Keep the streak alive."},
   lab:    {title:"Effect Lab.", sub:"Learn one device by ear, across a few loops."},
   tools:  {title:"Third-party tools.", sub:"Suggested by people worth listening to — capture now, explore later."},
-  keys:   {title:"Shortcuts.", sub:"Ableton keys worth keeping — search, and add your own."}
+  keys:   {title:"Shortcuts.", sub:"Ableton keys worth keeping — search, and add your own."},
+  macros: {title:"Useful macros.", sub:"Single-knob morphs worth reusing — capture, then rebuild in Ableton."},
+  train:  {title:"Training.", sub:"Guido's lessons to re-watch away from the desk — mark each Internalized when it sticks."}
 };
 const viewTitle = document.getElementById('viewTitle');
 const viewSub = document.getElementById('viewSub');
@@ -996,6 +1088,8 @@ function showView(v){
   document.getElementById('view-lab').hidden = v!=='lab';
   document.getElementById('view-tools').hidden = v!=='tools';
   document.getElementById('view-keys').hidden = v!=='keys';
+  document.getElementById('view-macros').hidden = v!=='macros';
+  document.getElementById('view-train').hidden = v!=='train';
   document.querySelector('header').style.display = (v==='journey') ? 'none' : 'block';
   viewTitle.textContent = VIEWS[v].title;
   viewSub.textContent = VIEWS[v].sub;
@@ -1005,6 +1099,8 @@ function showView(v){
   if(v==='lab'){ buildLab(); }
   if(v==='tools'){ buildTools(); }
   if(v==='keys'){ buildKeys(); }
+  if(v==='macros'){ buildMacros(); }
+  if(v==='train'){ buildTrain(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('.tab').forEach(t=> t.addEventListener('click', ()=>showView(t.dataset.view)));
@@ -1253,9 +1349,14 @@ var SEED_SHORTCUTS=[
     {k:"O", d:"Metronome on / off"},
     {k:"F9", d:"Arrangement Record"},
     {k:"⌘⇧F9", d:"Session Record"},
+    {k:"⌘⌥3", d:"Show / hide Clip View (clip / MIDI editor)"},
+    {k:"⌘⌥4", d:"Show / hide Device View (audio-effect / device chain)"},
     {k:"⌘⌥5", d:"Show / hide Browser"},
     {k:"⌘⌥6", d:"Show / hide Groove Pool"},
-    {k:"⌘⌥7", d:"Show / hide Help view"}
+    {k:"⌘⌥7", d:"Show / hide Help view"},
+    {k:"⌘M", d:"Toggle MIDI Map Mode (click a control, then move a MIDI knob to map it)"},
+    {k:"⌘K", d:"Toggle Key Map Mode (map computer keys to controls)"},
+    {k:"Map button", d:"Macro Map Mode — no keyboard shortcut; click the Rack's Map button, then click a parameter + a Macro's Map button"}
   ]},
   {g:"Tracks", items:[
     {k:"⌘T", d:"Insert audio track"},
@@ -1266,6 +1367,7 @@ var SEED_SHORTCUTS=[
     {k:"click value + ↑↓", d:"Nudge a clicked value field one step — e.g. click a track's dB, then ↑/↓ to change it ±1 dB"},
     {k:"U", d:"Fold / unfold selected tracks"},
     {k:"⌥U", d:"Fold / unfold ALL tracks & groups (toggle — collapses every group at once)"},
+    {k:"⌘A / ⇧-click", d:"Select all tracks — ⌘A with a track header focused, or click the first header then ⇧-click the last (then ⌥+ / ⌥− for uniform height)"},
     {k:"⌥+ / ⌥−", d:"Set selected tracks to the same height"},
     {k:"S", d:"Show all tracks (minimize)"},
     {k:"H", d:"Optimize Arrangement height"},
@@ -1326,6 +1428,81 @@ function buildKeys(){
   document.getElementById('kSearch').addEventListener('input', renderList);
   document.getElementById('kAdd').addEventListener('click', function(){ var k=document.getElementById('kKeys').value.trim(), d=document.getElementById('kDesc').value.trim(); if(!k||!d)return; keysAdd(k,d); document.getElementById('kKeys').value=''; document.getElementById('kDesc').value=''; renderList(); });
   renderList();
+}
+
+// ---- Macros (useful single-knob recipes) ----
+var SEED_MACROS=[
+  {name:"Open-up (bright + wide)", via:"Guido", desc:"One knob morphs dark + narrow/mono → bright + wide. Up = open (brighter, wider, powerful); down = close (darker, more mono/mid, focused). Great for builds, breakdowns, transitions.", maps:["EQ Eight · Band 8 Frequency: 800 Hz → 22 kHz (brightens)","Roar · Blend (Mid/Side): 60/40 mid → 40/60 side (widens)"]},
+  {name:"1 Knob Open (advanced)", via:"Guido", desc:"The Open-up macro elevated — one knob morphs the whole sound CLOSED (dark, narrow/mono, tight, single-layer) → OPEN (bright, wide, evolving, layered, powerful). Same philosophy, more reach: attack/decay shaping, a touch of glide, and fading in Meld's B engine for thickness + stereo. Great for driving a whole section's energy.", maps:["Meld · A Amp Env Attack: 11 → 48 ms (softer onset as it opens)","Meld · A Amp Env Decay: 200 → 500 ms (more body / sustain)","Meld · A Glide Time: 29 → 48 ms (a touch more glide)","Meld · B Volume: −50 → −12 dB (fades the 2nd engine in — thickness + stereo)","Roar · Blend (Mid/Side): 60/40 → 40/60 (wider)","EQ Eight · Band 8 Frequency: 700 Hz → 22 kHz (brighter)"]}
+];
+function macrosLoad(){ try{ var v=localStorage.getItem('mirage_macros'); if(v) return JSON.parse(v); }catch(e){} return null; }
+function macrosSave(a){ try{ localStorage.setItem('mirage_macros', JSON.stringify(a)); }catch(e){} }
+function macrosSeed(){ var t=macrosLoad()||[]; SEED_MACROS.forEach(function(sd){ if(!t.some(function(x){return x.name===sd.name;})){ t.push({name:sd.name, via:sd.via, desc:sd.desc, maps:sd.maps.slice()}); } }); macrosSave(t); return t; }
+function macrosAdd(name, desc, maps){ var t=macrosLoad()||[]; t.unshift({name:name, via:"Me", desc:desc, maps:maps}); macrosSave(t); }
+function macrosDelete(i){ var t=macrosLoad()||[]; t.splice(i,1); macrosSave(t); }
+function buildMacros(){
+  var el=document.getElementById('macros'); macrosSeed();
+  function render(){
+    var arr=macrosLoad()||[];
+    var html='<div class="jcard toolform">'
+      + '<input id="mName" class="tinput" placeholder="Macro name (e.g. Open-up)">'
+      + '<input id="mDesc" class="tinput" placeholder="What the knob does">'
+      + '<textarea id="mMaps" class="tinput" style="min-height:62px; resize:vertical" placeholder="Mappings, one per line — e.g. Reverb · Dry/Wet: 0% → 40%"></textarea>'
+      + '<button id="mAdd" class="primary" style="width:100%">+ Add macro</button></div>';
+    if(!arr.length) html+='<div class="browse-empty" style="padding:14px">None captured yet.</div>';
+    arr.forEach(function(it,i){
+      var maps=(it.maps||[]).map(function(m){ return '<div class="macromap">'+m+'</div>'; }).join('');
+      html+='<div class="toolitem"><div class="toolhead"><span class="toolname">'+it.name+'</span>'
+        + (it.via?'<span class="toolstatus" style="cursor:default">via '+it.via+'</span>':'')
+        + '<button class="tooldel" data-mi="'+i+'" title="remove">×</button></div>'
+        + (it.desc?'<div class="toolnote">'+it.desc+'</div>':'')
+        + (maps?'<div class="macromaps">'+maps+'</div>':'')
+        + '</div>';
+    });
+    el.innerHTML=html;
+    document.getElementById('mAdd').addEventListener('click', function(){ var n=document.getElementById('mName').value.trim(); if(!n)return; var maps=document.getElementById('mMaps').value.split('\n').map(function(s){return s.trim();}).filter(function(s){return s;}); macrosAdd(n, document.getElementById('mDesc').value.trim(), maps); render(); });
+    el.querySelectorAll('.tooldel[data-mi]').forEach(function(b){ b.addEventListener('click', function(){ macrosDelete(parseInt(b.dataset.mi,10)); render(); }); });
+  }
+  render();
+}
+
+// ---- Training (Guido's lessons to re-watch / internalize) ----
+var SEED_TRAIN=[
+  {g:"Drums", items:["Reverse-engineering common kick issues","Replacing the kick","Common snare & clap issues","How to mix it","Hi-hat & shaker issues","Mixing in the hi-hat","Percussion issues"]},
+  {g:"Bass", items:["Bass issues","Compressing the drums (Boots-and-cats saturation)"]},
+  {g:"Harmony & FX", items:["Common harmony issues","FX sends","Common leads","Mixing the leads"]},
+  {g:"Vocals (the big one)", items:["Preparing for vocals","Vocal issues","Cleaning vocals","Vocal compression","Time-based effects for vocals","Vocal throw","Vocal width","Extra background vocals","Mixing the verse"]},
+  {g:"Breakdown & arrangement", items:["FX","Common breakdown issues","Mixing the breakdown","Quick mix of the whole arrangement","Filtering","FX cleanup"]},
+  {g:"Mastering", items:["Mastering","Limiters","Clippers","EQ","Multi-band dynamics","The nerdy stuff","Feedback for low end","Lead remake — Meld one-knob automation","Final tweaks","Thank you & feedback"]}
+];
+var TRAIN_ORDER=["Not yet","Rewatch","Internalized ✓"];
+var TRAIN_CLS={"Not yet":"noty","Rewatch":"rewatch","Internalized ✓":"done"};
+function trainLoad(){ try{ var v=localStorage.getItem('mirage_train'); if(v) return JSON.parse(v); }catch(e){} return {}; }
+function trainSave(o){ try{ localStorage.setItem('mirage_train', JSON.stringify(o)); }catch(e){} }
+function trainStat(name){ var o=trainLoad(); return o[name]||"Not yet"; }
+function trainCycle(name){ var o=trainLoad(); var cur=o[name]||"Not yet"; o[name]=TRAIN_ORDER[(TRAIN_ORDER.indexOf(cur)+1)%TRAIN_ORDER.length]; trainSave(o); }
+function buildTrain(){
+  var el=document.getElementById('train');
+  function render(){
+    var total=0, done=0;
+    SEED_TRAIN.forEach(function(grp){ grp.items.forEach(function(n){ total++; if(trainStat(n)==="Internalized ✓") done++; }); });
+    var pct = total ? Math.round(done/total*100) : 0;
+    var html='<div class="trbar"><div class="trtop"><span class="trpct">'+pct+'% internalized</span>'
+      + '<span class="trcount">'+done+' / '+total+' lessons · tap a status to cycle</span></div>'
+      + '<div class="trtrack"><div class="trfill" style="width:'+pct+'%"></div></div></div>';
+    SEED_TRAIN.forEach(function(grp){
+      html+='<div class="trgroup"><h3>'+grp.g+'</h3><div class="trbox">';
+      grp.items.forEach(function(n){
+        var st=trainStat(n), cls=TRAIN_CLS[st]||'noty';
+        html+='<div class="trrow'+(cls==='done'?' done':'')+'"><span class="trname">'+n+'</span>'
+          + '<span class="trstatus '+cls+'" data-n="'+encodeURIComponent(n)+'">'+st+'</span></div>';
+      });
+      html+='</div></div>';
+    });
+    el.innerHTML=html;
+    el.querySelectorAll('.trstatus').forEach(function(b){ b.addEventListener('click', function(){ trainCycle(decodeURIComponent(b.dataset.n)); render(); }); });
+  }
+  render();
 }
 
 showView('journey');
