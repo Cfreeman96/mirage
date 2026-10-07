@@ -4,9 +4,9 @@
 > Regenerate whenever the master HTML changes. User-added items (Tools/Shortcuts/Macros you add in-app) live in browser localStorage, not the HTML, so they are not captured here — only the built-in seed content is.
 
 **Generated:** 2026-10-07
-**Total cards:** 151
+**Total cards:** 157
 
-**By category:** Foundations (3) · Principle (26) · Mastering (7) · Dynamics (10) · EQ & Filter (4) · Distortion (6) · Time-based (7) · Modulation (8) · Instruments & Racks (7) · Cleanup (2) · Serum 2 (56) · Serum 2 FX (15)
+**By category:** Foundations (3) · Principle (31) · Mastering (7) · Dynamics (10) · EQ & Filter (4) · Distortion (6) · Time-based (7) · Modulation (8) · Instruments & Racks (8) · Cleanup (2) · Serum 2 (56) · Serum 2 FX (15)
 
 ---
 
@@ -2691,7 +2691,215 @@ Watch the GR meter: lower Threshold until you're pulling a few dB on the loud wo
 
 ---
 
-## 81. Serum 2 — orientation
+## 81. Automation (drawing & recording)
+
+**Category:** Principle (`prin`)
+
+**Prompt / front:**
+
+Your Auto Filter sweep and LFO wobble are devices that create movement. But how do you move any knob yourself, over time? What is automation?
+
+**Answer:**
+
+Automation is a control's value changing across the timeline, stored as a breakpoint envelope. Almost every mixer and device control can be automated — even the song tempo. Two ways to make it: record it (turn on the Control Bar's Automation Arm + Arrangement Record, then move controls while it plays) or draw it by hand. In the Arrangement, press A to toggle Automation Mode, click a control to show its lane over the waveform, then click to add breakpoints — vertical axis is the value, horizontal is time. Drag a segment's midpoint to bend it into a curve. Key gotcha: if you grab an automated knob while you're not recording, you temporarily override the automation (the lane dims) — click Re-Enable Automation to hand control back to the envelope.
+
+**In your track / notes:**
+
+This is the hand on the throttle behind every movement card you have — Auto Filter, Auto Pan, the LFO make motion automatically; automation is you deciding exactly when and how much, section by section.
+🎛️ Dubstep: automation IS your arrangement energy — filter-sweep risers into the drop, volume and FX builds, opening a reverb send for a single snare, riding a growl's macro across 8 bars. Your course's Auto Filter → Auto Filter → Utility chain is the engine; automation is what shapes it into tension and release.
+
+**Try this:**
+
+In Arrangement, press A to show automation, click a reverb's Dry/Wet, and draw a ramp from 0 to ~50% over the two bars before a drop. Play it — you just built a riser by hand.
+
+**Jargon:**
+
+- **Breakpoint envelope** — the line of points that defines how a control moves over time.
+- **Automation Mode (A)** — the view toggle that shows/edits automation lanes over the track.
+- **Record vs draw** — capture live knob moves, or click points in by hand.
+- **Re-Enable Automation** — hands control back to the envelope after you've overridden it by grabbing a knob.
+
+**Links:**
+
+- Live manual — Automation & Envelopes: https://www.ableton.com/en/manual/automation-and-editing-envelopes/
+- Help — Working with Automation: https://help.ableton.com/hc/en-us/articles/209070629-Working-with-Automation-and-Modulation
+
+---
+
+## 82. Audio warping & Warp Modes
+
+**Category:** Principle (`prin`)
+
+**Prompt / front:**
+
+You drop an audio loop in and it locks to your tempo — sometimes cleanly, sometimes with artifacts. What is warping, and what do the Warp Modes do?
+
+**Answer:**
+
+Warping is Live time-stretching an audio clip so it follows your Set's tempo no matter the clip's original tempo, using warp markers that pin points in the audio to points on the grid. The Warp Mode chooses the stretching algorithm, each suited to a type of material: Beats (drums/percussive — preserves transients; best for rhythmic loops), Tones (monophonic pitched material — bass, a vocal, a single instrument), Texture (noisy/ambient/pads — granular, with a grain-size control), Re-Pitch (no stretching — changes speed and pitch together, like an old sampler or turntable), and Complex / Complex Pro (whole songs or mixed material — highest quality but CPU-heavy and never perfectly neutral; Complex Pro adds a Formants control to keep the tone natural when pitched). Rule of thumb: match the mode to the material, and only reach for Complex when the lighter modes fall short.
+
+**In your track / notes:**
+
+This is bread-and-butter audio editing you didn't have carded — fixing a recorded part's timing, locking a sample to grid, or abusing Re-Pitch for character.
+🎛️ Dubstep: Re-Pitch is a creative weapon — pitch a vocal chop or drum break by changing its warp/transpose for that gritty sped-up/slowed feel. Beats mode keeps breakbeats tight at your tempo; Texture warps pads and atmospheres into risers. Warping is also the front half of resampling: warp a chopped sample to grid, then mangle it.
+
+**Try this:**
+
+Drop any loop on an audio track, double-click it, toggle Warp on, set mode to Beats, and change the project tempo — hear it follow. Switch to Re-Pitch and do it again: now it pitches up/down like a record.
+
+**Jargon:**
+
+- **Warp markers** — points that pin moments in the audio to the tempo grid.
+- **Beats mode** — transient-preserving — for drums and rhythmic loops.
+- **Re-Pitch** — no stretching; speed and pitch move together, like a turntable.
+- **Complex Pro (Formants)** — highest-quality stretch for full songs; Formants keeps tone natural when pitched.
+
+**Links:**
+
+- Live manual — Audio Clips, Tempo & Warping: https://www.ableton.com/en/manual/audio-clips-tempo-and-warping/
+
+---
+
+## 83. Groups, busses & submixing
+
+**Category:** Principle (`prin`)
+
+**Prompt / front:**
+
+Your course is full of 'the drum group,' 'the bass group,' a master bus. What's actually happening when you group tracks or send to a bus?
+
+**Answer:**
+
+A Group Track is a summing container: select tracks → Cmd/Ctrl-G and they feed one channel with its own volume that can host effects processing the whole submix at once — how you ride the entire kit with one fader, or glue-compress all the drums together. Groups can't hold clips themselves and can be nested. A return track is the other kind of bus: you turn up a track's Send and its signal feeds the return, where one effect (a reverb, a delay) processes audio from many tracks at once — one shared space instead of a separate reverb on every track. Underneath, both are routing: many tracks → one destination. Group = summed processing + a level control; return = a shared send effect.
+
+**In your track / notes:**
+
+This names the structure your whole course assumed — drum group, bass group, FX returns, master. Group when you want to process a submix as a unit (glue comp on all drums); use returns to share one effect (the vocal-throw reverb you built).
+🎛️ Dubstep: group your drums to glue them and sidechain the group to the kick; group bass layers so one fader and one Utility rule the whole low end; use returns for the reverb/delay throws on leads and vocal chops so every element shares the same space.
+
+**Try this:**
+
+Select your kick, snare and hats → Cmd/Ctrl-G. Put one Glue Compressor on the group and nudge it — the whole kit breathes together. Then add a reverb to a return and send each drum a different amount.
+
+**Jargon:**
+
+- **Group Track (Cmd/Ctrl-G)** — a summing channel for several tracks, with its own fader and effects.
+- **Return track** — a bus hosting one effect that many tracks feed via Sends.
+- **Send** — how much of a track's signal is routed to a return.
+- **Submix (many-to-one)** — routing several tracks to a single destination for shared control.
+
+**Links:**
+
+- Live manual — Mixing (Group & Return Tracks): https://www.ableton.com/en/manual/mixing/
+- Live manual — Routing & I/O (Submixes): https://www.ableton.com/en/manual/routing-and-i-o/
+
+---
+
+## 84. Quantize vs Groove (timing feel)
+
+**Category:** Principle (`prin`)
+
+**Prompt / front:**
+
+Your drums feel stiff and robotic. Two fixes live in Live — quantize and groove. What's the difference?
+
+**Answer:**
+
+Quantize snaps note timing to the grid: select notes → Cmd/Ctrl-U to snap to the current grid, or use Quantize Settings for a specific value (1/16, triplets, note start and/or end). The subtlety is the Amount control — at 100% notes lock dead to the grid (that tight, programmed feel); below 100% they move only part-way, tightening timing without killing the human feel. Groove is the opposite move: instead of straightening, it adds swing and micro-timing from a template in the Groove Pool. Each groove has a Base (the note resolution it measures against), Quantize (how much straight snap to apply first), Timing (how strongly the groove's push/pull is applied), plus Random and Velocity. Grooves are non-destructive and real-time — audition and swap them live, or set Timing to 0 and use only Quantize for clean, non-destructive straightening.
+
+**In your track / notes:**
+
+Stiff → quantize (but back Amount off to ~80–90% so it's tight, not lifeless). On-grid but lifeless → add swing with a groove.
+🎛️ Dubstep: your ~140 BPM drums usually want tight quantization for punch, but a touch of swing on hats and percussion stops the groove sounding like a drum machine. Quantize-below-100% is the trick for programmed drums that still breathe.
+
+**Try this:**
+
+On a hat pattern, apply a Groove from the Pool and sweep its Timing from 0 to 100% — hear swing arrive. Then undo, select the notes, press Cmd/Ctrl-U, and compare dead-on-grid against the swung feel.
+
+**Jargon:**
+
+- **Quantize (Cmd/Ctrl-U)** — snaps note timing to the grid.
+- **Amount (partial quantize)** — moves notes only part-way to the grid — tight without robotic.
+- **Groove Pool** — where swing/feel templates live and get tweaked in real time.
+- **Timing (groove)** — how strongly the groove's push/pull is applied to your notes.
+
+**Links:**
+
+- Live manual — Using Grooves: https://www.ableton.com/en/manual/using-grooves/
+- Live manual — MIDI Tools (Quantize): https://www.ableton.com/en/manual/midi-tools/
+
+---
+
+## 85. Simpler (+ its 3 playback modes)
+
+**Category:** Instruments & Racks (`inst`)
+
+**Prompt / front:**
+
+You have a Sampler card, but most quick sampling in Live happens in Simpler. What is it, and what are its three playback modes?
+
+**Answer:**
+
+Simpler plays a region of a single sample through a synth-style engine (filter, envelope, LFO) — and, unlike a classic sampler, it can warp the sample so it stays in sync with your tempo whatever note you play. The mode switch is the big decision: Classic (melodic/harmonic — full ADSR, looping, polyphonic; turns a sample into a playable instrument), One-Shot (monophonic, no loop — the whole sample fires on trigger; built for drum hits and short phrases), and Slice (non-destructively chops the sample so each slice plays from its own key — slice by Transient, Beat, Region (even divisions), or Manual). Drag a sample onto a MIDI track and you get a Simpler instantly. Sampler is the bigger sibling (multi-sample zones, deeper modulation); Simpler is the fast, everyday one.
+
+**In your track / notes:**
+
+This fills your sampling gap — dragging audio onto a MIDI track to play it, chop a break, or turn a one-shot into an instrument.
+🎛️ Dubstep: Slice mode is how you chop a vocal or drum break across the keys and re-sequence it; One-Shot is perfect for triggering impacts, risers and custom kicks/snares; Classic lets you play a growl sample melodically. It's also the quickest way to play back a resample you bounced out of Serum.
+
+**Try this:**
+
+Drag a vocal clip onto a new MIDI track (it makes a Simpler), switch to Slice mode, slice By Transient, and play the keys — you're re-chopping the vocal live.
+
+**Jargon:**
+
+- **Classic mode** — full ADSR + looping, polyphonic — a sample as a playable instrument.
+- **One-Shot mode** — monophonic, whole sample on trigger — drum hits & short phrases.
+- **Slice mode** — chops the sample so each slice plays from a key (Transient/Beat/Region/Manual).
+- **Warp in Simpler** — keeps the sample in tempo-sync regardless of the note played.
+
+**Links:**
+
+- Live manual — Instrument Reference (Simpler): https://www.ableton.com/en/manual/live-instrument-reference/
+- Help — Warping in Simpler: https://help.ableton.com/hc/en-us/articles/209072629-Warping-in-Simpler
+
+---
+
+## 86. Spectrum & Tuner (reading the mix)
+
+**Category:** Principle (`prin`)
+
+**Prompt / front:**
+
+You mix by ear — good. But what does the Spectrum analyzer (and the Tuner) actually tell you, and when should you trust it?
+
+**Answer:**
+
+Spectrum is a measurement tool, not an effect — it shows incoming audio as a graph with dB (loudness) up the vertical axis and frequency/pitch along the horizontal, and it doesn't change the sound at all. Hover anywhere and it reads out the exact amplitude, frequency, and note name at that point — great for finding which note a rumble sits on, spotting a harsh peak, or seeing whether two elements are fighting in the same range. Drop it on a track or the master to see what your ears suspect. Tuner is the other measurement tool: it reads a monophonic pitch and its distance from the nearest semitone (works best on a clean, single-note signal) — for tuning a bass, a synth, or an external instrument. The discipline from your course still holds: ears first, picture second — the analyzer confirms and locates a problem, it doesn't decide for you.
+
+**In your track / notes:**
+
+This is the 'read the meter' half of mixing you didn't have carded — it pairs with your 'EQ do's & don'ts' rule (don't cut just because a visualizer shows energy).
+🎛️ Dubstep: park Spectrum on the master to watch your sub sit where it should, catch a nasty resonance a distortion stage created, and check the growl's energy and the kick aren't stacking in the exact same band. Tuner keeps your subs and growls actually in key with the track.
+
+**Try this:**
+
+Put Spectrum on your master, play the drop, and hover over the big low-end bump to read its note name. Is your sub on the track's root? If not, that's often why it feels off.
+
+**Jargon:**
+
+- **Spectrum** — a measurement/analysis tool (not an effect) — shows frequency vs loudness.
+- **Note readout** — hover the display to see amplitude, frequency and note name at that point.
+- **Tuner** — reads a single (monophonic) pitch and its cents/semitone offset.
+- **Ears first, picture second** — the analyzer locates and confirms a problem; your ears decide the fix.
+
+**Links:**
+
+- Live manual — Audio Effect Reference (Spectrum / Tuner): https://www.ableton.com/en/manual/live-audio-effect-reference/
+
+---
+
+## 87. Serum 2 — orientation
 
 **Category:** Serum 2 (`serum`)
 
@@ -2723,7 +2931,7 @@ Before lesson 1, open Serum and just scan the wavetable Position on Osc A while 
 
 ---
 
-## 82. Serum 2 FX — the rack & the 16 modules
+## 88. Serum 2 FX — the rack & the 16 modules
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -2759,7 +2967,7 @@ Open the FX tab, add a Distortion then a Reverb, play a note, then drag Reverb a
 
 ---
 
-## 83. Serum FX — Bode (frequency shifter)
+## 89. Serum FX — Bode (frequency shifter)
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -2793,7 +3001,7 @@ On a sustained growl, set MIX ~30%, nudge SHIFT up a few Hz — hear the metalli
 
 ---
 
-## 84. Serum FX — Chorus
+## 90. Serum FX — Chorus
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -2827,7 +3035,7 @@ On a lead: MIX ~35%, modest DEPTH, set DELAY 1/DELAY 2 to taste for thickness. F
 
 ---
 
-## 85. Serum FX — Compressor
+## 91. Serum FX — Compressor
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -2861,7 +3069,7 @@ Set MODE = MULTIBAND, pull the low-band threshold down and compress it downward 
 
 ---
 
-## 86. Serum FX — Convolve (convolution reverb / IR)
+## 92. Serum FX — Convolve (convolution reverb / IR)
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -2895,7 +3103,7 @@ Load any short percussive sample as the IMPULSE, drop MIX to ~40%, and play a gr
 
 ---
 
-## 87. Serum FX — Delay
+## 93. Serum FX — Delay
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -2929,7 +3137,7 @@ MODE = PING-PONG, BPM on, drag the lower time row to 1.5 (dotted). On a lead, ad
 
 ---
 
-## 88. Serum FX — Distortion (13 types + X-Shaper)
+## 94. Serum FX — Distortion (13 types + X-Shaper)
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -2963,7 +3171,7 @@ On a clean saw, pick Tube, push DRIVE, set the filter to POST and sweep FREQ —
 
 ---
 
-## 89. Serum FX — Equalizer
+## 95. Serum FX — Equalizer
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -2997,7 +3205,7 @@ On a growl layer meant to sit on top, set the low band to high-pass and sweep FR
 
 ---
 
-## 90. Serum FX — Filter
+## 96. Serum FX — Filter
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -3031,7 +3239,7 @@ Add a Filter at the bottom of the rack, set it to a low-pass, map CUTOFF to Macr
 
 ---
 
-## 91. Serum FX — Flanger
+## 97. Serum FX — Flanger
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -3065,7 +3273,7 @@ On a reese, MIX ~40%, BPM-sync RATE to 1 bar, push FEEDBACK — hear the metalli
 
 ---
 
-## 92. Serum FX — Hyper/Dimension
+## 98. Serum FX — Hyper/Dimension
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -3099,7 +3307,7 @@ On a lead: UNISON 5, modest DETUNE, RATE slow — instant supersaw width. Now se
 
 ---
 
-## 93. Serum FX — Phaser
+## 99. Serum FX — Phaser
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -3133,7 +3341,7 @@ On a sustained reese: BPM-sync RATE to 2 bars, POLES high, a little FEEDBACK, MI
 
 ---
 
-## 94. Serum FX — Reverb
+## 100. Serum FX — Reverb
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -3167,7 +3375,7 @@ On a lead: PLATE, SIZE medium, pull LO CUT up so lows stay clean, add PRE-DLY so
 
 ---
 
-## 95. Serum FX — Splitters (L/H, L/M/H, M/S)
+## 101. Serum FX — Splitters (L/H, L/M/H, M/S)
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -3201,7 +3409,7 @@ Add a SPLITTER L/H, set SPLIT FREQ ~150 Hz. In LOWS add nothing (or a touch of c
 
 ---
 
-## 96. Serum FX — Utility
+## 102. Serum FX — Utility
 
 **Category:** Serum 2 FX (`sfx`)
 
@@ -3235,7 +3443,7 @@ On a wide growl: add Utility, enable MONO BASS with FREQ ~130 Hz — watch/hear 
 
 ---
 
-## 97. Which oscillator engine for what (dubstep)
+## 103. Which oscillator engine for what (dubstep)
 
 **Category:** Serum 2 (`serum`)
 
@@ -3273,7 +3481,7 @@ Resampling drill: build a growl on Wavetable, render it to audio, drop it into a
 
 ---
 
-## 98. Modulation — dragging an envelope onto a knob
+## 104. Modulation — dragging an envelope onto a knob
 
 **Category:** Serum 2 (`serum`)
 
@@ -3314,7 +3522,7 @@ On an init patch: drag Env 2 onto CUTOFF, then drag the ring wide. Set Env 2 to 
 
 ---
 
-## 99. Wavetable oscillator — Position & morphing
+## 105. Wavetable oscillator — Position & morphing
 
 **Category:** Serum 2 (`serum`)
 
@@ -3347,7 +3555,7 @@ Hold a note and drag WT POS slowly across the table — hear it morph. Then drag
 
 ---
 
-## 100. Smooth Interpolation (wavetable morphing)
+## 106. Smooth Interpolation (wavetable morphing)
 
 **Category:** Serum 2 (`serum`)
 
@@ -3382,7 +3590,7 @@ Assign an LFO to WT POS and sweep slowly with Smooth Interpolation off — liste
 
 ---
 
-## 101. Warp modes
+## 107. Warp modes
 
 **Category:** Serum 2 (`serum`)
 
@@ -3417,7 +3625,7 @@ On a saw table: try Sync and raise WARP for the sync sweep; then PWM; then FM Fr
 
 ---
 
-## 102. FM warp vs PD warp (OSC B as modulator)
+## 108. FM warp vs PD warp (OSC B as modulator)
 
 **Category:** Serum 2 (`serum`)
 
@@ -3454,7 +3662,7 @@ Set OSC A's warp to FM (B), B's level to 0, and slowly raise WARP — hear it br
 
 ---
 
-## 103. FM warp for aggressive / dubstep growls
+## 109. FM warp for aggressive / dubstep growls
 
 **Category:** Serum 2 (`serum`)
 
@@ -3488,7 +3696,7 @@ Growl starter: OSC A = FM (B), Thru-Zero on, OSC B in octaves (FIN/CRS at 0). Ad
 
 ---
 
-## 104. AM & RM warp (vs FM / PD)
+## 110. AM & RM warp (vs FM / PD)
 
 **Category:** Serum 2 (`serum`)
 
@@ -3522,7 +3730,7 @@ On OSC A, cycle the warp through FM (B) → PD (B) → AM (B) → RM (B) at the 
 
 ---
 
-## 105. Unison, Detune & Blend
+## 111. Unison, Detune & Blend
 
 **Category:** Serum 2 (`serum`)
 
@@ -3554,7 +3762,7 @@ Set UNISON 7, raise DETUNE until it's lush, leave BLEND ~75%. Then pull detune/v
 
 ---
 
-## 106. Sub oscillator
+## 112. Sub oscillator
 
 **Category:** Serum 2 (`serum`)
 
@@ -3585,7 +3793,7 @@ Enable SUB, pick a sine, set OCT −1, and tuck it under your bass. Toggle it on
 
 ---
 
-## 107. Noise oscillator
+## 113. Noise oscillator
 
 **Category:** Serum 2 (`serum`)
 
@@ -3617,7 +3825,7 @@ Add a short noise burst on the attack with a fast-decay envelope on the noise le
 
 ---
 
-## 108. Pitch tracking (keeping layers in tune)
+## 114. Pitch tracking (keeping layers in tune)
 
 **Category:** Serum 2 (`serum`)
 
@@ -3650,7 +3858,7 @@ Right-click an oscillator's label and toggle Enable Pitch Tracking off, then pla
 
 ---
 
-## 109. Filter module + the Var knob
+## 115. Filter module + the Var knob
 
 **Category:** Serum 2 (`serum`)
 
@@ -3684,7 +3892,7 @@ Pick MG Low 24, assign Env 2 to CUTOFF with a wide amount and fast decay = a fil
 
 ---
 
-## 110. Filter: Drive, Fat, Mix & Level
+## 116. Filter: Drive, Fat, Mix & Level
 
 **Category:** Serum 2 (`serum`)
 
@@ -3720,7 +3928,7 @@ On your MG Low 12: push DRIVE past 50% with some resonance up — hear it get gr
 
 ---
 
-## 111. Filter keytracking (the keyboard icon)
+## 117. Filter keytracking (the keyboard icon)
 
 **Category:** Serum 2 (`serum`)
 
@@ -3754,7 +3962,7 @@ Keytrack off: play a low bass note, then one an octave up — the high note soun
 
 ---
 
-## 112. Multi filters (dual filters + FREQ)
+## 118. Multi filters (dual filters + FREQ)
 
 **Category:** Serum 2 (`serum`)
 
@@ -3788,7 +3996,7 @@ On LH 12: set CUTOFF and FREQ to leave a narrow mid band open (low-pass above it
 
 ---
 
-## 113. Flanges filters (Comb / Flanger / Phaser)
+## 119. Flanges filters (Comb / Flanger / Phaser)
 
 **Category:** Serum 2 (`serum`)
 
@@ -3823,7 +4031,7 @@ Load Cmb +, set MIX ~50%, and move CUTOFF — hear the metallic pitched ring. Sw
 
 ---
 
-## 114. Oscillator → Filter routing (the 1↔2 knob & BUS)
+## 120. Oscillator → Filter routing (the 1↔2 knob & BUS)
 
 **Category:** Serum 2 (`serum`)
 
@@ -3857,7 +4065,7 @@ Enable both filters. On OSC A's routing popup, sweep the 1↔2 knob left → rig
 
 ---
 
-## 115. Envelopes (anatomy)
+## 121. Envelopes (anatomy)
 
 **Category:** Serum 2 (`serum`)
 
@@ -3900,7 +4108,7 @@ Shape ENV 2: fast ATK, short DEC, low SUS, then drag it onto CUTOFF for a plucky
 
 ---
 
-## 116. Attack — the ride up (elevator model)
+## 122. Attack — the ride up (elevator model)
 
 **Category:** Serum 2 (`serum`)
 
@@ -3934,7 +4142,7 @@ Hold one note with ENV 2 on CUTOFF and drag the attack curve linear → concave 
 
 ---
 
-## 117. Decay — the ride down to Sustain (elevator model)
+## 123. Decay — the ride down to Sustain (elevator model)
 
 **Category:** Serum 2 (`serum`)
 
@@ -3967,7 +4175,7 @@ ENV 2 → CUTOFF, Attack ~0, Sustain 0, medium Decay, tall shaft. Drag the decay
 
 ---
 
-## 118. Sustain — the floor the car parks on (elevator model)
+## 124. Sustain — the floor the car parks on (elevator model)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4000,7 +4208,7 @@ With ENV 2 on CUTOFF, hold a note and drag SUS up and down — watch the cutoff 
 
 ---
 
-## 119. Release — the ride home + the amp-envelope catch (elevator model)
+## 125. Release — the ride home + the amp-envelope catch (elevator model)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4036,7 +4244,7 @@ Shorten a MIDI note so there's a gap after it. Set ENV 2 → CUTOFF with a long 
 
 ---
 
-## 120. LFOs
+## 126. LFOs
 
 **Category:** Serum 2 (`serum`)
 
@@ -4078,7 +4286,7 @@ On LFO 1: set BPM 1/8, draw a stepped/square shape, assign it to CUTOFF for a wo
 
 ---
 
-## 121. LFO modes — Free vs Retrig (vs Envelope)
+## 127. LFO modes — Free vs Retrig (vs Envelope)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4111,7 +4319,7 @@ Sync an LFO to 1/8 on CUTOFF. In Retrig, every note starts the wobble identicall
 
 ---
 
-## 122. LFO Mono vs Poly (shared vs per-voice)
+## 128. LFO Mono vs Poly (shared vs per-voice)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4144,7 +4352,7 @@ Play a chord with an LFO wobbling the cutoff. In Poly, strum the notes slightly 
 
 ---
 
-## 123. LFO Rise — vs Rate & note length
+## 129. LFO Rise — vs Rate & note length
 
 **Category:** Serum 2 (`serum`)
 
@@ -4183,7 +4391,7 @@ Hold a 2-bar chord with a 1/8 LFO on cutoff + Rise 1 bar — the wobble swells t
 
 ---
 
-## 124. LFO loopback point (Envelope mode)
+## 130. LFO loopback point (Envelope mode)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4217,7 +4425,7 @@ Put an LFO on CUTOFF, set MODE to Envelope, and draw a shape with a dramatic ope
 
 ---
 
-## 125. LFO types — Normal / Path / Chaos / S&H
+## 131. LFO types — Normal / Path / Chaos / S&H
 
 **Category:** Serum 2 (`serum`)
 
@@ -4252,7 +4460,7 @@ On a pad, set an LFO to Chaos: Rossler at a slow rate on the cutoff — it drift
 
 ---
 
-## 126. LFO Path mode (2D X/Y modulation)
+## 132. LFO Path mode (2D X/Y modulation)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4287,7 +4495,7 @@ Set LFO 1 to Path, load '2 Point Circle'. Click the X tab and drag it onto CUTOF
 
 ---
 
-## 127. Chaos LFOs — Lorenz vs Rossler
+## 133. Chaos LFOs — Lorenz vs Rossler
 
 **Category:** Serum 2 (`serum`)
 
@@ -4322,7 +4530,7 @@ On a sustained bass, route Chaos: Rossler to CUTOFF (or pitch) with a tiny depth
 
 ---
 
-## 128. Envelope vs LFO (as modulation sources)
+## 134. Envelope vs LFO (as modulation sources)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4358,7 +4566,7 @@ Put an LFO on CUTOFF, sync it 1/8 → a rhythmic wub (repeats). Now switch that 
 
 ---
 
-## 129. Modulation Matrix
+## 135. Modulation Matrix
 
 **Category:** Serum 2 (`serum`)
 
@@ -4392,7 +4600,7 @@ Open MATRIX, add a row: Source = Velocity → Destination = filter CUTOFF, so ha
 
 ---
 
-## 130. Velocity as a modulation source
+## 136. Velocity as a modulation source
 
 **Category:** Serum 2 (`serum`)
 
@@ -4426,7 +4634,7 @@ On your Env 2 → Filter Freq + Velo-aux patch, draw a range of note velocities 
 
 ---
 
-## 131. Note as a modulation source (Velocity's twin)
+## 137. Note as a modulation source (Velocity's twin)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4460,7 +4668,7 @@ In the Matrix, add Source = Note → Destination = CUTOFF. Play low vs high note
 
 ---
 
-## 132. Macros
+## 138. Macros
 
 **Category:** Serum 2 (`serum`)
 
@@ -4496,7 +4704,7 @@ Drag Macro 1 onto CUTOFF and onto UNISON DETUNE — now one knob opens and widen
 
 ---
 
-## 133. Serum FX rack
+## 139. Serum FX rack
 
 **Category:** Serum 2 (`serum`)
 
@@ -4530,7 +4738,7 @@ On a lead: add Hyper/Dimension for instant width, then a Compressor (try Multiba
 
 ---
 
-## 134. Voicing & Portamento
+## 140. Voicing & Portamento
 
 **Category:** Serum 2 (`serum`)
 
@@ -4564,7 +4772,7 @@ Turn MONO on, raise PORTA, and play overlapping notes for a smooth slide. Toggle
 
 ---
 
-## 135. Voicing: Legato
+## 141. Voicing: Legato
 
 **Category:** Serum 2 (`serum`)
 
@@ -4596,7 +4804,7 @@ MONO on, an LFO wubbing the filter. Play overlapping notes with LEGATO on (the w
 
 ---
 
-## 136. Voicing: Portamento (Porta)
+## 142. Voicing: Portamento (Porta)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4626,7 +4834,7 @@ MONO on, raise PORTA, play two overlapping notes a few steps apart — hear the 
 
 ---
 
-## 137. Voicing: Always (portamento)
+## 143. Voicing: Always (portamento)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4656,7 +4864,7 @@ With PORTA up: ALWAYS off → only overlapping notes glide (play detached for a 
 
 ---
 
-## 138. Voicing: Scaled (portamento)
+## 144. Voicing: Scaled (portamento)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4686,7 +4894,7 @@ PORTA up, SCALED on: play a 1-semitone move (quick glide) then an octave jump (s
 
 ---
 
-## 139. Voicing: Curve (portamento)
+## 145. Voicing: Curve (portamento)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4716,7 +4924,7 @@ PORTA up, glide between two notes. Set CURVE convex (quick depart, eases in) vs 
 
 ---
 
-## 140. Voicing recipe — dubstep sliding growl (all combined)
+## 146. Voicing recipe — dubstep sliding growl (all combined)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4753,7 +4961,7 @@ Build it: MONO on, PORTA ~10–11 o'clock, LEGATO on, ALWAYS off, SCALED on, CUR
 
 ---
 
-## 141. Granular synthesis
+## 147. Granular synthesis
 
 **Category:** Serum 2 (`serum`)
 
@@ -4786,7 +4994,7 @@ Set OSC A to Granular, load a sample, then modulate grain position and size with
 
 ---
 
-## 142. Granular controls — Scan, Density, Length
+## 148. Granular controls — Scan, Density, Length
 
 **Category:** Serum 2 (`serum`)
 
@@ -4820,7 +5028,7 @@ Load a vocal, slow the SCAN right down (or use X|Y to freeze it), set DENS moder
 
 ---
 
-## 143. Granular — grain randomization (the bottom row)
+## 149. Granular — grain randomization (the bottom row)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4853,7 +5061,7 @@ On a granular pad, bring up RAND (PAN) and OFFSET for instant width and movement
 
 ---
 
-## 144. Spectral synthesis
+## 150. Spectral synthesis
 
 **Category:** Serum 2 (`serum`)
 
@@ -4886,7 +5094,7 @@ Set OSC A to Spectral, load a sound, and automate a spectral shift to morph the 
 
 ---
 
-## 145. Spectral controls — Scan, Cut, Filter, Mix
+## 151. Spectral controls — Scan, Cut, Filter, Mix
 
 **Category:** Serum 2 (`serum`)
 
@@ -4920,7 +5128,7 @@ Load 'Aaah Holy', slow SCAN to near-freeze for a sustained choir pad. Open the F
 
 ---
 
-## 146. Multisample oscillator (Timbre + Override env)
+## 152. Multisample oscillator (Timbre + Override env)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4956,7 +5164,7 @@ On OSC A: header → Multisample → load 'Ah Both'. Hold a chord for the choir 
 
 ---
 
-## 147. Sample oscillator (single sample + Scan, Loop, Slice)
+## 153. Sample oscillator (single sample + Scan, Loop, Slice)
 
 **Category:** Serum 2 (`serum`)
 
@@ -4991,7 +5199,7 @@ Load a vocal or drum loop into OSC A (Sample mode). Set Start/End to a phrase, t
 
 ---
 
-## 148. Sample Loop modes (One-shot / Fwd / Rev / Tailed)
+## 154. Sample Loop modes (One-shot / Fwd / Rev / Tailed)
 
 **Category:** Serum 2 (`serum`)
 
@@ -5032,7 +5240,7 @@ Load a sustained sample, switch to Fwd Loop, drag LS/LE to a clean mid-section, 
 
 ---
 
-## 149. Sample loop modifier: Relative Loop
+## 155. Sample loop modifier: Relative Loop
 
 **Category:** Serum 2 (`serum`)
 
@@ -5063,7 +5271,7 @@ Load a vocal/texture, pick Fwd Loop, turn on Relative Loop, then modulate the sa
 
 ---
 
-## 150. Sample loop modifier: Link Loop Length
+## 156. Sample loop modifier: Link Loop Length
 
 **Category:** Serum 2 (`serum`)
 
@@ -5093,7 +5301,7 @@ Set a short loop, turn on Link Loop Length, and LFO the loop start — the same-
 
 ---
 
-## 151. Sample loop modifier: Exit Loop on Release
+## 157. Sample loop modifier: Exit Loop on Release
 
 **Category:** Serum 2 (`serum`)
 
